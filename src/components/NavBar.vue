@@ -19,10 +19,9 @@ ul {
 
 nav {
   float: left;
-  width: 30%;
+  width: 15%;
   background: #e9e9e2;
-  padding-right: 20px;
-  height: 300px;
+  height: 800px;
   font-size: 20px;
 }
 </style>

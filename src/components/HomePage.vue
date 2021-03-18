@@ -2,6 +2,7 @@
   <div>
     <NavBar></NavBar>
     <h1>Home Page</h1>
+    <Calendar></Calendar>
   </div>
 </template>
 
@@ -14,5 +15,3 @@ export default {
 };
 </script>
 
-<style>
-</style>
