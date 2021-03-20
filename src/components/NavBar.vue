@@ -2,7 +2,7 @@
   <div>
     <nav>
       <ul>
-        <li><router-link to="/" exact>Home</router-link></li><br>
+        <li><router-link to="/home" exact>Home</router-link></li><br>
         <li><router-link to="/waitingqueue" exact>Waiting Queues</router-link></li><br>
         <li><router-link to="/malls" exact>Malls</router-link></li><br>
         <li><router-link to="/joinq" exact>Join a Queue</router-link></li><br>

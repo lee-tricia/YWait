@@ -1,5 +1,5 @@
 <template>
-  <form id="Signup" @submit.prevent="signup()">
+  <form id="signup" @submit.prevent="signup()">
     <p>
       <input
         type="text"
@@ -60,7 +60,8 @@
         required
       />
     </p>
-    <button type="submit">Sign Up Now</button>
+    <button type="submit">Sign Up</button>
+    <p>Have an account? Login <router-link to="/" exact>here</router-link>!</p>
   </form>
 </template>
 
@@ -95,7 +96,7 @@ export default {
             if (this.password != this.confirmPassword) {
               throw new Error();
             } else {
-              alert("Successfully registered! Please login.");
+              this.$router.replace({ name: 'Login' });
               this.registerUser();
             }
           })
@@ -114,16 +115,16 @@ export default {
     },
     registerUser() {
       database
-        .collection('users')
+        .collection("users")
         .doc(`${auth.currentUser.uid}`)
         .set({
-            customerID: auth.currentUser.uid,
-            name: this.name,
-            email: auth.currentUser.email,
-            contact: this.contact,
-            dob: this.dob
-        })
-    }
+          customerID: auth.currentUser.uid,
+          name: this.name,
+          email: auth.currentUser.email,
+          contact: this.contact,
+          dob: this.dob,
+        });
+    },
   },
 };
 </script>
