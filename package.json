@@ -10,12 +10,11 @@
   "dependencies": {
     "@vue/cli-plugin-babel": "4.1.1",
     "core-js": "^3.6.5",
-    "dayjs": "1.8.30",
+    "dayjs": "^1.8.30",
     "firebase": "^4.7.0",
     "material-design-icons": "^3.0.1",
     "vue": "^2.6.11",
-    "vue-router": "^3.5.1",
-    "vue2-google-maps": "^0.10.7"
+    "vue-router": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -24,7 +23,6 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-browser-geolocation": "^1.8.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
