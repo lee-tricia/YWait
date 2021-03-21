@@ -1,26 +1,39 @@
 <template>
-    <div>
+    <div id="content">
         <NavBar></NavBar>
         <h1>Malls</h1>
+        <div id="wrapper">
 
-        <ul>
-            <li v-for = "mall in mallsList" v-bind:key = "mall.id">
-                <h3>{{ mall.mallName }}</h3>
-                <h6>{{ mall.address }}</h6>
-                <h6>Singapore {{ mall.postalCode }}</h6>
-            </li>
-        </ul>        
+            <ul id="malls">
+                <li class="mall-items" v-for = "mall in mallsList" v-bind:key = "mall.id">
+                    <h3>{{ mall.mallName }}</h3>
+                    <h5>{{ mall.address }}</h5>
+                    <h6>Singapore {{ mall.postalCode }}</h6>
+                </li>
+            </ul>
+
+            <Map/>
+        </div>
+        
     </div>
 </template>
 
 <script>
 import { database } from "../firebase.js";
+import Map from "./MallsMap.vue";
 
 export default {
+
+    name: "Malls",
+
     data() {
         return {
             mallsList: []
         }
+    },
+
+    components: {
+        Map
     },
 
     methods: {
@@ -46,21 +59,47 @@ export default {
 </script>
 
 <style scoped>
+    * {
+        text-align: center;
+    }
 
-ul {
+    #wrapper {
+        display: grid;
+        grid-template-rows: 50% 50%;
+        gap: 30px;
+        grid-template-areas:
+            "a"
+            "b";
+    }
+
+    #malls {
         display: flex;
         flex-wrap: wrap;
         list-style-type: none;
         padding: 0;
+        grid-area: a;
     }
 
-    li {
+    .mall-items {
         flex-grow: 1;
         flex-basis: 300px;
         text-align: center;
         padding: 10px;
         margin: 10px;
-        border: 1px solid #222;
     }
 
-<style>
+    Map {
+        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 60px;
+        margin-left: 60px;
+        grid-area: b;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+</style>

@@ -7,13 +7,16 @@ import Login from "./components/Login.vue"
 
 import VueRouter from 'vue-router'
 import Routes from './routes.js'
+import { MapInstaller } from '@progress/kendo-map-vue-wrapper'
 
 Vue.config.productionTip = false
+
 Vue.component('NavBar', NavBar)
 Vue.component('Signup', Signup)
 Vue.component('Calendar', Calendar)
 Vue.component('Login', Login)
 Vue.use(VueRouter)
+Vue.use(MapInstaller)
 
 const myRouter =  new VueRouter({
   routes:Routes,
