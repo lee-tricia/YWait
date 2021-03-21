@@ -20,6 +20,10 @@ export default {
 </script>
 
 <styles scoped>
+
+    button {
+        border: none;
+    }
     
 </style>
 
