@@ -3,6 +3,7 @@
     <h1>YWait</h1>
     <p>a Virtual Online Queueing System</p>
     <form id="login" @submit.prevent="login()">
+      <emailIcon />
       <input
         type="email"
         name="email"
@@ -11,7 +12,7 @@
         placeholder="Email Address"
         required
       /><br />
-
+      <lockIcon />
       <input
         type="password"
         name="password"
@@ -31,6 +32,8 @@
 
 <script>
 import { auth } from "../firebase.js";
+import emailIcon from "vue-material-design-icons/Email.vue";
+import lockIcon from "vue-material-design-icons/Lock.vue"
 export default {
   data() {
     return {
@@ -61,6 +64,10 @@ export default {
           }
         });
     },
+  },
+  components: {
+    emailIcon,
+    lockIcon
   },
 };
 </script>
@@ -133,9 +140,9 @@ input {
 }
 
 input:focus {
-  border-bottom:  solid 1px black; 
-    outline: 0; 
-    box-shadow:  0 2px 6px -8px rgba(rgba(0,0,0,.1), .45);
+  border-bottom: solid 1px black;
+  outline: 0;
+  box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
 }
 
 #wrapper {
