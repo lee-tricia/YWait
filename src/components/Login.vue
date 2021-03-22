@@ -1,32 +1,34 @@
 <template>
-  <div class="card card-container">
-    <h1>YWait</h1>
-    <p>a Virtual Online Queueing System</p>
-    <form id="login" @submit.prevent="login()">
-      <emailIcon class="icon"/>
-      <input
-        type="email"
-        name="email"
-        id="email"
-        v-model="email"
-        placeholder="Email Address"
-        required
-      /><br />
-      <lockIcon class="icon"/>
-      <input
-        type="password"
-        name="password"
-        id="password"
-        v-model="password"
-        placeholder="Password"
-        required
-      /><br />
+  <div id="wrapper">
+    <div class="card card-container">
+      <h1>YWait</h1>
+      <p>a Virtual Online Queueing System</p>
+      <form id="login" @submit.prevent="login()">
+        <emailIcon class="icon" />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          v-model="email"
+          placeholder="Email Address"
+          required
+        /><br />
+        <lockIcon class="icon" />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          v-model="password"
+          placeholder="Password"
+          required
+        /><br />
 
-      <button type="submit">Login</button><br /><br />
+        <button type="submit">Login</button><br /><br />
 
-      Don't have an account? Sign up
-      <router-link to="/signup" exact>here</router-link>!
-    </form>
+        Don't have an account? Sign up
+        <router-link to="/signup" exact>here</router-link>!
+      </form>
+    </div>
   </div>
 </template>
 
@@ -73,6 +75,22 @@ export default {
 </script>
 
 <style scoped>
+#wrapper {
+  background-image: url("http://tourgeorgia.ge/wp-content/uploads/2017/02/HD-Jasmin-Restaurant.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-blend-mode: lighten;
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-blend-mode: overlay;
+}
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
@@ -143,15 +161,6 @@ input:focus {
   border-bottom: solid 1px black;
   outline: 0;
   box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
-}
-
-#wrapper {
-  margin-left: auto;
-  margin-right: auto;
-  display: grid;
-  background-image: url("https://images.summitmedia-digital.com/spotph/images/2020/08/05/pretty-plates-shops-ruth-carmen-home-1-1596627030.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .material-design-icon.icon {

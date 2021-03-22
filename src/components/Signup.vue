@@ -1,71 +1,73 @@
 <template>
-  <div class="card card-container">
-    <h1>YWait</h1>
-    <p>a Virtual Online Queueing System</p>
-    <form id="signup" @submit.prevent="signup()">
-      <p>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          v-model="name"
-          placeholder="Name"
-          required
-        />
-      </p>
-      <p>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          v-model="email"
-          placeholder="Email Address"
-          required
-        />
-      </p>
-      <p>
-        <input
-          type="tel"
-          name="contact"
-          id="contact"
-          v-model="contact"
-          placeholder="Contact Number"
-          required
-        />
-      </p>
-      <p>
-        <input
-          type="date"
-          name="dob"
-          id="dob"
-          v-model="dob"
-          placeholder="Date of Birth"
-          required
-        />
-      </p>
-      <p>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          v-model="password"
-          placeholder="Password"
-          required
-        />
-      </p>
-      <p>
-        <input
-          type="password"
-          name="confirmPassword"
-          id="confirmPassword"
-          v-model="confirmPassword"
-          placeholder="Confirm Password"
-          required
-        />
-      </p>
-      <button type="submit">Sign Up</button><br /><br />
-      Have an account? Login <router-link to="/" exact>here</router-link>!
-    </form>
+  <div id="wrapper">
+    <div class="card card-container">
+      <h1>YWait</h1>
+      <p>a Virtual Online Queueing System</p>
+      <form id="signup" @submit.prevent="signup()">
+        <p>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            v-model="name"
+            placeholder="Name"
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            v-model="email"
+            placeholder="Email Address"
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="tel"
+            name="contact"
+            id="contact"
+            v-model="contact"
+            placeholder="Contact Number"
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="date"
+            name="dob"
+            id="dob"
+            v-model="dob"
+            placeholder="Date of Birth"
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            v-model="password"
+            placeholder="Password"
+            required
+          />
+        </p>
+        <p>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            v-model="confirmPassword"
+            placeholder="Confirm Password"
+            required
+          />
+        </p>
+        <button type="submit">Sign Up</button><br /><br />
+        Have an account? Login <router-link to="/" exact>here</router-link>!
+      </form>
+    </div>
   </div>
 </template>
 
@@ -134,6 +136,23 @@ export default {
 </script>
 
 <style scoped>
+#wrapper {
+  background-image: url("http://tourgeorgia.ge/wp-content/uploads/2017/02/HD-Jasmin-Restaurant.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-blend-mode: lighten;
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-blend-mode: overlay;
+}
+
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
