@@ -1,8 +1,8 @@
 <template>
   <div id="wrapper">
     <div class="card card-container">
-      <h1>YWait</h1>
-      <p>a Virtual Online Queueing System</p>
+      <img :src="logo" />
+      <p>A Virtual Online Queueing System</p>
       <form id="signup" @submit.prevent="signup()">
         <p>
           <input
@@ -83,6 +83,7 @@ export default {
       dob: null,
       password: "",
       confirmPassword: "",
+      logo: require("../../images/logo.png"),
     };
   },
   methods: {
@@ -152,13 +153,11 @@ export default {
   left: 0;
   background-blend-mode: overlay;
 }
-
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
-  margin-top: 100px;
+  margin-top: 80px;
 }
-
 .card {
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
@@ -172,7 +171,14 @@ export default {
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   text-align: center;
 }
-
+img { 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  margin-bottom: -50px;
+  margin-top: -60px;
+}
 input {
   font-size: 16px;
   padding: 20px 0px;
@@ -187,15 +193,12 @@ input {
   color: #000;
   font-weight: 400;
   -webkit-appearance: none;
-  border-radius: 5px;
 }
-
 input:focus {
   border-bottom: solid 1px black;
   outline: 0;
   box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
 }
-
 button {
   -webkit-appearance: none;
   width: auto;
@@ -215,20 +218,16 @@ button {
   outline: 0;
   cursor: pointer;
 }
-
 button:hover {
   box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.65);
 }
-
 button:active {
   opacity: 0.6;
   transform: translateY(3px);
 }
-
 a {
   color: black;
 }
-
 a:hover {
   color: grey;
 }

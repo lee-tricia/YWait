@@ -1,7 +1,7 @@
 <template>
   <div class="sidenav">
     <nav>
-      <h1>YWait</h1>
+      <img :src="logo" />
       <ul>
         <li>
           <homeIcon class="icon" /><router-link to="/home" exact
@@ -37,7 +37,9 @@
       <div class="help">
         <h2>Require any assistance?</h2>
         <p class="email">Email us at:</p>
-        <p class="emailLink"><a href="mailto:help@YWait.com">help@YWait.com</a></p>
+        <p class="emailLink">
+          <a href="mailto:help@YWait.com">help@YWait.com</a>
+        </p>
       </div>
       <div class="logout"><LogOutButton /></div>
     </nav>
@@ -53,7 +55,9 @@ import profileIcon from "vue-material-design-icons/AccountCircleOutline";
 import chatIcon from "vue-material-design-icons/ChatProcessingOutline";
 export default {
   data() {
-    return {};
+    return {
+      logo: require("../../images/logo.png"),
+    };
   },
   components: {
     homeIcon,
@@ -67,10 +71,13 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  text-align: center;
-  font-size: 35px;
-  padding-bottom: 30px;
+img { 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  margin-bottom: -50px;
+  margin-top: -60px;
 }
 nav {
   height: 100%;
@@ -102,7 +109,7 @@ a.router-link-exact-active {
   bottom: -0.225em;
 }
 li {
-  text-align: center;
+  text-align: left;
   margin-right: 40px;
   color: black;
   padding: 10px;
@@ -111,7 +118,7 @@ li {
   display: inline-flex;
   align-self: center;
   position: relative;
-  margin-top: 80px;
+  margin-top: 40px;
 }
 div.help {
   padding: 10px 15px 10px;
