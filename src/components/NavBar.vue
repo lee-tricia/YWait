@@ -33,11 +33,11 @@
         </li>
         <br /><br /><br />
       </ul>
-      <chatIcon class="chatIcon" :size="50"/>
+      <chatIcon class="chatIcon" :size="50" />
       <div class="help">
         <h2>Require any assistance?</h2>
         <p class="email">Email us at:</p>
-        <p class="emailLink">help@YWait.com</p>
+        <p class="emailLink"><a href="mailto:help@YWait.com">help@YWait.com</a></p>
       </div>
       <div class="logout"><LogOutButton /></div>
     </nav>
@@ -50,7 +50,7 @@ import clockIcon from "vue-material-design-icons/ClockOutline";
 import mapIcon from "vue-material-design-icons/MapMarkerOutline";
 import calendarIcon from "vue-material-design-icons/CalendarMonthOutline";
 import profileIcon from "vue-material-design-icons/AccountCircleOutline";
-import chatIcon from "vue-material-design-icons/ChatProcessingOutline"
+import chatIcon from "vue-material-design-icons/ChatProcessingOutline";
 export default {
   data() {
     return {};
@@ -61,7 +61,7 @@ export default {
     mapIcon,
     calendarIcon,
     profileIcon,
-    chatIcon
+    chatIcon,
   },
 };
 </script>
@@ -91,7 +91,7 @@ a {
 a:hover {
   color: grey;
 }
-a:active {
+a.router-link-exact-active {
   color: grey;
 }
 .material-design-icon.icon {
@@ -114,7 +114,7 @@ li {
   margin-top: 80px;
 }
 div.help {
-  padding: 10px 15px 15px;
+  padding: 10px 15px 10px;
   width: 220px;
   border-radius: 10px;
   background-color: white;

@@ -51,7 +51,6 @@ export default {
 #wrapper {
   margin-left: 300px;
   text-align: center;
-  
 }
 #details {
   text-align: center;
@@ -59,6 +58,8 @@ export default {
   background-color: white;
   width: 800px;
   border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 p.name {
   font-size: 30px;
