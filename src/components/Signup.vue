@@ -173,6 +173,29 @@ export default {
   text-align: center;
 }
 
+input {
+  font-size: 16px;
+  padding: 20px 0px;
+  padding-left: 10px;
+  height: 56px;
+  border: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  width: 280px;
+  box-sizing: border-box;
+  transition: all 0.3s linear;
+  color: #000;
+  font-weight: 400;
+  -webkit-appearance: none;
+  border-radius: 5px;
+}
+
+input:focus {
+  border-bottom: solid 1px black;
+  outline: 0;
+  box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
+}
+
 button {
   -webkit-appearance: none;
   width: auto;
@@ -202,26 +225,11 @@ button:active {
   transform: translateY(3px);
 }
 
-input {
-  font-size: 16px;
-  padding: 20px 0px;
-  padding-left: 10px;
-  height: 56px;
-  border: none;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
-  background: #fff;
-  width: 280px;
-  box-sizing: border-box;
-  transition: all 0.3s linear;
-  color: #000;
-  font-weight: 400;
-  -webkit-appearance: none;
-  border-radius: 5px;
+a {
+  color: black;
 }
 
-input:focus {
-  border-bottom: solid 1px black;
-  outline: 0;
-  box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
+a:hover {
+  color: grey;
 }
 </style>
