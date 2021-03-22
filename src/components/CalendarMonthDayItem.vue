@@ -44,13 +44,14 @@ export default {
 <style scoped>
 .calendar-day {
   position: relative;
-  min-height: 100px;
+  min-height: 40px;
   font-size: 16px;
   background-color: #fff;
   color: var(--grey-800);
   padding: 5px;
 }
 
+/* dates (numbers) */
 .calendar-day > span {
   display: flex;
   justify-content: center;
@@ -61,15 +62,18 @@ export default {
   height: var(--day-label-size);
 }
 
+/* shaded dates that are not in this month */
 .calendar-day--not-current {
   background-color: var(--grey-100);
   color: var(--grey-300);
 }
 
+/* selected date */
 .calendar-day--today {
   padding-top: 4px;
 }
 
+/* selected date */
 .calendar-day--today > span {
   color: #fff;
   border-radius: 9999px;
