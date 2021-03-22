@@ -1,14 +1,16 @@
 <template>
-  <div id="profile">
+  <div>
     <NavBar></NavBar>
-    <h1>Profile Page</h1>
-    <div id="details">
-      <p class="name">{{ this.name }}</p>
-      <p class="details">
-        Email Address: {{ this.email }}<br />
-        Contact Number: {{ this.contact }} <br />
-        Date of Birth: {{ this.dob }}
-      </p>
+    <div id="wrapper">
+      <h1>Profile Page</h1>
+      <div id="details">
+        <p class="name">{{ this.name }}</p>
+        <p class="details">
+          Email Address: {{ this.email }}<br />
+          Contact Number: {{ this.contact }} <br />
+          Date of Birth: {{ this.dob }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -46,16 +48,16 @@ export default {
 </script>
 
 <style scoped>
-#profile {
-  background-color: rgb(247, 247, 247);
+#wrapper {
+  margin-left: 250px;
+  text-align: center;
 }
 #details {
   text-align: center;
   border: 1px solid #222;
   background-color: white;
-  width: 900px;
+  width: 800px;
   border-radius: 10px;
-  margin-left: 350px;
 }
 p.name {
   font-size: 30px;

@@ -3,7 +3,7 @@
     <h1>YWait</h1>
     <p>a Virtual Online Queueing System</p>
     <form id="login" @submit.prevent="login()">
-      <emailIcon />
+      <emailIcon class="icon"/>
       <input
         type="email"
         name="email"
@@ -12,7 +12,7 @@
         placeholder="Email Address"
         required
       /><br />
-      <lockIcon />
+      <lockIcon class="icon"/>
       <input
         type="password"
         name="password"
@@ -33,7 +33,7 @@
 <script>
 import { auth } from "../firebase.js";
 import emailIcon from "vue-material-design-icons/Email.vue";
-import lockIcon from "vue-material-design-icons/Lock.vue"
+import lockIcon from "vue-material-design-icons/Lock.vue";
 export default {
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
   },
   components: {
     emailIcon,
-    lockIcon
+    lockIcon,
   },
 };
 </script>
@@ -152,5 +152,9 @@ input:focus {
   background-image: url("https://images.summitmedia-digital.com/spotph/images/2020/08/05/pretty-plates-shops-ruth-carmen-home-1-1596627030.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.material-design-icon.icon {
+  margin-right: 5px;
 }
 </style>
