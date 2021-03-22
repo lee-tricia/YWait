@@ -162,6 +162,7 @@ export default {
   position: relative;
   background-color: var(--grey-200);
   border: solid 1px var(--grey-300);
+  border-radius: 3px;
 }
 
 .day-of-week {
