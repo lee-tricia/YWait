@@ -8,6 +8,6 @@
 <style scoped>
 h1 {
   text-align: center;
-  margin-left: 250px;
+  margin-left: 300px;
 }
 </style>

@@ -4,7 +4,7 @@
       <h1>YWait</h1>
       <p>a Virtual Online Queueing System</p>
       <form id="login" @submit.prevent="login()">
-        <emailIcon class="icon" />
+        <emailIcon class="icon" :size="20"/>
         <input
           type="email"
           name="email"
@@ -13,7 +13,7 @@
           placeholder="Email Address"
           required
         /><br />
-        <lockIcon class="icon" />
+        <lockIcon class="icon" :size="20"/>
         <input
           type="password"
           name="password"
@@ -135,7 +135,10 @@ input:focus {
 }
 
 .material-design-icon.icon {
-  margin-right: 5px;
+  display: inline-flex;
+  align-self: center;
+  position: relative;
+  bottom: -0.225em;
 }
 
 button {

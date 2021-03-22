@@ -160,7 +160,7 @@ export default {
 
 <style scoped>
 #wrapper {
-  margin-left: 250px;
+  margin-left: 300px;
 }
 h1 {
     text-align: center;

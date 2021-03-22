@@ -9,7 +9,6 @@ import LogOutButton from "./components/LogOutButton.vue"
 import VueRouter from 'vue-router'
 import Routes from './routes.js'
 import { MapInstaller } from '@progress/kendo-map-vue-wrapper'
-import 'vue-material-design-icons/styles.css';
 
 Vue.config.productionTip = false
 

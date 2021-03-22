@@ -62,7 +62,7 @@ h1 {
 }
 #wrapper {
   display: grid;
-  margin-left: 250px;
+  margin-left: 300px;
   text-align: center;
   grid-template-rows: 50% 50%;
   gap: 30px;

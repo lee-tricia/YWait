@@ -49,8 +49,9 @@ export default {
 
 <style scoped>
 #wrapper {
-  margin-left: 250px;
+  margin-left: 300px;
   text-align: center;
+  
 }
 #details {
   text-align: center;

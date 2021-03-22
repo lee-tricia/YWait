@@ -19,6 +19,6 @@ export default {
 <style scoped>
 #wrapper {
   text-align: center;
-  margin-left: 250px;
+  margin-left: 300px;
 }
 </style>
