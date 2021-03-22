@@ -1,71 +1,71 @@
 <template>
-    <div>
+  <div class="card card-container">
     <h1>YWait</h1>
     <p>a Virtual Online Queueing System</p>
-  <form id="signup" @submit.prevent="signup()">
-    <p>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        v-model="name"
-        placeholder="Name"
-        required
-      />
-    </p>
-    <p>
-      <input
-        type="email"
-        name="email"
-        id="email"
-        v-model="email"
-        placeholder="Email Address"
-        required
-      />
-    </p>
-    <p>
-      <input
-        type="tel"
-        name="contact"
-        id="contact"
-        v-model="contact"
-        placeholder="Contact Number"
-        required
-      />
-    </p>
-    <p>
-      <input
-        type="date"
-        name="dob"
-        id="dob"
-        v-model="dob"
-        placeholder="Date of Birth"
-        required
-      />
-    </p>
-    <p>
-      <input
-        type="password"
-        name="password"
-        id="password"
-        v-model="password"
-        placeholder="Password"
-        required
-      />
-    </p>
-    <p>
-      <input
-        type="password"
-        name="confirmPassword"
-        id="confirmPassword"
-        v-model="confirmPassword"
-        placeholder="Confirm Password"
-        required
-      />
-    </p>
-    <button type="submit">Sign Up</button>
-    <p>Have an account? Login <router-link to="/" exact>here</router-link>!</p>
-  </form>
+    <form id="signup" @submit.prevent="signup()">
+      <p>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          v-model="name"
+          placeholder="Name"
+          required
+        />
+      </p>
+      <p>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          v-model="email"
+          placeholder="Email Address"
+          required
+        />
+      </p>
+      <p>
+        <input
+          type="tel"
+          name="contact"
+          id="contact"
+          v-model="contact"
+          placeholder="Contact Number"
+          required
+        />
+      </p>
+      <p>
+        <input
+          type="date"
+          name="dob"
+          id="dob"
+          v-model="dob"
+          placeholder="Date of Birth"
+          required
+        />
+      </p>
+      <p>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          v-model="password"
+          placeholder="Password"
+          required
+        />
+      </p>
+      <p>
+        <input
+          type="password"
+          name="confirmPassword"
+          id="confirmPassword"
+          v-model="confirmPassword"
+          placeholder="Confirm Password"
+          required
+        />
+      </p>
+      <button type="submit">Sign Up</button><br /><br />
+      Have an account? Login <router-link to="/" exact>here</router-link>!
+    </form>
   </div>
 </template>
 
@@ -100,7 +100,7 @@ export default {
             if (this.password != this.confirmPassword) {
               throw new Error();
             } else {
-              this.$router.replace({ name: 'Login' });
+              this.$router.replace({ name: "Login" });
               this.registerUser();
             }
           })
@@ -134,51 +134,75 @@ export default {
 </script>
 
 <style scoped>
+.card-container.card {
+  max-width: 350px !important;
+  padding: 40px 40px;
+  margin-top: 100px;
+}
 
- button {
-  -webkit-appearance:  none; 
-  width:  auto;
-  min-width:  100px;
-  border-radius:  24px; 
-  text-align:  center; 
-  padding:  15px 40px;
-  margin-top:  5px; 
-  background-color:  black; 
-  color:  #fff; 
-  font-size:  14px;
-  margin-left:  auto; 
-  font-weight:  500; 
-  box-shadow:  0px 2px 6px -1px rgba(0,0,0,.13); 
-  border:  none;
-  transition:  all .3s ease; 
-  outline: 0; 
-  &:hover {
-    transform:  translateY(-3px);
-    box-shadow:  0 2px 6px -1px rgba($primary, .65);
-    &:active {
-      transform:  scale(.99);
-    }
-  }
+.card {
+  background-color: #f7f7f7;
+  padding: 20px 25px 30px;
+  margin: 0 auto 25px;
+  margin-top: 50px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 10px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+button {
+  -webkit-appearance: none;
+  width: auto;
+  min-width: 100px;
+  border-radius: 24px;
+  text-align: center;
+  padding: 15px 40px;
+  margin-top: 5px;
+  background-color: black;
+  color: #fff;
+  font-size: 14px;
+  margin-left: auto;
+  font-weight: 500;
+  box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.13);
+  border: none;
+  transition: all 0.3s ease;
+  outline: 0;
+  cursor: pointer;
+}
+
+button:hover {
+  box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.65);
+}
+
+button:active {
+  opacity: 0.6;
+  transform: translateY(3px);
 }
 
 input {
-  font-size:  16px; 
-  padding:  20px 0px; 
-  height:  56px; 
-  border:  none; 
-  border-bottom:  solid 1px rgba(0,0,0,.1); 
-  background:  #fff; 
-  width:  280px; 
-  box-sizing:  border-box; 
-  transition:  all .3s linear; 
-  color:  #000; 
-  font-weight:  400;
-  -webkit-appearance:  none; 
-  &:focus {
-    border-bottom:  solid 1px $primary; 
-    outline: 0; 
-    box-shadow:  0 2px 6px -8px rgba($primary, .45);
-  }
+  font-size: 16px;
+  padding: 20px 0px;
+  padding-left: 10px;
+  height: 56px;
+  border: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  width: 280px;
+  box-sizing: border-box;
+  transition: all 0.3s linear;
+  color: #000;
+  font-weight: 400;
+  -webkit-appearance: none;
+  border-radius: 5px;
 }
 
+input:focus {
+  border-bottom: solid 1px black;
+  outline: 0;
+  box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
+}
 </style>
