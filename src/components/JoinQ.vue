@@ -5,42 +5,25 @@
       <h1>Join Queue</h1>
       <form @submit.prevent="joinQueue()">
         <p>
-          <label for="mall">Choose your preferred dining mall:</label>
-        </p>
-        <p>
-          <select
-            v-model="mallSelected"
-            v-on:change="selectRestaurants()"
-            id="mall"
-            required
-          >
+          <select v-model="mallSelected" v-on:change="getRestaurants()" required>
             <option v-for="mall in mallsList" v-bind:key="mall.id">
-              {{ mall.mallName }}
+              {{ mall }}
             </option>
           </select>
         </p>
 
-        <p>
-          <label for="restaurant"
-            >Choose your preferred dining restaurant:</label
-          >
-        </p>
         <p>
           <select v-model="restaurantSelected" required>
             <option
-              v-for="restaurant in selectedRestaurantsList"
+              v-for="restaurant in restaurantList"
               v-bind:key="restaurant.id"
-              id="restaurant"
-              required
             >
-              {{ restaurant.restaurantName }}
+              {{ restaurant }}
             </option>
           </select>
         </p>
 
-        <p>
-          <label for="numAdult">No. of Pax (Adult)</label>
-        </p>
+        <p><label for="numAdult"> No. of Pax (Adult) </label></p>
         <p><input type="number" v-model="numAdult" id="numAdult" required /></p>
 
         <p><label for="numChildren"> No. of Pax (Children) </label></p>
@@ -58,17 +41,16 @@
             id="wheelchair"
             value="1"
           />
-          <label for="wheelchair"> Wheelchair</label>
+          <label for="wheelchair"> Wheel Chair</label>
         </p>
 
-        <p><label for="additionalMessage">Message</label></p>
+        <p><label for="additionalMessage"> Addition Message </label></p>
         <p>
           <textarea
             v-model="additionalMessage"
             id="additionalMessage"
             rows="4"
             cols="50"
-            placeholder="Any additonal message"
           ></textarea>
         </p>
 
@@ -87,8 +69,7 @@ export default {
     return {
       // all details from database
       mallsList: ["All"],
-      restaurantsList: [],
-      selectedRestaurantsList: [],
+      restaurantList: [],
 
       //FORM
       customerID: `${auth.currentUser.uid}`,
@@ -104,8 +85,8 @@ export default {
   methods: {
     // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
     joinQueue: function() {
-      database.collection("bookings").add({
-        customerID: this.customerID,
+      database.collection("Bookings").add({
+        customerID: null,
         mallName: this.mallSelected,
         restaurantName: this.restaurantSelected,
         restaurantMall: this.restaurantSelected + " @ " + this.mallSelected,
@@ -148,37 +129,43 @@ export default {
       return qCategory;
     },
     // getDetails is for when created stage
-    getDetails: function() {
-      // get mallsList
+    getMalls: function() {
+      // get mallList
       database
         .collection("malls")
         .get()
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             var curr = doc.data();
-            this.mallsList.push(curr);
+            this.mallsList.push(curr.mallName);
           });
         });
-      // get restaurantsList
+      
+    },
+
+    getRestaurants: function() {
+      // get restaurantList
+      this.restaurantList = [];
       database
         .collection("restaurants")
         .get()
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             var curr = doc.data();
-            this.restaurantsList.push(curr);
+            if (this.mallSelected === "All") {
+                this.restaurantList.push(curr.restaurantName);
+            }
+            else if (curr.mallName === this.mallSelected) {
+                this.restaurantList.push(curr.restaurantName);
+            }
           });
         });
-    },
-    selectRestaurants: function() {
-      const selectedRestaurants = this.restaurantsList.filter(
-        (restaurant) => restaurant.mallName == this.mallSelected
-      );
-      this.selectedRestaurantsList = selectedRestaurants;
+      
     },
   },
+  
   created() {
-    this.getDetails();
+    this.getMalls();
   },
 };
 </script>
@@ -188,6 +175,6 @@ export default {
   margin-left: 300px;
 }
 h1 {
-  text-align: center;
+    text-align: center;
 }
 </style>
