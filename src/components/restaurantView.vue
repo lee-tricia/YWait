@@ -44,17 +44,17 @@ export default {
       return data
     },
     queueData: function(status) {
-      var query = database.collection('Bookings').where('restaurantName','==',this.restaurantName).where('queueStatus','==',status)
+      var query = database.collection('bookings').where('restaurantName','==',this.restaurantName).where('queueStatus','==',status)
       return this.getDataFromQuery(query)
     },
     changeStatus: function(event, newStatus) {
       let doc_id = event.target.id
-      database.collection('Bookings').doc(doc_id).update({
+      database.collection('bookings').doc(doc_id).update({
         queueStatus: newStatus
       }).then(() => location.reload())
     },
     getRestaurantName: function() {
-      database.collection('restaurant').doc(`${auth.currentUser.uid}`).get().then(doc => {
+      database.collection('restaurants').doc(`${auth.currentUser.uid}`).get().then(doc => {
         this.restaurantName = doc.data().restaurantName
       })
     }

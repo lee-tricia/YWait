@@ -5,25 +5,42 @@
       <h1>Join Queue</h1>
       <form @submit.prevent="joinQueue()">
         <p>
-          <select v-model="mallSelected" required>
+          <label for="mall">Choose your preferred dining mall:</label>
+        </p>
+        <p>
+          <select
+            v-model="mallSelected"
+            v-on:change="selectRestaurants()"
+            id="mall"
+            required
+          >
             <option v-for="mall in mallsList" v-bind:key="mall.id">
-              {{ mall }}
+              {{ mall.mallName }}
             </option>
           </select>
         </p>
 
         <p>
+          <label for="restaurant"
+            >Choose your preferred dining restaurant:</label
+          >
+        </p>
+        <p>
           <select v-model="restaurantSelected" required>
             <option
-              v-for="restaurant in restaurantList"
+              v-for="restaurant in selectedRestaurantsList"
               v-bind:key="restaurant.id"
+              id="restaurant"
+              required
             >
-              {{ restaurant }}
+              {{ restaurant.restaurantName }}
             </option>
           </select>
         </p>
 
-        <p><label for="numAdult"> No. of Pax (Adult) </label></p>
+        <p>
+          <label for="numAdult">No. of Pax (Adult)</label>
+        </p>
         <p><input type="number" v-model="numAdult" id="numAdult" required /></p>
 
         <p><label for="numChildren"> No. of Pax (Children) </label></p>
@@ -41,16 +58,17 @@
             id="wheelchair"
             value="1"
           />
-          <label for="wheelchair"> Wheel Chair</label>
+          <label for="wheelchair"> Wheelchair</label>
         </p>
 
-        <p><label for="additionalMessage"> Addition Message </label></p>
+        <p><label for="additionalMessage">Message</label></p>
         <p>
           <textarea
             v-model="additionalMessage"
             id="additionalMessage"
             rows="4"
             cols="50"
+            placeholder="Any additonal message"
           ></textarea>
         </p>
 
@@ -69,7 +87,8 @@ export default {
     return {
       // all details from database
       mallsList: ["All"],
-      restaurantList: [],
+      restaurantsList: [],
+      selectedRestaurantsList: [],
 
       //FORM
       customerID: `${auth.currentUser.uid}`,
@@ -85,8 +104,8 @@ export default {
   methods: {
     // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
     joinQueue: function() {
-      database.collection("Bookings").add({
-        customerID: null,
+      database.collection("bookings").add({
+        customerID: this.customerID,
         mallName: this.mallSelected,
         restaurantName: this.restaurantSelected,
         restaurantMall: this.restaurantSelected + " @ " + this.mallSelected,
@@ -130,26 +149,32 @@ export default {
     },
     // getDetails is for when created stage
     getDetails: function() {
-      // get mallList
+      // get mallsList
       database
         .collection("malls")
         .get()
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             var curr = doc.data();
-            this.mallsList.push(curr.mallName);
+            this.mallsList.push(curr);
           });
         });
-      // get restaurantList
+      // get restaurantsList
       database
-        .collection("restaurant")
+        .collection("restaurants")
         .get()
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             var curr = doc.data();
-            this.restaurantList.push(curr.restaurantName);
+            this.restaurantsList.push(curr);
           });
         });
+    },
+    selectRestaurants: function() {
+      const selectedRestaurants = this.restaurantsList.filter(
+        (restaurant) => restaurant.mallName == this.mallSelected
+      );
+      this.selectedRestaurantsList = selectedRestaurants;
     },
   },
   created() {
@@ -163,6 +188,6 @@ export default {
   margin-left: 300px;
 }
 h1 {
-    text-align: center;
+  text-align: center;
 }
 </style>

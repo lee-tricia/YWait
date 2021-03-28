@@ -2,7 +2,7 @@
   <div>
     <NavBar></NavBar>
     <div id="wrapper">
-      <h1>Profile Page</h1>
+      <h1>My Profile</h1>
       <div
         id="profile"
         v-if="this.editProfile == false && this.changePassword == false"
@@ -110,6 +110,38 @@
           <button v-on:click="cancel()">
             Cancel
           </button>
+        </div>
+      </div>
+
+      <h2 v-if="this.editProfile == false && this.changePassword == false">
+        Current Queue Details
+      </h2>
+      <div
+        id="currentQueue"
+        v-if="this.editProfile == false && this.changePassword == false"
+      >
+        <div id="currentQueueDetails">
+          <p class="details">Insert queue details</p>
+        </div>
+      </div>
+      <p
+        class="note"
+        v-if="this.editProfile == false && this.changePassword == false"
+      >
+        Note: Full party must be present to be seated. <br />
+        The queue seatings will be given up if you are late due to limited
+        seating capacity.
+      </p>
+
+      <h2 v-if="this.editProfile == false && this.changePassword == false">
+        Queue History
+      </h2>
+      <div
+        id="queueHistory"
+        v-if="this.editProfile == false && this.changePassword == false"
+      >
+        <div id="queueHistoryDetails">
+          <p class="details">Insert queue history</p>
         </div>
       </div>
     </div>
@@ -227,7 +259,9 @@ export default {
   margin-left: 300px;
 }
 h1 {
-  text-align: center;
+  margin-left: 10px;
+  font-size: 40px;
+  font-weight: normal;
 }
 #profileIcon {
   float: left;
@@ -240,8 +274,8 @@ h1 {
   height: 300px;
   width: 800px;
   border-radius: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10px;
+  margin-bottom: 30px;
 }
 #details {
   margin-top: 25px;
@@ -261,8 +295,7 @@ h1 {
   height: 300px;
   width: 800px;
   border-radius: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10px;
 }
 #editPassword {
   margin-top: 20px;
@@ -334,5 +367,47 @@ button:hover {
 button:active {
   opacity: 0.6;
   transform: translateY(3px);
+}
+h2 {
+  margin-left: 10px;
+  margin-bottom: -25px;
+  font-size: 30px;
+  font-weight: normal;
+}
+#currentQueue {
+  border-top: 3px solid #222;
+  background-color: white;
+  height: auto;
+  width: 1550px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  background-color: #eee;
+  padding-bottom: 10px;
+}
+#currentQueueDetails {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-bottom: 10px;
+}
+p.note {
+  margin-left: 30px;
+  font-style: italic;
+}
+#queueHistory {
+  border-top: 3px solid #222;
+  background-color: white;
+  height: auto;
+  width: 1550px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  background-color: #eee;
+  padding-bottom: 10px;
+}
+#queueHistoryDetails {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-bottom: 10px;
 }
 </style>
