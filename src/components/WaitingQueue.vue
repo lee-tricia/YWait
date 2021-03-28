@@ -71,7 +71,7 @@
 
 <script>
 // left sorting to settle
-import database from '../firebase.js'
+import { database } from '../firebase.js'
 import sortIcon from "vue-material-design-icons/Sort.vue";
 
 export default {
