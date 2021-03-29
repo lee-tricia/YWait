@@ -5,7 +5,7 @@
     <ul>
       <li v-for="queue in currentQueueNumber" v-bind:key="queue.id">
         {{queue}} <br>
-        <button v-bind:id="queue['bookingID']" v-on:click="changeStatus($event, 'done')">Update</button>
+        <button v-bind:id="queue['bookingID']" v-on:click="changeStatus($event, 'all done')">Update</button>
       </li>
     </ul>
     
