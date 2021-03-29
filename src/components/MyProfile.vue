@@ -58,8 +58,10 @@
       >
         <div id="queueHistoryDetails">
           <ul>
-            <li v-for="restaurant in history" v-bind:key="restaurant.id">
-              {{ restaurant.restaurantMall }}
+            <li v-for="booking in history" v-bind:key="booking.id">
+              {{ booking.restaurantMall }} 
+              <rating @updateRating="ratingUpdated" v-bind:restaurantId="booking.restaurantId"></rating>
+              <button v-on:click="rate()">Post</button>
             </li>
             <br />
           </ul>
@@ -167,6 +169,8 @@ import { database } from "../firebase.js";
 import { auth } from "../firebase.js";
 import firebase from "firebase/app";
 import profileIcon from "vue-material-design-icons/AccountCircle";
+import rating from "./Rating.vue"
+
 export default {
   data() {
     return {
@@ -187,6 +191,8 @@ export default {
       waitingRestaurant: "",
       waitingMall: "",
       history: [],
+      rating: 0,
+      rateRestId: "",
     };
   },
   methods: {
@@ -242,7 +248,7 @@ export default {
                 "Passwords do not match. Please check your password and try again."
               );
             } else {
-              auth.currentUser.updatePassword(this.newPassword).then(() => {
+                auth.currentUser.updatePassword(this.newPassword).then(() => {
                 alert("Password successfully changed.");
                 this.changePassword = false;
                 this.editProfile = false;
@@ -267,7 +273,6 @@ export default {
         this.editProfile = false;
       }
     },
-
     getCurrentAndHist() {
       database
         .collection("bookings")
@@ -294,13 +299,26 @@ export default {
           });
         });
     },
+    ratingUpdated(rating, restId) {
+        this.rating = rating;
+        this.rateRestId = restId;
+    },
+    rate() {
+        database
+          .collection("restaurants")
+          .doc(this.rateRestId)
+          .update({
+            rating: this.rating,
+          });
+        alert("Restaurant successfully rated.");
+    }
   },
   created() {
     this.fetchItems();
     this.getCurrentAndHist();
   },
   components: {
-    profileIcon,
+    profileIcon, rating
   },
 };
 </script>

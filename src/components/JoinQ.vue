@@ -37,7 +37,7 @@
             <option
               v-for="restaurant in selectedRestaurantsList"
               v-bind:key="restaurant.id"
-              id="restaurant"
+              v-bind:value="restaurant"
               required
             >
               {{ restaurant.restaurantName }}
@@ -141,8 +141,8 @@ export default {
       database.collection("bookings").add({
         customerID: this.customerID,
         mallName: this.mallSelected,
-        restaurantName: this.restaurantSelected,
-        restaurantMall: this.restaurantSelected + " @ " + this.mallSelected,
+        restaurantName: this.restaurantSelected.restaurantName,
+        restaurantMall: this.restaurantSelected.restaurantName + " @ " + this.mallSelected,
         numAdult: this.numAdult,
         numChildren: this.numChildren,
         paxGroup: this.getPaxGroup(this.numAdult + this.numChildren),
@@ -152,10 +152,12 @@ export default {
         additionalMessage: this.additionalMessage,
         queueStatus: "waiting",
         bookedTiming: this.getCurrentTime(),
+        restaurantId: this.restaurantSelected.id,
       });
       alert(
         "Successfully joined queue. Head to my profile to view queue details."
       );
+      location.reload();
     },
     getCurrentTime: function() {
       const today = new Date();
@@ -203,6 +205,7 @@ export default {
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             var curr = doc.data();
+            curr.id = doc.id;
             this.restaurantsList.push(curr);
           });
         });
