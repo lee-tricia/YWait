@@ -18,43 +18,52 @@
           <button v-on:click="edit()">Edit Profile</button>
           <button v-on:click="change()">Change Password</button>
         </div>
-      </div><br>
-
-      <div id="currentQueue">
-        <table style="width:100%">
-            <tr>
-            <th><h2>Current Queue Details</h2></th>
-            </tr>
-            <tr>
-                <td>
-                    <p>Please arrive at {{ this.waitingRestaurant }} @ {{ this.waitingMall }} by **time</p>
-                    <p>Details:</p>
-                    <span>No. of Pax (Adult): {{ this.numOfAdult }}</span>
-                    <span>No. of Pax (Children): {{ this.numOfChildren }}</span>
-                    <span>Baby Chair: {{ this.babychair }}</span>
-                    <span>Wheelchair: {{this.wheelchair}} </span>
-                </td>
-            </tr>
-        </table>
-        <p><i>Note: Full party must be present to be seated.</i></p>
-        <p><i>The queue seatings will be given up if you are late due to the limited seating capacity</i></p>
       </div>
+      <br />
 
-      <div id="queueHistory">
-        <table style="width:100%">
-            <tr>
-            <th><h2>Queue History</h2></th>
-            </tr>
-            <tr>
-                <td>
-                    <ul>
-                        <li v-for="restaurant in history" v-bind:key="restaurant.id">
-                            {{restaurant.restaurantMall}}
-                        </li><br>
-                    </ul>
-                </td>
-            </tr>
-        </table>
+      <h2 v-if="this.editProfile == false && this.changePassword == false">
+        Current Queue Details
+      </h2>
+      <div
+        id="currentQueue"
+        v-if="this.editProfile == false && this.changePassword == false"
+      >
+        <div id="currentQueueDetails">
+          <p>
+            Please arrive at {{ this.waitingRestaurant }} @
+            {{ this.waitingMall }} by **time
+          </p>
+          <p>Details:</p>
+          <span>No. of Pax (Adult): {{ this.numOfAdult }}</span>
+          <span>No. of Pax (Children): {{ this.numOfChildren }}</span>
+          <span>Baby Chair: {{ this.babychair }}</span>
+          <span>Wheelchair: {{ this.wheelchair }} </span>
+        </div>
+      </div>
+      <p
+        class="note"
+        v-if="this.editProfile == false && this.changePassword == false"
+      >
+        Note: Full party must be present to be seated. <br />
+        The queue seatings will be given up if you are late due to limited
+        seating capacity.
+      </p>
+
+      <h2 v-if="this.editProfile == false && this.changePassword == false">
+        Queue History
+      </h2>
+      <div
+        id="queueHistory"
+        v-if="this.editProfile == false && this.changePassword == false"
+      >
+        <div id="queueHistoryDetails">
+          <ul>
+            <li v-for="restaurant in history" v-bind:key="restaurant.id">
+              {{ restaurant.restaurantMall }}
+            </li>
+            <br />
+          </ul>
+        </div>
       </div>
 
       <div
@@ -161,7 +170,7 @@ import profileIcon from "vue-material-design-icons/AccountCircle";
 export default {
   data() {
     return {
-        userid: "",
+      userid: "",
       editProfile: false,
       changePassword: false,
       name: "",
@@ -177,7 +186,7 @@ export default {
       wheelchair: 0,
       waitingRestaurant: "",
       waitingMall: "",
-      history: []
+      history: [],
     };
   },
   methods: {
@@ -260,25 +269,31 @@ export default {
     },
 
     getCurrentAndHist() {
-        database
+      database
         .collection("bookings")
         .get()
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             var queue = doc.data();
-            if ((this.userid === queue.customerID) && (queue.queueStatus === "waiting")) {
-                this.numOfAdult = queue.numAdult;
-                this.numOfChildren = queue.numChildren;
-                this.babychair = queue.babyChair;
-                this.wheelchair = queue.wheelChair;
-                this.waitingMall = queue.mallName;
-                this.waitingRestaurant = queue.restaurantName;
-            } else if ((this.userid === queue.customerID) && (queue.queueStatus === "completed")) {
-                this.history.push(queue);
+            if (
+              this.userid === queue.customerID &&
+              queue.queueStatus === "waiting"
+            ) {
+              this.numOfAdult = queue.numAdult;
+              this.numOfChildren = queue.numChildren;
+              this.babychair = queue.babyChair;
+              this.wheelchair = queue.wheelChair;
+              this.waitingMall = queue.mallName;
+              this.waitingRestaurant = queue.restaurantName;
+            } else if (
+              this.userid === queue.customerID &&
+              queue.queueStatus === "completed"
+            ) {
+              this.history.push(queue);
             }
           });
         });
-    }
+    },
   },
   created() {
     this.fetchItems();
@@ -295,7 +310,9 @@ export default {
   margin-left: 300px;
 }
 h1 {
-  text-align: center;
+  margin-left: 10px;
+  font-size: 40px;
+  font-weight: normal;
 }
 #profileIcon {
   float: left;
@@ -308,8 +325,8 @@ h1 {
   height: 300px;
   width: 800px;
   border-radius: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10px;
+  margin-bottom: 30px;
 }
 #details {
   margin-top: 25px;
@@ -329,8 +346,8 @@ h1 {
   height: 300px;
   width: 800px;
   border-radius: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10px;
+  margin-bottom: 30px;
 }
 #editPassword {
   margin-top: 20px;
@@ -402,5 +419,47 @@ button:hover {
 button:active {
   opacity: 0.6;
   transform: translateY(3px);
+}
+h2 {
+  margin-left: 10px;
+  margin-bottom: -25px;
+  font-size: 30px;
+  font-weight: normal;
+}
+#currentQueue {
+  border-top: 3px solid #222;
+  background-color: white;
+  height: auto;
+  width: 1550px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  background-color: #eee;
+  padding-bottom: 10px;
+}
+#currentQueueDetails {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-bottom: 10px;
+}
+p.note {
+  margin-left: 30px;
+  font-style: italic;
+}
+#queueHistory {
+  border-top: 3px solid #222;
+  background-color: white;
+  height: auto;
+  width: 1550px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  background-color: #eee;
+  padding-bottom: 10px;
+}
+#queueHistoryDetails {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-bottom: 10px;
 }
 </style>
