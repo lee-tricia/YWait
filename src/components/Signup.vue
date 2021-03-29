@@ -152,6 +152,7 @@ export default {
   top: 0;
   left: 0;
   background-blend-mode: overlay;
+  margin-left: 0px;
 }
 .card-container.card {
   max-width: 350px !important;
