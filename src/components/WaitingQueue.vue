@@ -127,7 +127,7 @@ export default {
     },
     // for displayedData
     filterQuery: function() {
-      var query = database.collection('bookings').where('queueStatus','>','all done')
+      var query = database.collection('bookings').where('queueStatus','>','completed')
       query = query.orderBy('queueStatus')
       if (this.filterMall != 'All') {
         query = query.where('mallName','==',this.filterMall)
