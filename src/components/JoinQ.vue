@@ -2,12 +2,16 @@
   <div>
     <NavBar></NavBar>
     <div id="wrapper">
-      <h1>Join Queue</h1>
+      <h1>Join a Queue</h1>
       <form @submit.prevent="joinQueue()">
         <p>
-          <label for="mall">Choose your preferred dining mall:</label>
+          <label for="mall"
+            >Choose your preferred dining mall<span style="color:red"
+              >*</span
+            ></label
+          >
         </p>
-        <p>
+        <div class="select">
           <select
             v-model="mallSelected"
             v-on:change="selectRestaurants()"
@@ -18,14 +22,16 @@
               {{ mall.mallName }}
             </option>
           </select>
-        </p>
+        </div>
 
         <p>
           <label for="restaurant"
-            >Choose your preferred dining restaurant:</label
+            >Choose your preferred dining restaurant<span style="color:red"
+              >*</span
+            ></label
           >
         </p>
-        <p>
+        <div class="select">
           <select v-model="restaurantSelected" required>
             <option
               v-for="restaurant in selectedRestaurantsList"
@@ -36,29 +42,42 @@
               {{ restaurant.restaurantName }}
             </option>
           </select>
-        </p>
+        </div>
 
         <p>
-          <label for="numAdult">No. of Pax (Adult)</label>
+          <label for="numAdult"
+            >No. of Pax (Adult)<span style="color:red">*</span></label
+          >
         </p>
         <p><input type="number" v-model="numAdult" id="numAdult" required /></p>
 
         <p><label for="numChildren"> No. of Pax (Children) </label></p>
         <p><input type="number" v-model="numChildren" id="numChildren" /></p>
 
-        <p>
-          <input type="checkbox" v-model="babyChair" id="babychair" value="1" />
-          <label for="babychair"> Baby Chair</label>
+        <p class="checkbox">
+          <label for="babychair">
+            Baby Chair
+            <input
+              type="checkbox"
+              v-model="babyChair"
+              id="babychair"
+              value="1"
+            />
+            <span class="checkmark"></span>
+          </label>
         </p>
 
-        <p>
-          <input
-            type="checkbox"
-            v-model="wheelChair"
-            id="wheelchair"
-            value="1"
-          />
-          <label for="wheelchair"> Wheelchair</label>
+        <p class="checkbox">
+          <label for="wheelchair">
+            Wheelchair
+            <input
+              type="checkbox"
+              v-model="wheelChair"
+              id="wheelchair"
+              value="1"
+            />
+            <span class="checkmark"></span>
+          </label>
         </p>
 
         <p><label for="additionalMessage">Message</label></p>
@@ -94,8 +113,8 @@ export default {
       customerID: `${auth.currentUser.uid}`,
       mallSelected: "",
       restaurantSelected: "",
-      numAdult: 0,
-      numChildren: 0,
+      numAdult: null,
+      numChildren: null,
       babyChair: 0,
       wheelChair: 0,
       additionalMessage: "",
@@ -119,6 +138,7 @@ export default {
         queueStatus: "waiting",
         bookedTiming: this.getCurrentTime(),
       });
+      alert("Successfully joined queue. Head to my profile to view queue details.")
     },
     getCurrentTime: function() {
       const today = new Date();
@@ -189,5 +209,208 @@ export default {
 }
 h1 {
   text-align: center;
+  font-size: 40px;
+  font-weight: normal;
+}
+form {
+  margin-left: 70px;
+  font-size: 18px;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: 50px;
+  margin: 5px 0px;
+  padding: 0px 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #333;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -ms-word-break: normal;
+  word-break: normal;
+  border-radius: 10px;
+}
+
+.select:after {
+  content: ">";
+  text-indent: 10px;
+  font: 17px "Consolas", monospace;
+  color: black;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  padding: 0 0 10px;
+  border-bottom: 1px solid #999;
+  width: 30px;
+  position: absolute;
+  pointer-events: none;
+  margin-left: 275px;
+  margin-top: -45px;
+}
+
+select:focus {
+  border: solid 1px black;
+  outline: 0;
+  box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
+}
+
+#numAdult {
+  font-size: 16px;
+  padding: 20px 0px;
+  padding-left: 10px;
+  height: 56px;
+  border: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  width: 280px;
+  box-sizing: border-box;
+  transition: all 0.3s linear;
+  color: #000;
+  font-weight: 400;
+  -webkit-appearance: none;
+}
+
+#numChildren {
+  font-size: 16px;
+  padding: 20px 0px;
+  padding-left: 10px;
+  height: 56px;
+  border: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  width: 280px;
+  box-sizing: border-box;
+  transition: all 0.3s linear;
+  color: #000;
+  font-weight: 400;
+  -webkit-appearance: none;
+}
+
+#numAdult:focus {
+  border-bottom: solid 1px black;
+  outline: 0;
+  box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
+}
+
+#numChildren:focus {
+  border-bottom: solid 1px black;
+  outline: 0;
+  box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
+}
+
+.checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  padding-top: 3px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 100px;
+}
+
+.checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.checkbox:hover input ~ .checkmark {
+  border: solid 1px black;
+}
+
+.checkbox input:checked ~ .checkmark {
+  background-color: black;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 4px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+textarea {
+  font-size: 16px;
+  padding: 10px 0px;
+  padding-left: 10px;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  box-sizing: border-box;
+  transition: all 0.3s linear;
+  color: #000;
+  -webkit-appearance: none;
+  border-radius: 10px;
+}
+
+textarea:focus {
+  border: solid 1px black;
+  outline: 0;
+  box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
+}
+
+button {
+  -webkit-appearance: none;
+  width: auto;
+  min-width: 100px;
+  border-radius: 24px;
+  text-align: center;
+  padding: 15px 40px;
+  margin-top: 5px;
+  background-color: black;
+  color: #fff;
+  font-size: 14px;
+  margin-left: auto;
+  font-weight: 500;
+  box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.13);
+  border: none;
+  transition: all 0.3s ease;
+  outline: 0;
+  cursor: pointer;
+}
+button:hover {
+  box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.65);
+}
+button:active {
+  opacity: 0.6;
+  transform: translateY(3px);
 }
 </style>
