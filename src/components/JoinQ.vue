@@ -3,6 +3,7 @@
     <NavBar></NavBar>
     <div id="wrapper">
       <h1>Join a Queue</h1>
+      <img :src="restaurantImage" />
       <form @submit.prevent="joinQueue()">
         <p>
           <label for="mall"
@@ -91,7 +92,18 @@
           ></textarea>
         </p>
 
-        <button type="submit">Join Queue</button>
+        <p>
+          <b>* Full party</b> must be present for
+          <span style="color:red"
+            >at least 5 minutes before reservation time</span
+          >
+          to be seated.<br />We regret to inform that queue seatings will be
+          given up if you are late due to the limited seating capacity.
+        </p>
+
+        <div id="button">
+          <button type="submit">Join Queue</button>
+        </div>
       </form>
     </div>
   </div>
@@ -118,6 +130,9 @@ export default {
       babyChair: 0,
       wheelChair: 0,
       additionalMessage: "",
+
+      //image
+      restaurantImage: require("../../images/joinQ-restaurant.jpg"),
     };
   },
   methods: {
@@ -138,7 +153,9 @@ export default {
         queueStatus: "waiting",
         bookedTiming: this.getCurrentTime(),
       });
-      alert("Successfully joined queue. Head to my profile to view queue details.")
+      alert(
+        "Successfully joined queue. Head to my profile to view queue details."
+      );
     },
     getCurrentTime: function() {
       const today = new Date();
@@ -213,8 +230,9 @@ h1 {
   font-weight: normal;
 }
 form {
-  margin-left: 70px;
+  margin-left: 350px;
   font-size: 18px;
+  margin-top: -650px;
 }
 select {
   -webkit-appearance: none;
@@ -387,6 +405,11 @@ textarea:focus {
   box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
 }
 
+#button {
+  text-align: center;
+  margin-left: -350px;
+}
+
 button {
   -webkit-appearance: none;
   width: auto;
@@ -397,8 +420,7 @@ button {
   margin-top: 5px;
   background-color: black;
   color: #fff;
-  font-size: 14px;
-  margin-left: auto;
+  font-size: 16px;
   font-weight: 500;
   box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.13);
   border: none;
@@ -412,5 +434,14 @@ button:hover {
 button:active {
   opacity: 0.6;
   transform: translateY(3px);
+}
+
+img {
+  width: 400px;
+  margin-bottom: 100px;
+  margin-top: 0px;
+  margin-left: 820px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
 }
 </style>
