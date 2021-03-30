@@ -57,6 +57,6 @@ export default {
 
 <style scoped>
 .card-body {
-  width: 500px;
+  width: 100%;
 }
 </style>
