@@ -40,6 +40,7 @@ export default {
 <style scoped>
 #wrapper {
   margin-left: 300px;
+  font-family: sans-serif;
 }
 h1 {
   margin-left: 20px;
