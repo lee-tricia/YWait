@@ -7,7 +7,7 @@
         <kendo-map
           :center="[1.3051315545985274, 103.83224131197983]"
           :zoom="13"
-          style="width: 100%; height: 500px;"
+          style="width: 100%; height: 500px; margin-left: 35px;"
         >
           <kendo-map-layer
             :type="'tile'"
@@ -57,6 +57,6 @@ export default {
 
 <style scoped>
 .card-body {
-  width: 100%;
+  width: 95%;
 }
 </style>
