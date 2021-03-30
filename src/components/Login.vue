@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { auth } from "../firebase.js";
+import { auth, database } from "../firebase.js";
 import emailIcon from "vue-material-design-icons/Email.vue";
 import lockIcon from "vue-material-design-icons/Lock.vue";
 export default {
@@ -49,7 +49,19 @@ export default {
       auth
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          this.$router.replace({ name: "Home" });
+          database
+            .collection("users")
+            .where("email", "==", this.email)
+            .get()
+            .then((snapshot) => {
+              if (snapshot.empty) {
+                this.$router.replace({ name: "RestaurantHome" });
+                console.log("Restaurant Login");
+              } else {
+                this.$router.replace({ name: "Home" });
+                console.log("User Login");
+              }
+            });
         })
         .catch((error) => {
           if (error.code == "auth/invalid-email") {

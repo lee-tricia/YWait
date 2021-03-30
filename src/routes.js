@@ -6,6 +6,7 @@ import JoinQ from './components/JoinQ.vue'
 import MyProfile from './components/MyProfile.vue'
 import Signup from './components/Signup.vue'
 import Login from './components/Login.vue'
+import restaurantView from './components/restaurantView.vue'
 
 export default [
     { path: '/home', name: 'Home', component: HomePage },
@@ -14,7 +15,8 @@ export default [
     { path: '/joinq', name: 'JoinQ', component: JoinQ },
     { path: '/waitingqueue', name: 'WaitingQueue', component: WaitingQueue },
     { path: '/signup', name: 'Signup', component: Signup },
-    { path: '/', name: 'Login', component: Login }
+    { path: '/', name: 'Login', component: Login },
+    { path: '/restauranthome', name: 'RestaurantHome', component: restaurantView }
 ]
 
 
