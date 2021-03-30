@@ -326,6 +326,7 @@ export default {
 <style scoped>
 #wrapper {
   margin-left: 300px;
+  font-family: sans-serif;
 }
 h1 {
   margin-left: 10px;
@@ -405,6 +406,7 @@ input {
   font-weight: 400;
   -webkit-appearance: none;
   margin: 0px;
+  font-family: sans-serif;
 }
 input:focus {
   border-bottom: solid 1px black;
@@ -430,6 +432,7 @@ button {
   transition: all 0.3s ease;
   outline: 0;
   cursor: pointer;
+  font-family: sans-serif;
 }
 button:hover {
   box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.65);

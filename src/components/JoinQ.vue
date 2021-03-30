@@ -251,6 +251,7 @@ form {
   text-align: left;
   font-size: 18px;
   margin-top: -650px;
+  font-family: sans-serif;
 }
 select {
   -webkit-appearance: none;
@@ -444,6 +445,7 @@ button {
   transition: all 0.3s ease;
   outline: 0;
   cursor: pointer;
+  font-family: sans-serif;
 }
 button:hover {
   box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.65);

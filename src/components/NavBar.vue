@@ -71,7 +71,10 @@ export default {
 </script>
 
 <style scoped>
-img { 
+.sidenav {
+  font-family: sans-serif;
+}
+img {
   display: block;
   margin-left: auto;
   margin-right: auto;

@@ -153,6 +153,7 @@ export default {
   left: 0;
   background-blend-mode: overlay;
   margin-left: 0px;
+  font-family: sans-serif;
 }
 .card-container.card {
   max-width: 350px !important;
@@ -194,6 +195,7 @@ input {
   color: #000;
   font-weight: 400;
   -webkit-appearance: none;
+  font-family: sans-serif;
 }
 input:focus {
   border-bottom: solid 1px black;
@@ -218,6 +220,7 @@ button {
   transition: all 0.3s ease;
   outline: 0;
   cursor: pointer;
+  font-family: sans-serif;
 }
 button:hover {
   box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.65);
