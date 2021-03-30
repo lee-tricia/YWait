@@ -48,9 +48,9 @@ export default {
 }
 h1 {
   text-align: left;
-  margin-top: -10px;
-  margin-bottom: -5px;
-  font-size: 80px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  font-size: 60px;
 }
 
 #joinQ {
