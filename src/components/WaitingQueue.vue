@@ -232,7 +232,7 @@ export default {
 <style>
 #wrapper {
   margin-left: 300px;
-  font-family: Helvetica;
+  font-family: Helvetica, sans-serif;
 }
 
 h1 {

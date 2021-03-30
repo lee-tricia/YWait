@@ -69,6 +69,7 @@ h1 {
   grid-template-areas:
     "a"
     "b";
+  font-family: sans-serif;
 }
 
 #malls {

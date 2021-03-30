@@ -35,6 +35,7 @@ button {
   transition: all 0.3s ease;
   outline: 0;
   cursor: pointer;
+  font-family: sans-serif;
 }
 
 button:hover {
