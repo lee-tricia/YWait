@@ -2,8 +2,11 @@
   <div>
     <NavBar></NavBar>
     <div id="wrapper">
-    <h1>Hi {{ this.name }}!</h1>
-    <Calendar></Calendar>
+      <h1>Hi {{ this.name }}!</h1>
+      <div id="joinQ"><router-link to="/joinq" exact>Join a Queue Here !</router-link></div>
+      <p></p>
+      <div id = "viewMalls"><router-link to="/malls" exact>Malls</router-link></div>
+      <div id = "calendar"><Calendar></Calendar></div>
     </div>
   </div>
 </template>
@@ -14,7 +17,7 @@ import { auth } from "../firebase.js";
 export default {
   data() {
     return {
-      name: ""
+      name: "",
     };
   },
   methods: {
@@ -36,7 +39,6 @@ export default {
 
 <style scoped>
 #wrapper {
-  text-align: center;
   margin-left: 300px;
 }
 h1 {
@@ -44,5 +46,52 @@ h1 {
   text-align: left;
   margin-top: 30px;
   font-size: 100px;
+}
+
+#joinQ {
+  padding: 7px 25px;
+  width: 95%;
+  height: 300px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: url("../../images/home-page-dashboard.jpeg");
+  background-repeat: no-repeat;
+  background-size: 100% 300%;
+  background-position: bottom;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  font-size: 50px;
+  text-decoration: underline;
+  text-shadow: 2px 2px black;
+}
+
+#viewMalls {
+  display: inline-block;
+  padding: 7px 25px;
+  vertical-align: top;
+  width: 50%;
+  height: 500px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: url("../../images/home-page-view.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+  font-size: 50px;
+  text-decoration: underline;
+  text-shadow: 2px 2px black;
+}
+
+#calendar{
+  display: inline-block;
+  padding: 7px 25px;
+  width: 40%;
+  height: 500px;
+  margin-left: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 </style>
