@@ -3,108 +3,114 @@
     <NavBar></NavBar>
     <div id="wrapper">
       <h1>Join a Queue</h1>
-      <img :src="restaurantImage" />
-      <form @submit.prevent="joinQueue()">
-        <p>
-          <label for="mall"
-            >Choose your preferred dining mall<span style="color:red"
-              >*</span
-            ></label
-          >
-        </p>
-        <div class="select">
-          <select
-            v-model="mallSelected"
-            v-on:change="selectRestaurants()"
-            id="mall"
-            required
-          >
-            <option v-for="mall in mallsList" v-bind:key="mall.id">
-              {{ mall.mallName }}
-            </option>
-          </select>
-        </div>
-
-        <p>
-          <label for="restaurant"
-            >Choose your preferred dining restaurant<span style="color:red"
-              >*</span
-            ></label
-          >
-        </p>
-        <div class="select">
-          <select v-model="restaurantSelected" required>
-            <option
-              v-for="restaurant in selectedRestaurantsList"
-              v-bind:key="restaurant.id"
-              v-bind:value="restaurant"
+      <div id="img">
+        <img :src="restaurantImage" />
+      </div>
+      <div id="form">
+        <form @submit.prevent="joinQueue()">
+          <p>
+            <label for="mall"
+              >Choose your preferred dining mall<span style="color:red"
+                >*</span
+              ></label
+            >
+          </p>
+          <div class="select">
+            <select
+              v-model="mallSelected"
+              v-on:change="selectRestaurants()"
+              id="mall"
               required
             >
-              {{ restaurant.restaurantName }}
-            </option>
-          </select>
-        </div>
+              <option v-for="mall in mallsList" v-bind:key="mall.id">
+                {{ mall.mallName }}
+              </option>
+            </select>
+          </div>
 
-        <p>
-          <label for="numAdult"
-            >No. of Pax (Adult)<span style="color:red">*</span></label
-          >
-        </p>
-        <p><input type="number" v-model="numAdult" id="numAdult" required /></p>
+          <p>
+            <label for="restaurant"
+              >Choose your preferred dining restaurant<span style="color:red"
+                >*</span
+              ></label
+            >
+          </p>
+          <div class="select">
+            <select v-model="restaurantSelected" required>
+              <option
+                v-for="restaurant in selectedRestaurantsList"
+                v-bind:key="restaurant.id"
+                v-bind:value="restaurant"
+                required
+              >
+                {{ restaurant.restaurantName }}
+              </option>
+            </select>
+          </div>
 
-        <p><label for="numChildren"> No. of Pax (Children) </label></p>
-        <p><input type="number" v-model="numChildren" id="numChildren" /></p>
+          <p>
+            <label for="numAdult"
+              >No. of Pax (Adult)<span style="color:red">*</span></label
+            >
+          </p>
+          <p>
+            <input type="number" v-model="numAdult" id="numAdult" required />
+          </p>
 
-        <p class="checkbox">
-          <label for="babychair">
-            Baby Chair
-            <input
-              type="checkbox"
-              v-model="babyChair"
-              id="babychair"
-              value="1"
-            />
-            <span class="checkmark"></span>
-          </label>
-        </p>
+          <p><label for="numChildren"> No. of Pax (Children) </label></p>
+          <p><input type="number" v-model="numChildren" id="numChildren" /></p>
 
-        <p class="checkbox">
-          <label for="wheelchair">
-            Wheelchair
-            <input
-              type="checkbox"
-              v-model="wheelChair"
-              id="wheelchair"
-              value="1"
-            />
-            <span class="checkmark"></span>
-          </label>
-        </p>
+          <p class="checkbox">
+            <label for="babychair">
+              Baby Chair
+              <input
+                type="checkbox"
+                v-model="babyChair"
+                id="babychair"
+                value="1"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </p>
 
-        <p><label for="additionalMessage">Message</label></p>
-        <p>
-          <textarea
-            v-model="additionalMessage"
-            id="additionalMessage"
-            rows="4"
-            cols="50"
-            placeholder="Any additonal message"
-          ></textarea>
-        </p>
+          <p class="checkbox">
+            <label for="wheelchair">
+              Wheelchair
+              <input
+                type="checkbox"
+                v-model="wheelChair"
+                id="wheelchair"
+                value="1"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </p>
 
-        <p>
-          <b>* Full party</b> must be present for
-          <span style="color:red"
-            >at least 5 minutes before reservation time</span
-          >
-          to be seated.<br />We regret to inform that queue seatings will be
-          given up if you are late due to the limited seating capacity.
-        </p>
+          <p><label for="additionalMessage">Message</label></p>
+          <p>
+            <textarea
+              v-model="additionalMessage"
+              id="additionalMessage"
+              rows="4"
+              cols="50"
+              placeholder="Any additonal message"
+            ></textarea>
+          </p>
 
-        <div id="button">
-          <button type="submit">Join Queue</button>
-        </div>
-      </form>
+          <p>
+            <b>* Full party</b> must be present for
+            <span style="color:red"
+              >at least 5 minutes before reservation time</span
+            >
+            to be seated.<br />We regret to inform that queue seatings will be
+            given up if you are late due to the limited seating capacity.
+          </p>
+
+          <div id="button">
+            <button type="submit">Join Queue</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -142,7 +148,8 @@ export default {
         customerID: this.customerID,
         mallName: this.mallSelected,
         restaurantName: this.restaurantSelected.restaurantName,
-        restaurantMall: this.restaurantSelected.restaurantName + " @ " + this.mallSelected,
+        restaurantMall:
+          this.restaurantSelected.restaurantName + " @ " + this.mallSelected,
         numAdult: this.numAdult,
         numChildren: this.numChildren,
         paxGroup: this.getPaxGroup(this.numAdult + this.numChildren),
@@ -226,14 +233,22 @@ export default {
 <style scoped>
 #wrapper {
   margin-left: 300px;
+  font-family: sans-serif;
 }
 h1 {
   text-align: center;
   font-size: 40px;
   font-weight: normal;
 }
+#form {
+  display: block;
+  text-align: center;
+}
 form {
-  margin-left: 350px;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
   font-size: 18px;
   margin-top: -650px;
 }
@@ -410,7 +425,6 @@ textarea:focus {
 
 #button {
   text-align: center;
-  margin-left: -350px;
 }
 
 button {
@@ -439,11 +453,16 @@ button:active {
   transform: translateY(3px);
 }
 
+#img {
+  display: block;
+  text-align: center;
+}
 img {
+  display: inline-block;
   width: 400px;
   margin-bottom: 100px;
   margin-top: 0px;
-  margin-left: 820px;
+  margin-left: 30%;
   border-radius: 10px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
 }
