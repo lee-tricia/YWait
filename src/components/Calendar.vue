@@ -22,9 +22,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  width: 550px;
-  left:400px;
-  margin-top: 100px;
+  width: 560px;
+  margin-top: 15%;
+  margin-left: -5px;
 }
 
 body {
