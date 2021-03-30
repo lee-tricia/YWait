@@ -33,7 +33,7 @@ export default {
   },
 
   methods: {
-    fetchItems: function() {
+    fetchItems: function () {
       database
         .collection("malls")
         .get()
@@ -69,7 +69,6 @@ h1 {
   grid-template-areas:
     "a"
     "b";
-  font-family: sans-serif;
 }
 
 #malls {

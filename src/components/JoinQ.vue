@@ -10,7 +10,7 @@
         <form @submit.prevent="joinQueue()">
           <p>
             <label for="mall"
-              >Choose your preferred dining mall<span style="color:red"
+              >Choose your preferred dining mall<span style="color: red"
                 >*</span
               ></label
             >
@@ -30,7 +30,7 @@
 
           <p>
             <label for="restaurant"
-              >Choose your preferred dining restaurant<span style="color:red"
+              >Choose your preferred dining restaurant<span style="color: red"
                 >*</span
               ></label
             >
@@ -50,7 +50,7 @@
 
           <p>
             <label for="numAdult"
-              >No. of Pax (Adult)<span style="color:red">*</span></label
+              >No. of Pax (Adult)<span style="color: red">*</span></label
             >
           </p>
           <p>
@@ -99,7 +99,7 @@
 
           <p>
             <b>* Full party</b> must be present for
-            <span style="color:red"
+            <span style="color: red"
               >at least 5 minutes before reservation time</span
             >
             to be seated.<br />We regret to inform that queue seatings will be

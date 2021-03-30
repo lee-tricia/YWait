@@ -3,10 +3,14 @@
     <NavBar></NavBar>
     <div id="wrapper">
       <h1>Hi {{ this.name }}!</h1>
-      <div id="joinQ"><router-link to="/joinq" exact>Join a Queue Here !</router-link></div>
+      <div id="joinQ">
+        <router-link to="/joinq" exact>Join a Queue Here !</router-link>
+      </div>
       <p></p>
-      <div id = "viewMalls"><router-link to="/malls" exact>Malls</router-link></div>
-      <div id = "calendar"><Calendar></Calendar></div>
+      <div id="viewMalls">
+        <router-link to="/malls" exact>Malls</router-link>
+      </div>
+      <div id="calendar"><Calendar></Calendar></div>
     </div>
   </div>
 </template>
@@ -43,10 +47,10 @@ export default {
   font-family: sans-serif;
 }
 h1 {
-  margin-left: 20px;
   text-align: left;
-  margin-top: 30px;
-  font-size: 100px;
+  margin-top: -10px;
+  margin-bottom: -5px;
+  font-size: 80px;
 }
 
 #joinQ {
@@ -86,7 +90,7 @@ h1 {
   text-shadow: 2px 2px black;
 }
 
-#calendar{
+#calendar {
   display: inline-block;
   padding: 7px 25px;
   width: 40%;
