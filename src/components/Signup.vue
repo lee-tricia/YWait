@@ -121,16 +121,13 @@ export default {
       }
     },
     registerUser() {
-      database
-        .collection("users")
-        .doc(`${auth.currentUser.uid}`)
-        .set({
-          customerID: auth.currentUser.uid,
-          name: this.name,
-          email: auth.currentUser.email,
-          contact: this.contact,
-          dob: this.dob,
-        });
+      database.collection("users").doc(`${auth.currentUser.uid}`).set({
+        customerID: auth.currentUser.uid,
+        name: this.name,
+        email: auth.currentUser.email,
+        contact: this.contact,
+        dob: this.dob,
+      });
     },
   },
 };
@@ -172,7 +169,7 @@ export default {
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   text-align: center;
 }
-img { 
+img {
   display: block;
   margin-left: auto;
   margin-right: auto;

@@ -13,7 +13,7 @@
       />
     </div>
 
-    <CalendarWeekdays/>
+    <CalendarWeekdays />
 
     <ol class="days-grid">
       <CalendarMonthDayItem
@@ -45,12 +45,12 @@ export default {
     CalendarMonthDayItem,
     CalendarDateIndicator,
     CalendarDateSelector,
-    CalendarWeekdays
+    CalendarWeekdays,
   },
 
   data() {
     return {
-      selectedDate: dayjs()
+      selectedDate: dayjs(),
     };
   },
 
@@ -59,7 +59,7 @@ export default {
       return [
         ...this.previousMonthDays,
         ...this.currentMonthDays,
-        ...this.nextMonthDays
+        ...this.nextMonthDays,
       ];
     },
 
@@ -85,7 +85,7 @@ export default {
           date: dayjs(`${this.year}-${this.month}-${index + 1}`).format(
             "YYYY-MM-DD"
           ),
-          isCurrentMonth: true
+          isCurrentMonth: true,
         };
       });
     },
@@ -114,10 +114,11 @@ export default {
         (day, index) => {
           return {
             date: dayjs(
-              `${previousMonth.year()}-${previousMonth.month() +
-                1}-${previousMonthLastMondayDayOfMonth + index}`
+              `${previousMonth.year()}-${previousMonth.month() + 1}-${
+                previousMonthLastMondayDayOfMonth + index
+              }`
             ).format("YYYY-MM-DD"),
-            isCurrentMonth: false
+            isCurrentMonth: false,
           };
         }
       );
@@ -139,10 +140,10 @@ export default {
           date: dayjs(
             `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
           ).format("YYYY-MM-DD"),
-          isCurrentMonth: false
+          isCurrentMonth: false,
         };
       });
-    }
+    },
   },
 
   methods: {
@@ -152,8 +153,8 @@ export default {
 
     selectDate(newSelectedDate) {
       this.selectedDate = newSelectedDate;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -191,6 +192,4 @@ export default {
   grid-row-gap: var(--grid-gap);
   border-top: solid 1px var(--grey-200);
 }
-
-
 </style>

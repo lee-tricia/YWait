@@ -7,15 +7,15 @@ export default {
   props: {
     selectedDate: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 
   computed: {
     selectedMonth() {
       return this.selectedDate.format("MMMM YYYY");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -25,6 +25,5 @@ export default {
   font-weight: 600;
   color: var(--grey-00);
 }
-
 </style>
 

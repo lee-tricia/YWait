@@ -13,8 +13,8 @@ export default {
   computed: {
     weekdays() {
       return WEEKDAYS;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -28,5 +28,4 @@ export default {
   text-align: right;
   padding-right: 5px;
 }
-
 </style>

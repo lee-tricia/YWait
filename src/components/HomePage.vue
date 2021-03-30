@@ -95,4 +95,8 @@ h1 {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
+
+:visited {
+  color: white;
+}
 </style>

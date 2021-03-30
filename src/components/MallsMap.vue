@@ -7,17 +7,13 @@
         <kendo-map
           :center="[1.3051315545985274, 103.83224131197983]"
           :zoom="13"
-          style="width: 100%; height: 500px; margin-left: 35px;"
+          style="width: 100%; height: 500px; margin-left: 35px"
         >
           <kendo-map-layer
             :type="'tile'"
-            :url-template="
-              'https://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png'
-            "
+            :url-template="'https://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png'"
             :subdomains="['a', 'b', 'c']"
-            :attribution="
-              '&copy; <a href=\'https://osm.org/copyright\'> OpenStreetMap contributors</a>'
-            "
+            :attribution="'&copy; <a href=\'https://osm.org/copyright\'> OpenStreetMap contributors</a>'"
           >
           </kendo-map-layer>
           <kendo-map-marker :location="[1.3042291286530805, 103.8319619254719]">

@@ -7,7 +7,7 @@
       <form @submit.prevent="joinQueue()">
         <p>
           <label for="mall"
-            >Choose your preferred dining mall<span style="color:red"
+            >Choose your preferred dining mall<span style="color: red"
               >*</span
             ></label
           >
@@ -27,7 +27,7 @@
 
         <p>
           <label for="restaurant"
-            >Choose your preferred dining restaurant<span style="color:red"
+            >Choose your preferred dining restaurant<span style="color: red"
               >*</span
             ></label
           >
@@ -47,7 +47,7 @@
 
         <p>
           <label for="numAdult"
-            >No. of Pax (Adult)<span style="color:red">*</span></label
+            >No. of Pax (Adult)<span style="color: red">*</span></label
           >
         </p>
         <p><input type="number" v-model="numAdult" id="numAdult" required /></p>
@@ -94,7 +94,7 @@
 
         <p>
           <b>* Full party</b> must be present for
-          <span style="color:red"
+          <span style="color: red"
             >at least 5 minutes before reservation time</span
           >
           to be seated.<br />We regret to inform that queue seatings will be
@@ -137,12 +137,13 @@ export default {
   },
   methods: {
     // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
-    joinQueue: function() {
+    joinQueue: function () {
       database.collection("bookings").add({
         customerID: this.customerID,
         mallName: this.mallSelected,
         restaurantName: this.restaurantSelected.restaurantName,
-        restaurantMall: this.restaurantSelected.restaurantName + " @ " + this.mallSelected,
+        restaurantMall:
+          this.restaurantSelected.restaurantName + " @ " + this.mallSelected,
         numAdult: this.numAdult,
         numChildren: this.numChildren,
         paxGroup: this.getPaxGroup(this.numAdult + this.numChildren),
@@ -159,7 +160,7 @@ export default {
       );
       location.reload();
     },
-    getCurrentTime: function() {
+    getCurrentTime: function () {
       const today = new Date();
       const date =
         today.getFullYear() +
@@ -172,14 +173,14 @@ export default {
       const dateTime = date + " " + time;
       return dateTime;
     },
-    getPaxGroup: function(totalPax) {
+    getPaxGroup: function (totalPax) {
       var paxGroup;
       if (totalPax < 3) paxGroup = "1 to 2 people";
       else if (totalPax < 5) paxGroup = "3 to 4 people";
       else paxGroup = "5 or more people";
       return paxGroup;
     },
-    getQueueNumber: function(totalPax) {
+    getQueueNumber: function (totalPax) {
       var qCategory;
       if (totalPax < 3) qCategory = "A";
       else if (totalPax < 5) qCategory = "B";
@@ -187,7 +188,7 @@ export default {
       return qCategory;
     },
     // getDetails is for when created stage
-    getDetails: function() {
+    getDetails: function () {
       // get mallsList
       database
         .collection("malls")
@@ -210,7 +211,7 @@ export default {
           });
         });
     },
-    selectRestaurants: function() {
+    selectRestaurants: function () {
       const selectedRestaurants = this.restaurantsList.filter(
         (restaurant) => restaurant.mallName == this.mallSelected
       );

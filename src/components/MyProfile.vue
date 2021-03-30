@@ -59,8 +59,11 @@
         <div id="queueHistoryDetails">
           <ul>
             <li v-for="booking in history" v-bind:key="booking.id">
-              {{ booking.restaurantMall }} 
-              <rating @updateRating="ratingUpdated" v-bind:restaurantId="booking.restaurantId"></rating>
+              {{ booking.restaurantMall }}
+              <rating
+                @updateRating="ratingUpdated"
+                v-bind:restaurantId="booking.restaurantId"
+              ></rating>
               <button v-on:click="rate()">Post</button>
             </li>
             <br />
@@ -108,9 +111,7 @@
             />
           </p>
           <button v-on:click="edit()">Save</button>
-          <button v-on:click="cancel()">
-            Cancel
-          </button>
+          <button v-on:click="cancel()">Cancel</button>
         </div>
       </div>
 
@@ -152,12 +153,8 @@
               required
             />
           </p>
-          <button v-on:click="change()">
-            Save
-          </button>
-          <button v-on:click="cancel()">
-            Cancel
-          </button>
+          <button v-on:click="change()">Save</button>
+          <button v-on:click="cancel()">Cancel</button>
         </div>
       </div>
     </div>
@@ -169,7 +166,7 @@ import { database } from "../firebase.js";
 import { auth } from "../firebase.js";
 import firebase from "firebase/app";
 import profileIcon from "vue-material-design-icons/AccountCircle";
-import rating from "./Rating.vue"
+import rating from "./Rating.vue";
 
 export default {
   data() {
@@ -213,14 +210,11 @@ export default {
       if (this.editProfile == false) {
         this.editProfile = true;
       } else {
-        database
-          .collection("users")
-          .doc(`${auth.currentUser.uid}`)
-          .update({
-            name: this.name,
-            contact: this.contact,
-            dob: this.dob,
-          });
+        database.collection("users").doc(`${auth.currentUser.uid}`).update({
+          name: this.name,
+          contact: this.contact,
+          dob: this.dob,
+        });
         this.editProfile = false;
         alert("Profile successfully updated.");
       }
@@ -248,7 +242,7 @@ export default {
                 "Passwords do not match. Please check your password and try again."
               );
             } else {
-                auth.currentUser.updatePassword(this.newPassword).then(() => {
+              auth.currentUser.updatePassword(this.newPassword).then(() => {
                 alert("Password successfully changed.");
                 this.changePassword = false;
                 this.editProfile = false;
@@ -300,25 +294,23 @@ export default {
         });
     },
     ratingUpdated(rating, restId) {
-        this.rating = rating;
-        this.rateRestId = restId;
+      this.rating = rating;
+      this.rateRestId = restId;
     },
     rate() {
-        database
-          .collection("restaurants")
-          .doc(this.rateRestId)
-          .update({
-            rating: this.rating,
-          });
-        alert("Restaurant successfully rated.");
-    }
+      database.collection("restaurants").doc(this.rateRestId).update({
+        rating: this.rating,
+      });
+      alert("Restaurant successfully rated.");
+    },
   },
   created() {
     this.fetchItems();
     this.getCurrentAndHist();
   },
   components: {
-    profileIcon, rating
+    profileIcon,
+    rating,
   },
 };
 </script>

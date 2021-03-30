@@ -20,12 +20,12 @@ Vue.component('LogOutButton', LogOutButton)
 Vue.use(VueRouter)
 Vue.use(MapInstaller)
 
-const myRouter =  new VueRouter({
-  routes:Routes,
-  mode:'history'
+const myRouter = new VueRouter({
+  routes: Routes,
+  mode: 'history'
 })
 
 new Vue({
   render: h => h(App),
-  router:myRouter
+  router: myRouter
 }).$mount('#app')

@@ -3,7 +3,7 @@
     class="calendar-day"
     :class="{
       'calendar-day--not-current': !day.isCurrentMonth,
-      'calendar-day--today': isToday
+      'calendar-day--today': isToday,
     }"
   >
     <span>{{ label }}</span>
@@ -19,25 +19,25 @@ export default {
   props: {
     day: {
       type: Object,
-      required: true
+      required: true,
     },
 
     isCurrentMonth: {
       type: Boolean,
-      default: false
+      default: false,
     },
 
     isToday: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   computed: {
     label() {
       return dayjs(this.day.date).format("D");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -79,5 +79,4 @@ export default {
   border-radius: 9999px;
   background-color: var(--grey-800);
 }
-
 </style>

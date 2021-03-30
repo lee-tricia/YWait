@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <CalendarMonth/>
+    <CalendarMonth />
   </div>
 </template>
 
@@ -11,8 +11,8 @@ export default {
   name: "App",
 
   components: {
-    CalendarMonth
-  }
+    CalendarMonth,
+  },
 };
 </script>
 

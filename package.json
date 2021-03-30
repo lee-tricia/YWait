@@ -17,9 +17,11 @@
     "firebase": "^4.7.0",
     "material-design-icons": "^3.0.1",
     "vue": "^2.6.11",
+    "vue-date-pick": "^1.4.1",
     "vue-material-design-icons": "^4.11.0",
     "vue-router": "^3.5.1",
-    "vue-star-rating": "^1.7.0"
+    "vue-star-rating": "^1.7.0",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

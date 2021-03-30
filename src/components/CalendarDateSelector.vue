@@ -15,13 +15,13 @@ export default {
   props: {
     currentDate: {
       type: String,
-      required: true
+      required: true,
     },
 
     selectedDate: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 
   methods: {
@@ -38,8 +38,8 @@ export default {
     selectNext() {
       let newSelectedDate = dayjs(this.selectedDate).add(1, "month");
       this.$emit("dateSelected", newSelectedDate);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -55,5 +55,4 @@ export default {
   cursor: pointer;
   user-select: none;
 }
-
 </style>
