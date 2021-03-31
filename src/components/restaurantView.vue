@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Restaurant page</h1>
     {{ currentQueueNumber }}
     <ul>
       <li v-for="queue in currentQueueNumber" v-bind:key="queue.id">
