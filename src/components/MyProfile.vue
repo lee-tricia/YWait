@@ -308,8 +308,7 @@ export default {
               }
           })
       });
-      alert(this.rateTtlRatings);
-       database.collection("restaurants").doc(this.rateRestId).update({
+        database.collection("restaurants").doc(this.rateRestId).update({
         rating: (this.rating + this.rateTtlRatings) / (this.rateNumRatings + 1),
         totalRatings: this.rating + this.rateTtlRatings,
         numRatings: this.rateNumRatings + 1,
