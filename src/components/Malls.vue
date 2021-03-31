@@ -6,8 +6,8 @@
       <ul id="malls">
         <li class="mall-items" v-for="mall in mallsList" v-bind:key="mall.id">
           <h2>{{ mall.mallName }}</h2>
-          <h5>{{ mall.address }}</h5>
-          <h6>Singapore {{ mall.postalCode }}</h6>
+          <h3>{{ mall.address }}</h3>
+          <h4>Singapore {{ mall.postalCode }}</h4>
         </li>
       </ul>
       <Map />
