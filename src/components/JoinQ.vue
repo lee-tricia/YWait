@@ -49,9 +49,7 @@
           </div>
 
           <p>
-            <label for="numAdult"
-              >No. of Pax (Adult)<span style="color: red">*</span></label
-            >
+            <label for="numAdult">No. of Pax (Adult)<span style="color: red">*</span></label>
           </p>
           <p>
             <input type="number" v-model="numAdult" id="numAdult" required />
@@ -152,8 +150,8 @@ export default {
           this.restaurantSelected.restaurantName + " @ " + this.mallSelected,
         numAdult: this.numAdult,
         numChildren: this.numChildren,
-        paxGroup: this.getPaxGroup(this.numAdult + this.numChildren),
-        queueNumber: this.getQueueNumber(this.numAdult + this.numChildren),
+        paxGroup: this.getPaxGroup(this.numAdult, this.numChildren),
+        queueNumber: this.getQueueNumber(this.numAdult, this.numChildren),
         babyChair: this.babyChair,
         wheelChair: this.wheelChair,
         additionalMessage: this.additionalMessage,
@@ -179,54 +177,67 @@ export default {
       const dateTime = date + " " + time;
       return dateTime;
     },
-    getPaxGroup: function (totalPax) {
-      var paxGroup;
-      if (totalPax < 3) paxGroup = "1 to 2 people";
-      else if (totalPax < 5) paxGroup = "3 to 4 people";
-      else paxGroup = "5 or more people";
-      return paxGroup;
+    calculatePax: function(numAdult, numChildren) {
+        let adult = 0;
+        let children = 0;
+        if (! numAdult) {
+            adult = numAdult;
+        }
+        if (! numChildren) {
+            children = numChildren;
+        }
+        return adult + children;
     },
-    getQueueNumber: function (totalPax) {
-      var qCategory;
-      if (totalPax < 3) qCategory = "A";
-      else if (totalPax < 5) qCategory = "B";
-      else qCategory = "C";
-      return qCategory;
+    getPaxGroup: function (numAdult, numChildren) {
+        const totalPax = this.calculatePax(numAdult, numChildren); 
+        var paxGroup;
+        if (totalPax < 3) paxGroup = "1 to 2 people";
+        else if (totalPax < 5) paxGroup = "3 to 4 people";
+        else paxGroup = "5 or more people";
+        return paxGroup;
+    },
+    getQueueNumber: function (numAdult, numChildren) {
+        const totalPax = this.calculatePax(numAdult, numChildren);
+        var qCategory;
+        if (totalPax < 3) qCategory = "A";
+        else if (totalPax < 5) qCategory = "B";
+        else qCategory = "C";
+        return qCategory;
     },
     // getDetails is for when created stage
     getDetails: function () {
-      // get mallsList
-      database
-        .collection("malls")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            var curr = doc.data();
-            this.mallsList.push(curr);
-          });
-        });
-      // get restaurantsList
-      database
-        .collection("restaurants")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            var curr = doc.data();
-            curr.id = doc.id;
-            this.restaurantsList.push(curr);
-          });
-        });
+        // get mallsList
+        database
+            .collection("malls")
+            .get()
+            .then((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+                var curr = doc.data();
+                this.mallsList.push(curr);
+            });
+            });
+        // get restaurantsList
+        database
+            .collection("restaurants")
+            .get()
+            .then((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+                var curr = doc.data();
+                curr.id = doc.id;
+                this.restaurantsList.push(curr);
+            });
+            });
     },
     selectRestaurants: function () {
-      const selectedRestaurants = this.restaurantsList.filter(
-        (restaurant) => restaurant.mallName == this.mallSelected
-      );
-      this.selectedRestaurantsList = selectedRestaurants;
+        const selectedRestaurants = this.restaurantsList.filter(
+            (restaurant) => restaurant.mallName == this.mallSelected
+        );
+        this.selectedRestaurantsList = selectedRestaurants;
+        },
+  },
+    created() {
+        this.getDetails();
     },
-  },
-  created() {
-    this.getDetails();
-  },
 };
 </script>
 
