@@ -190,6 +190,8 @@ export default {
       history: [],
       rating: 0,
       rateRestId: "",
+      rateTtlRatings: 0,
+      rateNumRatings: 0,
     };
   },
   methods: {
@@ -298,8 +300,19 @@ export default {
       this.rateRestId = restId;
     },
     rate() {
-      database.collection("restaurants").doc(this.rateRestId).update({
-        rating: this.rating,
+      database.collection("restaurants").get().then((snapshot) =>{
+          snapshot.docs.forEach((doc) => {
+              if (doc.id === this.rateRestId) {
+                    this.rateTtlRatings = doc.data().totalRatings;
+                    this.rateNumRatings = doc.data().numRatings;
+              }
+          })
+      });
+      alert(this.rateTtlRatings);
+       database.collection("restaurants").doc(this.rateRestId).update({
+        rating: (this.rating + this.rateTtlRatings) / (this.rateNumRatings + 1),
+        totalRatings: this.rating + this.rateTtlRatings,
+        numRatings: this.rateNumRatings + 1,
       });
       alert("Restaurant successfully rated.");
     },
