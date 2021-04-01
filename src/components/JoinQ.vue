@@ -222,9 +222,16 @@ export default {
             .get()
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
-                    this.queueNum = doc.data().queueNumber;
-                    console.log(typeof doc.data().queueNumber);
-                    this.queueNumId = doc.id;
+                    if (qCategory === "A") {
+                        this.queueNum = doc.data().queueNumA;
+                        this.queueNumId = doc.id;
+                    } else if (qCategory === "B") {
+                        this.queueNum = doc.data().queueNumB;
+                        this.queueNumId = doc.id;
+                    } else {
+                        this.queueNum = doc.data().queueNumC;
+                        this.queueNumId = doc.id;
+                    }
                 })
             })
             this.queueNum += 1
@@ -232,10 +239,29 @@ export default {
             while (num.length < 4) num = "0" + num;
             var res = qCategory + num;
 
-            database
-            .collection("queueNumbers")
-            .doc(this.queueNumId)
-            .update({queueNumber: this.queueNum});
+            if (qCategory === "A") {
+                database
+                .collection("queueNumbers")
+                .doc(this.queueNumId)
+                .update({
+                    queueNumA: this.queueNum
+            });
+            } else if (qCategory === "B") {
+                database
+                .collection("queueNumbers")
+                .doc(this.queueNumId)
+                .update({
+                    queueNumB: this.queueNum
+            });
+            } else {
+                database
+                .collection("queueNumbers")
+                .doc(this.queueNumId)
+                .update({
+                    queueNumC: this.queueNum
+            });     
+            }
+            alert(res);
             return res;
         },
         // getDetails is for when created stage
