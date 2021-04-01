@@ -31,7 +31,7 @@
         <div id="currentQueueDetails">
           <p>
             Please arrive at {{ this.waitingRestaurant }} @
-            {{ this.waitingMall }} by **time
+            {{ this.waitingMall }} by {{ this.arrivalTime }}.
           </p>
           <p>Details:</p>
           <span>No. of Pax (Adult): {{ this.numOfAdult }}</span>
@@ -64,7 +64,7 @@
                 @updateRating="ratingUpdated"
                 v-bind:restaurantId="booking.restaurantId"
               ></rating>
-              <button v-on:click="rate()">Post</button>
+              <button v-on:click="rate()">Rate</button>
             </li>
             <br />
           </ul>
@@ -171,27 +171,28 @@ import rating from "./Rating.vue";
 export default {
     data() {
         return {
-        userid: "",
-        editProfile: false,
-        changePassword: false,
-        name: "",
-        email: "",
-        contact: null,
-        dob: "",
-        oldPassword: null,
-        newPassword: null,
-        confirmPassword: null,
-        numOfAdult: 0,
-        numOfChildren: 0,
-        babychair: 0,
-        wheelchair: 0,
-        waitingRestaurant: "",
-        waitingMall: "",
-        history: [],
-        rating: 0,
-        rateRestId: "",
-        rateTtlRatings: 0,
-        rateNumRatings: 0,
+            userid: "",
+            editProfile: false,
+            changePassword: false,
+            name: "",
+            email: "",
+            contact: null,
+            dob: "",
+            oldPassword: null,
+            newPassword: null,
+            confirmPassword: null,
+            numOfAdult: 0,
+            numOfChildren: 0,
+            babychair: 0,
+            wheelchair: 0,
+            waitingRestaurant: "",
+            waitingMall: "",
+            arrivalTime: "",
+            history: [],
+            rating: 0,
+            rateRestId: "",
+            rateTtlRatings: 0,
+            rateNumRatings: 0,
         };
     },
     methods: {
@@ -286,6 +287,7 @@ export default {
                 this.wheelchair = queue.wheelChair;
                 this.waitingMall = queue.mallName;
                 this.waitingRestaurant = queue.restaurantName;
+                this.arrivalTime = queue.arrivalTime;
                 } else if (
                 this.userid === queue.customerID &&
                 queue.queueStatus === "completed"
