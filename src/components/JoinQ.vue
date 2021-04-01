@@ -118,127 +118,142 @@ import { database } from "../firebase.js";
 import { auth } from "../firebase.js";
 
 export default {
-  data() {
-    return {
-      // all details from database
-      mallsList: ["All"],
-      restaurantsList: [],
-      selectedRestaurantsList: [],
+    data() {
+        return {
+        // all details from database
+        mallsList: ["All"],
+        restaurantsList: [],
+        selectedRestaurantsList: [],
 
-      //FORM
-      customerID: `${auth.currentUser.uid}`,
-      mallSelected: "",
-      restaurantSelected: "",
-      numAdult: null,
-      numChildren: null,
-      babyChair: 0,
-      wheelChair: 0,
-      additionalMessage: "",
+        //FORM
+        customerID: `${auth.currentUser.uid}`,
+        mallSelected: "",
+        restaurantSelected: "",
+        numAdult: null,
+        numChildren: null,
+        babyChair: 0,
+        wheelChair: 0,
+        additionalMessage: "",
 
-      //image
-      restaurantImage: require("../../images/joinQ-restaurant.jpg"),
-    };
-  },
-  methods: {
-    // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
-    joinQueue: function () {
-      database.collection("bookings").add({
-        customerID: this.customerID,
-        mallName: this.mallSelected,
-        restaurantName: this.restaurantSelected.restaurantName,
-        restaurantMall:
-          this.restaurantSelected.restaurantName + " @ " + this.mallSelected,
-        numAdult: this.numAdult,
-        numChildren: this.numChildren,
-        paxGroup: this.getPaxGroup(this.numAdult, this.numChildren),
-        queueNumber: this.getQueueNumber(this.numAdult, this.numChildren),
-        babyChair: this.babyChair,
-        wheelChair: this.wheelChair,
-        additionalMessage: this.additionalMessage,
-        queueStatus: "waiting",
-        bookedTiming: this.getCurrentTime(),
-        restaurantId: this.restaurantSelected.id,
-      });
-      alert(
-        "Successfully joined queue. Head to my profile to view queue details."
-      );
-      location.reload();
+        //image
+        restaurantImage: require("../../images/joinQ-restaurant.jpg"),
+        };
     },
-    getCurrentTime: function () {
-      const today = new Date();
-      const date =
-        today.getFullYear() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-      const time =
-        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      const dateTime = date + " " + time;
-      return dateTime;
-    },
-    calculatePax: function(numAdult, numChildren) {
-        let adult = 0;
-        let children = 0;
-        if (! numAdult) {
-            adult = numAdult;
-        }
-        if (! numChildren) {
-            children = numChildren;
-        }
-        return adult + children;
-    },
-    getPaxGroup: function (numAdult, numChildren) {
-        const totalPax = this.calculatePax(numAdult, numChildren); 
-        var paxGroup;
-        if (totalPax < 3) paxGroup = "1 to 2 people";
-        else if (totalPax < 5) paxGroup = "3 to 4 people";
-        else paxGroup = "5 or more people";
-        return paxGroup;
-    },
-    getQueueNumber: function (numAdult, numChildren) {
-        const totalPax = this.calculatePax(numAdult, numChildren);
-        var qCategory;
-        if (totalPax < 3) qCategory = "A";
-        else if (totalPax < 5) qCategory = "B";
-        else qCategory = "C";
-        return qCategory;
-    },
-    // getDetails is for when created stage
-    getDetails: function () {
-        // get mallsList
-        database
-            .collection("malls")
-            .get()
-            .then((snapshot) => {
-            snapshot.docs.forEach((doc) => {
-                var curr = doc.data();
-                this.mallsList.push(curr);
-            });
-            });
-        // get restaurantsList
-        database
-            .collection("restaurants")
-            .get()
-            .then((snapshot) => {
-            snapshot.docs.forEach((doc) => {
-                var curr = doc.data();
-                curr.id = doc.id;
-                this.restaurantsList.push(curr);
-            });
-            });
-    },
-    selectRestaurants: function () {
-        const selectedRestaurants = this.restaurantsList.filter(
-            (restaurant) => restaurant.mallName == this.mallSelected
-        );
-        this.selectedRestaurantsList = selectedRestaurants;
+    methods: {
+        // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
+        joinQueue: function () {
+            var paxGroup = this.getPaxGroup(this.numAdult, this.numChildren);
+            var restName = this.restaurantSelected.restaurantName;
+            var mallName = this.mallSelected;
+            this.getArrivalTime(paxGroup, restName, mallName);
         },
-  },
-    created() {
-        this.getDetails();
+        getCurrentTime: function () {
+            const curr = new Date();
+            return curr.toString();
+        },
+        getArrivalTime(paxGroup, restName, mallName) {
+            let counter = 0;
+            database
+            .collection("bookings")
+            .get()
+            .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    var booking = doc.data();
+                    if (((booking.paxGroup === paxGroup) && (booking.restaurantName === restName)) 
+                    && ((booking.mallName === mallName) && (booking.queueStatus === "waiting"))) {
+                        counter += 1;
+                    }
+                })
+            }).then(() => {
+                var bookTime = this.getCurrentTime();
+                var parsed = (Date.parse(bookTime) + (counter * 2700000));
+                var arrTime = (new Date(parsed)).toString();
+                alert(arrTime);
+                database.collection("bookings").add({
+                    customerID: this.customerID,
+                    mallName: mallName,
+                    restaurantName: restName,
+                    restaurantMall: restName + " @ " + mallName,
+                    numAdult: this.numAdult,
+                    numChildren: this.numChildren,
+                    paxGroup: paxGroup,
+                    queueNumber: this.getQueueNumber(this.numAdult, this.numChildren),
+                    babyChair: this.babyChair,
+                    wheelChair: this.wheelChair,
+                    additionalMessage: this.additionalMessage,
+                    queueStatus: "waiting",
+                    bookedTiming: bookTime,
+                    restaurantId: this.restaurantSelected.id,
+                    arrivalTime: arrTime,
+                });
+                alert(
+                    "Successfully joined queue. Head to my profile to view queue details."
+                );
+                location.reload();
+            });
+        },
+        calculatePax: function(numAdult, numChildren) {
+            let adult = 0;
+            let children = 0;
+            if (! numAdult) {
+                adult = numAdult;
+            }
+            if (! numChildren) {
+                children = numChildren;
+            }
+            return adult + children;
+        },
+        getPaxGroup: function (numAdult, numChildren) {
+            const totalPax = this.calculatePax(numAdult, numChildren); 
+            var paxGroup;
+            if (totalPax < 3) paxGroup = "1 to 2 people";
+            else if (totalPax < 5) paxGroup = "3 to 4 people";
+            else paxGroup = "5 or more people";
+            return paxGroup;
+        },
+        getQueueNumber: function (numAdult, numChildren) {
+            const totalPax = this.calculatePax(numAdult, numChildren);
+            var qCategory;
+            if (totalPax < 3) qCategory = "A";
+            else if (totalPax < 5) qCategory = "B";
+            else qCategory = "C";
+            return qCategory;
+        },
+        // getDetails is for when created stage
+        getDetails: function () {
+            // get mallsList
+            database
+                .collection("malls")
+                .get()
+                .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    var curr = doc.data();
+                    this.mallsList.push(curr);
+                });
+                });
+            // get restaurantsList
+            database
+                .collection("restaurants")
+                .get()
+                .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    var curr = doc.data();
+                    curr.id = doc.id;
+                    this.restaurantsList.push(curr);
+                });
+                });
+        },
+        selectRestaurants: function () {
+            const selectedRestaurants = this.restaurantsList.filter(
+                (restaurant) => restaurant.mallName == this.mallSelected
+            );
+            this.selectedRestaurantsList = selectedRestaurants;
+            },
     },
-};
+        created() {
+            this.getDetails();
+        },
+    };
 </script>
 
 <style scoped>
