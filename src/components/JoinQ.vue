@@ -168,7 +168,6 @@ export default {
                 var bookTime = this.getCurrentTime();
                 var parsed = (Date.parse(bookTime) + (counter * 2700000));
                 var arrTime = (new Date(parsed)).toString();
-                alert(arrTime);
                 database.collection("bookings").add({
                     customerID: this.customerID,
                     mallName: mallName,
@@ -187,21 +186,18 @@ export default {
                     arrivalTime: arrTime,
                 });
                 alert(
-                    "Successfully joined queue. Head to my profile to view queue details."
+                    "Successfully joined queue. Please arrive at " + restName + " @ "
+                    + mallName + " by " + arrTime + "."
                 );
-                location.reload();
+                this.$router.push("/myprofile");
             });
         },
         calculatePax: function(numAdult, numChildren) {
-            let adult = 0;
             let children = 0;
-            if (! numAdult) {
-                adult = numAdult;
-            }
             if (! numChildren) {
                 children = numChildren;
             }
-            return adult + children;
+            return numAdult + children;
         },
         getPaxGroup: function (numAdult, numChildren) {
             const totalPax = this.calculatePax(numAdult, numChildren); 
