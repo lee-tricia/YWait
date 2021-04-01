@@ -137,6 +137,9 @@ export default {
 
         //image
         restaurantImage: require("../../images/joinQ-restaurant.jpg"),
+
+        queueNum: 0,
+        queueNumId: "",
         };
     },
     methods: {
@@ -194,13 +197,13 @@ export default {
         },
         calculatePax: function(numAdult, numChildren) {
             let children = 0;
-            if (! numChildren) {
+            if (numChildren !== null) {
                 children = numChildren;
             }
-            return numAdult + children;
+            return parseInt(numAdult, 10) + children;
         },
         getPaxGroup: function (numAdult, numChildren) {
-            const totalPax = this.calculatePax(numAdult, numChildren); 
+            const totalPax = this.calculatePax(numAdult, numChildren);
             var paxGroup;
             if (totalPax < 3) paxGroup = "1 to 2 people";
             else if (totalPax < 5) paxGroup = "3 to 4 people";
@@ -213,7 +216,27 @@ export default {
             if (totalPax < 3) qCategory = "A";
             else if (totalPax < 5) qCategory = "B";
             else qCategory = "C";
-            return qCategory;
+
+            database
+            .collection("queueNumbers")
+            .get()
+            .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    this.queueNum = doc.data().queueNumber;
+                    console.log(typeof doc.data().queueNumber);
+                    this.queueNumId = doc.id;
+                })
+            })
+            this.queueNum += 1
+            var num = String(this.queueNum);
+            while (num.length < 4) num = "0" + num;
+            var res = qCategory + num;
+
+            database
+            .collection("queueNumbers")
+            .doc(this.queueNumId)
+            .update({queueNumber: this.queueNum});
+            return res;
         },
         // getDetails is for when created stage
         getDetails: function () {
