@@ -5,9 +5,9 @@
     <div id="wrapper">
       <ul id="malls">
         <li class="mall-items" v-for="mall in mallsList" v-bind:key="mall.id">
-          <h3>{{ mall.mallName }}</h3>
-          <h5>{{ mall.address }}</h5>
-          <h6>Singapore {{ mall.postalCode }}</h6>
+          <h2>{{ mall.mallName }}</h2>
+          <h3>{{ mall.address }}</h3>
+          <h4>Singapore {{ mall.postalCode }}</h4>
         </li>
       </ul>
       <Map />
@@ -57,8 +57,9 @@ export default {
 
 <style scoped>
 h1 {
-  margin-left: 250px;
   text-align: center;
+  font-size: 40px;
+  font-weight: normal;
 }
 #wrapper {
   display: grid;

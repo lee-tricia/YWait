@@ -31,7 +31,7 @@
         <div id="currentQueueDetails">
           <p>
             Please arrive at {{ this.waitingRestaurant }} @
-            {{ this.waitingMall }} by **time
+            {{ this.waitingMall }} by {{ this.arrivalTime }}.
           </p>
           <p>Details:</p>
           <span>No. of Pax (Adult): {{ this.numOfAdult }}</span>
@@ -64,7 +64,7 @@
                 @updateRating="ratingUpdated"
                 v-bind:restaurantId="booking.restaurantId"
               ></rating>
-              <button v-on:click="rate()">Post</button>
+              <button v-on:click="rate()">Rate</button>
             </li>
             <br />
           </ul>
@@ -169,149 +169,163 @@ import profileIcon from "vue-material-design-icons/AccountCircle";
 import rating from "./Rating.vue";
 
 export default {
-  data() {
-    return {
-      userid: "",
-      editProfile: false,
-      changePassword: false,
-      name: "",
-      email: "",
-      contact: null,
-      dob: "",
-      oldPassword: null,
-      newPassword: null,
-      confirmPassword: null,
-      numOfAdult: 0,
-      numOfChildren: 0,
-      babychair: 0,
-      wheelchair: 0,
-      waitingRestaurant: "",
-      waitingMall: "",
-      history: [],
-      rating: 0,
-      rateRestId: "",
-    };
-  },
-  methods: {
-    fetchItems() {
-      database
-        .collection("users")
-        .doc(`${auth.currentUser.uid}`)
-        .get()
-        .then((querySnapShot) => {
-          this.name = querySnapShot.data().name;
-          this.email = querySnapShot.data().email;
-          this.contact = querySnapShot.data().contact;
-          this.dob = querySnapShot.data().dob;
-          this.userid = querySnapShot.data().customerID;
+    data() {
+        return {
+            userid: "",
+            editProfile: false,
+            changePassword: false,
+            name: "",
+            email: "",
+            contact: null,
+            dob: "",
+            oldPassword: null,
+            newPassword: null,
+            confirmPassword: null,
+            numOfAdult: 0,
+            numOfChildren: 0,
+            babychair: 0,
+            wheelchair: 0,
+            waitingRestaurant: "",
+            waitingMall: "",
+            arrivalTime: "",
+            history: [],
+            rating: 0,
+            rateRestId: "",
+            rateTtlRatings: 0,
+            rateNumRatings: 0,
+        };
+    },
+    methods: {
+        fetchItems() {
+        database
+            .collection("users")
+            .doc(`${auth.currentUser.uid}`)
+            .get()
+            .then((querySnapShot) => {
+            this.name = querySnapShot.data().name;
+            this.email = querySnapShot.data().email;
+            this.contact = querySnapShot.data().contact;
+            this.dob = querySnapShot.data().dob;
+            this.userid = querySnapShot.data().customerID;
+            });
+        },
+        edit() {
+        if (this.editProfile == false) {
+            this.editProfile = true;
+        } else {
+            database.collection("users").doc(`${auth.currentUser.uid}`).update({
+            name: this.name,
+            contact: this.contact,
+            dob: this.dob,
+            });
+            this.editProfile = false;
+            alert("Profile successfully updated.");
+        }
+        },
+        reauthenticate(password) {
+        const user = auth.currentUser;
+        const cred = firebase.auth.EmailAuthProvider.credential(
+            user.email,
+            password
+        );
+        return user.reauthenticateWithCredential(cred);
+        },
+        change() {
+        if (this.changePassword == false) {
+            this.changePassword = true;
+        } else {
+            this.reauthenticate(this.oldPassword)
+            .then(() => {
+                if (this.newPassword.length < 6) {
+                alert(
+                    "Password must contain at least 6 characters. Please check your password and try again."
+                );
+                } else if (this.newPassword != this.confirmPassword) {
+                alert(
+                    "Passwords do not match. Please check your password and try again."
+                );
+                } else {
+                auth.currentUser.updatePassword(this.newPassword).then(() => {
+                    alert("Password successfully changed.");
+                    this.changePassword = false;
+                    this.editProfile = false;
+                });
+                }
+            })
+            .catch((error) => {
+                if (error.code == "auth/wrong-password") {
+                alert(
+                    "The current password you entered is wrong. Please check your current password and try again."
+                );
+                }
+            });
+        }
+        },
+        cancel() {
+        if (this.editProfile == true) {
+            this.editProfile = false;
+            this.changePassword = false;
+        } else {
+            this.changePassword = false;
+            this.editProfile = false;
+        }
+        },
+        getCurrentAndHist() {
+        database
+            .collection("bookings")
+            .get()
+            .then((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+                var queue = doc.data();
+                if (
+                this.userid === queue.customerID &&
+                queue.queueStatus === "waiting"
+                ) {
+                this.numOfAdult = queue.numAdult;
+                this.numOfChildren = queue.numChildren;
+                this.babychair = queue.babyChair;
+                this.wheelchair = queue.wheelChair;
+                this.waitingMall = queue.mallName;
+                this.waitingRestaurant = queue.restaurantName;
+                this.arrivalTime = queue.arrivalTime;
+                } else if (
+                this.userid === queue.customerID &&
+                queue.queueStatus === "completed"
+                ) {
+                this.history.push(queue);
+                }
+            });
+            });
+        },
+        ratingUpdated(rating, restId) {
+        this.rating = rating;
+        this.rateRestId = restId;
+        },
+        rate() {
+        database.collection("restaurants").get().then((snapshot) =>{
+            snapshot.docs.forEach((doc) => {
+                if (doc.id === this.rateRestId) {
+                        this.rateTtlRatings = doc.data().totalRatings;
+                        this.rateNumRatings = doc.data().numRatings;
+                }
+            })
         });
-    },
-    edit() {
-      if (this.editProfile == false) {
-        this.editProfile = true;
-      } else {
-        database.collection("users").doc(`${auth.currentUser.uid}`).update({
-          name: this.name,
-          contact: this.contact,
-          dob: this.dob,
+            database.collection("restaurants").doc(this.rateRestId).update({
+            rating: (this.rating + this.rateTtlRatings) / (this.rateNumRatings + 1),
+            totalRatings: this.rating + this.rateTtlRatings,
+            numRatings: this.rateNumRatings + 1,
         });
-        this.editProfile = false;
-        alert("Profile successfully updated.");
-      }
+        alert("Restaurant successfully rated.");
+        },
     },
-    reauthenticate(password) {
-      const user = auth.currentUser;
-      const cred = firebase.auth.EmailAuthProvider.credential(
-        user.email,
-        password
-      );
-      return user.reauthenticateWithCredential(cred);
+    created() {
+        this.fetchItems();
+        this.getCurrentAndHist();
     },
-    change() {
-      if (this.changePassword == false) {
-        this.changePassword = true;
-      } else {
-        this.reauthenticate(this.oldPassword)
-          .then(() => {
-            if (this.newPassword.length < 6) {
-              alert(
-                "Password must contain at least 6 characters. Please check your password and try again."
-              );
-            } else if (this.newPassword != this.confirmPassword) {
-              alert(
-                "Passwords do not match. Please check your password and try again."
-              );
-            } else {
-              auth.currentUser.updatePassword(this.newPassword).then(() => {
-                alert("Password successfully changed.");
-                this.changePassword = false;
-                this.editProfile = false;
-              });
-            }
-          })
-          .catch((error) => {
-            if (error.code == "auth/wrong-password") {
-              alert(
-                "The current password you entered is wrong. Please check your current password and try again."
-              );
-            }
-          });
-      }
+    components: {
+        profileIcon,
+        rating,
     },
-    cancel() {
-      if (this.editProfile == true) {
-        this.editProfile = false;
-        this.changePassword = false;
-      } else {
-        this.changePassword = false;
-        this.editProfile = false;
-      }
-    },
-    getCurrentAndHist() {
-      database
-        .collection("bookings")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            var queue = doc.data();
-            if (
-              this.userid === queue.customerID &&
-              queue.queueStatus === "waiting"
-            ) {
-              this.numOfAdult = queue.numAdult;
-              this.numOfChildren = queue.numChildren;
-              this.babychair = queue.babyChair;
-              this.wheelchair = queue.wheelChair;
-              this.waitingMall = queue.mallName;
-              this.waitingRestaurant = queue.restaurantName;
-            } else if (
-              this.userid === queue.customerID &&
-              queue.queueStatus === "completed"
-            ) {
-              this.history.push(queue);
-            }
-          });
-        });
-    },
-    ratingUpdated(rating, restId) {
-      this.rating = rating;
-      this.rateRestId = restId;
-    },
-    rate() {
-      database.collection("restaurants").doc(this.rateRestId).update({
-        rating: this.rating,
-      });
-      alert("Restaurant successfully rated.");
-    },
-  },
-  created() {
-    this.fetchItems();
-    this.getCurrentAndHist();
-  },
-  components: {
-    profileIcon,
-    rating,
-  },
 };
 </script>
 
