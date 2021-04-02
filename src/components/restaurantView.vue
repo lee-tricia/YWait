@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>Restaurant Queue System</h1>
+    
     <div id="currToCompleted">
+      <h2> - Current Queue Number - </h2>
       <table>
         <tr>
           <th>No. Pax</th>
@@ -25,14 +27,16 @@
             v-bind:id="queue['bookingID']"
             v-on:click="changeStatus($event, 'completed')"
           >
-            Update
+            Have Arrived
           </button>            
           </td>          
         </tr>
       </table>
     </div>
 
+    
     <div id="waitingToCurr">
+      <h2> - Waiting Queue Numbers - </h2>
       <table>
         <tr>
           <th>No. Pax</th>
@@ -58,7 +62,7 @@
             v-bind:id="queue['bookingID']"
             v-on:click="changeStatus($event, 'current')"
           >
-            Push
+            Push to Current
           </button>          
           </td>          
         </tr>
@@ -112,4 +116,60 @@ export default {
 </script>
 
 <style>
+#wrapper {
+  margin-left: 300px;
+  font-family: sans-serif;
+}
+
+h2 {
+  margin-top: 4%;
+  text-align: center;
+}
+
+table, td, th {
+  border-collapse: collapse;
+}
+
+table {
+  box-shadow: 11px 11px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 10px 10px;
+}
+
+#currToCompleted > table {
+  width: 70%;
+  margin-left: 15%;
+  margin-bottom: 5%;
+}
+
+#waitingToCurr > table {
+  width: 80%;
+  margin-left: 10%;
+}
+
+th {
+  padding: 7px;
+  background: url("../../images/waitingQ-dashboard.jpeg");
+}
+
+th:first-of-type {
+  border-radius: 10px 0 0 0;
+}
+
+th:last-of-type {
+  border-radius: 0 10px 0 0;
+}
+
+button {
+  color: black; 
+  background-color: white;
+  border: 2px solid #e7e7e7;
+  transition-duration: 0.4s;
+  text-align: center;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #e7e7e7;
+}
+
 </style>
