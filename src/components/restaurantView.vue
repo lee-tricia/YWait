@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Restaurant page</h1>
-    {{ currentQueueNumber }}
     <ul>
       <li v-for="queue in currentQueueNumber" v-bind:key="queue.id">
         {{ queue }} <br />
@@ -14,7 +13,6 @@
       </li>
     </ul>
 
-    {{ waitingQueue }}
     <ul>
       <li v-for="queue in waitingQueue" v-bind:key="queue.id">
         {{ queue }} <br />
@@ -36,7 +34,6 @@ import { auth } from "../firebase.js";
 export default {
   data() {
     return {
-      restaurantName: "",
       currentQueueNumber: this.queueData("current"),
       waitingQueue: this.queueData("waiting"),
     };
@@ -55,7 +52,7 @@ export default {
     queueData: function (status) {
       var query = database
         .collection("bookings")
-        .where("restaurantName", "==", this.restaurantName)
+        .where("restaurantId", "==", `${auth.currentUser.uid}`)
         .where("queueStatus", "==", status);
       return this.getDataFromQuery(query);
     },
@@ -69,18 +66,6 @@ export default {
         })
         .then(() => location.reload());
     },
-    getRestaurantName: function () {
-      database
-        .collection("restaurants")
-        .doc(`${auth.currentUser.uid}`)
-        .get()
-        .then((doc) => {
-          this.restaurantName = doc.data().restaurantName;
-        });
-    },
-  },
-  created() {
-    this.getRestaurantName();
   },
 };
 </script>
