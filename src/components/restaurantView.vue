@@ -24,8 +24,7 @@
           <td> {{queue['additionalMessage']}} </td>
           <td> 
             <button
-            v-bind:id="queue['bookingID']"
-            v-on:click="changeStatus($event, 'completed')"
+            v-on:click="changeStatus(queue['queueNumber'], 'completed')"
           >
             Have Arrived
           </button>            
@@ -59,8 +58,7 @@
           <td> {{queue['arrivalTime']}} </td>
           <td> 
             <button
-            v-bind:id="queue['bookingID']"
-            v-on:click="changeStatus($event, 'current')"
+            v-on:click="changeStatus(queue['queueNumber'], 'current')"
           >
             Push to Current
           </button>          
@@ -101,15 +99,16 @@ export default {
         .where("queueStatus", "==", status);
       return this.getDataFromQuery(query);
     },
-    changeStatus: function (event, newStatus) {
-      let doc_id = event.target.id;
+    changeStatus: function (queueNum, newStatus) {
       database
         .collection("bookings")
-        .doc(doc_id)
-        .update({
-          queueStatus: newStatus,
+        .where("restaurantId", "==", `${auth.currentUser.uid}`)
+        .where("queueNumber","==",queueNum)
+        .limit(1)
+        .get().then((query) => {
+          const queueData = query.docs[0];
+          queueData.ref.update({queueStatus: newStatus});
         })
-        .then(() => location.reload());
     },
   },
 };
