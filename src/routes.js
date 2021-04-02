@@ -9,15 +9,13 @@ import Login from './components/Login.vue'
 import restaurantView from './components/restaurantView.vue'
 
 export default [
-    { path: '/home', name: 'Home', component: HomePage },
-    { path: '/malls', name: 'Malls', component: Malls },
-    { path: '/myprofile', name: 'Profile', component: MyProfile },
-    { path: '/joinq', name: 'JoinQ', component: JoinQ },
-    { path: '/waitingqueue', name: 'WaitingQueue', component: WaitingQueue },
+    { path: '/home', name: 'Home', component: HomePage, meta:{authRequired: true}},
+    { path: '/malls', name: 'Malls', component: Malls, meta:{authRequired: true} },
+    { path: '/myprofile', name: 'Profile', component: MyProfile, meta:{authRequired: true} },
+    { path: '/joinq', name: 'JoinQ', component: JoinQ, meta:{authRequired: true} },
+    { path: '/waitingqueue', name: 'WaitingQueue', component: WaitingQueue, meta:{authRequired: true} },
     { path: '/signup', name: 'Signup', component: Signup },
     { path: '/', name: 'Login', component: Login },
-    { path: '/restauranthome', name: 'RestaurantHome', component: restaurantView }
+    { path: '/restauranthome', name: 'RestaurantHome', component: restaurantView, meta:{authRequired: true} }
 ]
-
-
 

@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import Vue from 'vue'
 import App from './App.vue'
 import Signup from "./components/Signup.vue"
@@ -24,6 +25,21 @@ const myRouter = new VueRouter({
   routes: Routes,
   mode: 'history'
 })
+
+myRouter.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.authRequired)) {
+    if (firebase.auth().currentUser) {
+      next();
+    } else {
+      alert('You must be logged in to see this page');
+      next({
+        path: '/',
+      });
+    }
+  } else {
+    next();
+  }
+});
 
 new Vue({
   render: h => h(App),
