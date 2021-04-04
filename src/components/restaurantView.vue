@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Restaurant Queue System</h1>
+    <div class="logout"><LogOutButton /></div>
     
     <div id="currToCompleted">
       <h2> - Current Queue Number - </h2>
@@ -116,8 +117,19 @@ export default {
 
 <style>
 #wrapper {
-  margin-left: 300px;
   font-family: sans-serif;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.logout {
+  position: absolute;
+  top: 2%;
+  right: 10%;
 }
 
 h2 {
@@ -127,6 +139,7 @@ h2 {
 
 table, td, th {
   border-collapse: collapse;
+  text-align: center;
 }
 
 table {
@@ -164,6 +177,7 @@ button {
   border: 2px solid #e7e7e7;
   transition-duration: 0.4s;
   text-align: center;
+  align-self: center;
 }
 
 button:hover {
