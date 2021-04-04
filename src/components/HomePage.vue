@@ -4,11 +4,11 @@
     <div id="wrapper">
       <h1>Hi {{ this.name }}!</h1>
       <div id="joinQ">
-        <router-link to="/joinq" exact>Join a Queue Here !</router-link>
+        <router-link to="/joinq" exact>Join a Queue Here!</router-link>
       </div>
       <p></p>
       <div id="viewMalls">
-        <router-link to="/malls" exact>Malls</router-link>
+        <router-link to="/malls" exact>View Malls</router-link>
       </div>
       <div id="calendar"><Calendar></Calendar></div>
     </div>
@@ -43,14 +43,14 @@ export default {
 
 <style scoped>
 #wrapper {
-  margin-left: 300px;
+  margin-left: 330px;
   font-family: sans-serif;
 }
 h1 {
   text-align: left;
   margin-top: 0px;
   margin-bottom: 10px;
-  font-size: 60px;
+  font-size: 70px;
 }
 
 #joinQ {
@@ -66,9 +66,9 @@ h1 {
   font-weight: bold;
   color: white;
   text-align: left;
-  font-size: 50px;
-  text-decoration: underline;
+  font-size: 40px;
   text-shadow: 2px 2px black;
+  padding-top: 10px;
 }
 
 #viewMalls {
@@ -85,22 +85,31 @@ h1 {
   color: white;
   font-weight: bold;
   text-align: left;
-  font-size: 50px;
-  text-decoration: underline;
+  font-size: 40px;
   text-shadow: 2px 2px black;
+  padding-top: 10px;
 }
 
 #calendar {
   display: inline-block;
-  padding: 7px 25px;
-  width: 40%;
-  height: 500px;
-  margin-left: 10px;
+  padding: 0px 47px;
+  padding-left: 73px;
+  width: 36%;
+  height: 517px;
+  margin-left: 20px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
 
-:visited {
+a {
+  text-decoration: none;
+}
+
+a:visited {
   color: white;
+}
+
+a:hover {
+  color: rgb(201, 199, 199);
 }
 </style>
