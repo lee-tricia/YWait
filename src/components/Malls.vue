@@ -1,13 +1,13 @@
 <template>
   <div>
     <NavBar></NavBar>
-    <h1>Malls</h1>
     <div id="wrapper">
+    <h1>Malls</h1>
       <ul id="malls">
         <li class="mall-items" v-for="mall in mallsList" v-bind:key="mall.id">
           <h2>{{ mall.mallName }}</h2>
           <h3>{{ mall.address }}</h3>
-          <h4>Singapore {{ mall.postalCode }}</h4>
+          <h3>Singapore {{ mall.postalCode }}</h3>
         </li>
       </ul>
       <Map />
@@ -57,35 +57,39 @@ export default {
 
 <style scoped>
 h1 {
-  text-align: center;
   font-size: 40px;
   font-weight: normal;
 }
 #wrapper {
-  display: grid;
+  display: block;
   margin-left: 300px;
   text-align: center;
   grid-template-rows: 50% 50%;
-  gap: 30px;
   grid-template-areas:
     "a"
     "b";
+  font-family: sans-serif;
+}
+
+h3 {
+  font-weight: normal;
 }
 
 #malls {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
-  padding: 0;
   grid-area: a;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .mall-items {
   flex-grow: 1;
   flex-basis: 300px;
   text-align: center;
-  padding: 10px;
-  margin: 10px;
+  padding-left: 50px;
+  padding-right: 75px;
 }
 
 map {
@@ -94,8 +98,6 @@ map {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-  margin-left: 60px;
   grid-area: b;
   align-items: center;
   justify-content: center;

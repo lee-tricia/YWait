@@ -2,7 +2,6 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div class="card">
-      <h3>Map</h3>
       <div class="card-body">
         <kendo-map
           :center="[1.3051315545985274, 103.83224131197983]"
