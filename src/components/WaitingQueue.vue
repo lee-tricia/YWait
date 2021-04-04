@@ -233,10 +233,12 @@ export default {
 #wrapper {
   margin-left: 300px;
   font-family: Helvetica, sans-serif;
+  text-align: center;
 }
 
 h1 {
-  text-align: center;
+  font-size: 40px;
+  font-weight: normal;
 }
 
 #filterBar {
