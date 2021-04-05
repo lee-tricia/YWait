@@ -2,7 +2,6 @@
   <div>
     <NavBar></NavBar>
     <div id="wrapper">
-      <h1>Profile Page</h1>
       <div
         id="profile"
         v-if="this.editProfile == false && this.changePassword == false"
@@ -28,7 +27,7 @@
         id="currentQueue"
         v-if="this.editProfile == false && this.changePassword == false"
       >
-        <div id="currentQueueDetails">
+        <div id="currentQueueDetails" v-if='this.waitingRestaurant != ""'>
           <p>
             Please arrive at {{ this.waitingRestaurant }} @
             {{ this.waitingMall }} by {{ this.arrivalTime }}.
@@ -38,6 +37,9 @@
           <span>No. of Pax (Children): {{ this.numOfChildren }}</span><br>
           <span>Baby Chair: {{ this.babychair }}</span><br>
           <span>Wheelchair: {{ this.wheelchair }} </span><br>
+        </div>
+        <div id="currentQueueDetails" v-if='this.waitingRestaurant == ""'>
+          <p class="notInQ">Currently not in any queue. Click on 'Join a Queue' to join a queue.</p>
         </div>
       </div>
       <p
@@ -72,7 +74,7 @@
       </div>
 
       <div
-        id="profile"
+        id="editProfile"
         v-if="this.editProfile == true && this.changePassword == false"
       >
         <div id="profileIcon">
@@ -334,11 +336,6 @@ export default {
   margin-left: 300px;
   font-family: sans-serif;
 }
-h1 {
-  margin-left: 10px;
-  font-size: 40px;
-  font-weight: normal;
-}
 #profileIcon {
   float: left;
   padding-left: 10px;
@@ -351,11 +348,20 @@ h1 {
   width: 800px;
   border-radius: 10px;
   margin-left: 10px;
-  margin-bottom: 30px;
+  margin-top: 30px;
 }
 #details {
   margin-top: 25px;
   margin-left: 220px;
+}
+#editProfile {
+  border: 1px solid #222;
+  background-color: white;
+  height: 300px;
+  width: 800px;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-top: 3px;
 }
 #editDetails {
   margin-top: 20px;
@@ -372,7 +378,7 @@ h1 {
   width: 800px;
   border-radius: 10px;
   margin-left: 10px;
-  margin-bottom: 30px;
+  margin-top: 3px;
 }
 #editPassword {
   margin-top: 20px;
@@ -488,5 +494,9 @@ p.note {
   margin-top: 10px;
   margin-left: 10px;
   padding-bottom: 10px;
+}
+.notInQ {
+  margin-top: 40px;
+  margin-left: 20px;
 }
 </style>
