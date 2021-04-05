@@ -49,7 +49,9 @@
           </div>
 
           <p>
-            <label for="numAdult">No. of Pax (Adult)<span style="color: red">*</span></label>
+            <label for="numAdult"
+              >No. of Pax (Adult)<span style="color: red">*</span></label
+            >
           </p>
           <p>
             <input type="number" v-model="numAdult" id="numAdult" required />
@@ -118,187 +120,207 @@ import { database } from "../firebase.js";
 import { auth } from "../firebase.js";
 
 export default {
-    data() {
-        return {
-        // all details from database
-        mallsList: ["All"],
-        restaurantsList: [],
-        selectedRestaurantsList: [],
+  data() {
+    return {
+      // all details from database
+      mallsList: ["All"],
+      restaurantsList: [],
+      selectedRestaurantsList: [],
 
-        //FORM
-        customerID: `${auth.currentUser.uid}`,
-        mallSelected: "",
-        restaurantSelected: "",
-        numAdult: null,
-        numChildren: null,
-        babyChair: 0,
-        wheelChair: 0,
-        additionalMessage: "",
+      //FORM
+      customerID: `${auth.currentUser.uid}`,
+      customerName: "",
+      mallSelected: "",
+      restaurantSelected: "",
+      numAdult: null,
+      numChildren: null,
+      babyChair: 0,
+      wheelChair: 0,
+      additionalMessage: "",
 
-        //image
-        restaurantImage: require("../../images/joinQ-restaurant.jpg"),
+      //image
+      restaurantImage: require("../../images/joinQ-restaurant.jpg"),
 
-        queueNum: 0,
-        queueNumId: "",
-        };
-    },
-    methods: {
-        // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
-        joinQueue: function () {
-            var paxGroup = this.getPaxGroup(this.numAdult, this.numChildren);
-            var restName = this.restaurantSelected.restaurantName;
-            var mallName = this.mallSelected;
-            this.getArrivalTime(paxGroup, restName, mallName);
-        },
-        getCurrentTime: function () {
-            const curr = new Date();
-            return curr.toString();
-        },
-        getArrivalTime(paxGroup, restName, mallName) {
-            let counter = 0;
-            database
-            .collection("bookings")
-            .get()
-            .then((snapshot) => {
-                snapshot.docs.forEach((doc) => {
-                    var booking = doc.data();
-                    if (((booking.paxGroup === paxGroup) && (booking.restaurantName === restName)) 
-                    && ((booking.mallName === mallName) && (booking.queueStatus === "waiting"))) {
-                        counter += 1;
-                    }
-                })
-            }).then(() => {
-                var bookTime = this.getCurrentTime();
-                var parsed = (Date.parse(bookTime) + (counter * 2700000));
-                var arrTime = (new Date(parsed)).toString();
-                database.collection("bookings").add({
-                    customerID: this.customerID,
-                    mallName: mallName,
-                    restaurantName: restName,
-                    restaurantMall: restName + " @ " + mallName,
-                    numAdult: this.numAdult,
-                    numChildren: this.numChildren,
-                    paxGroup: paxGroup,
-                    queueNumber: this.getQueueNumber(this.numAdult, this.numChildren),
-                    babyChair: this.babyChair,
-                    wheelChair: this.wheelChair,
-                    additionalMessage: this.additionalMessage,
-                    queueStatus: "waiting",
-                    bookedTiming: bookTime,
-                    restaurantId: this.restaurantSelected.id,
-                    arrivalTime: arrTime,
-                });
-                alert(
-                    "Successfully joined queue. Please arrive at " + restName + " @ "
-                    + mallName + " by " + arrTime + "."
-                );
-                this.$router.push("/myprofile");
-            });
-        },
-        calculatePax: function(numAdult, numChildren) {
-            let children = 0;
-            if (numChildren !== null) {
-                children = numChildren;
-            }
-            return parseInt(numAdult, 10) + children;
-        },
-        getPaxGroup: function (numAdult, numChildren) {
-            const totalPax = this.calculatePax(numAdult, numChildren);
-            var paxGroup;
-            if (totalPax < 3) paxGroup = "1 to 2 people";
-            else if (totalPax < 5) paxGroup = "3 to 4 people";
-            else paxGroup = "5 or more people";
-            return paxGroup;
-        },
-        getQueueNumber: function (numAdult, numChildren) {
-            const totalPax = this.calculatePax(numAdult, numChildren);
-            var qCategory;
-            if (totalPax < 3) qCategory = "A";
-            else if (totalPax < 5) qCategory = "B";
-            else qCategory = "C";
-
-            database
-            .collection("queueNumbers")
-            .get()
-            .then((snapshot) => {
-                snapshot.docs.forEach((doc) => {
-                    if (qCategory === "A") {
-                        this.queueNum = doc.data().queueNumA;
-                        this.queueNumId = doc.id;
-                    } else if (qCategory === "B") {
-                        this.queueNum = doc.data().queueNumB;
-                        this.queueNumId = doc.id;
-                    } else {
-                        this.queueNum = doc.data().queueNumC;
-                        this.queueNumId = doc.id;
-                    }
-                })
-            })
-            this.queueNum += 1
-            var num = String(this.queueNum);
-            while (num.length < 4) num = "0" + num;
-            var res = qCategory + num;
-
-            if (qCategory === "A") {
-                database
-                .collection("queueNumbers")
-                .doc(this.queueNumId)
-                .update({
-                    queueNumA: this.queueNum
-            });
-            } else if (qCategory === "B") {
-                database
-                .collection("queueNumbers")
-                .doc(this.queueNumId)
-                .update({
-                    queueNumB: this.queueNum
-            });
-            } else {
-                database
-                .collection("queueNumbers")
-                .doc(this.queueNumId)
-                .update({
-                    queueNumC: this.queueNum
-            });     
-            }
-            alert(res);
-            return res;
-        },
-        // getDetails is for when created stage
-        getDetails: function () {
-            // get mallsList
-            database
-                .collection("malls")
-                .get()
-                .then((snapshot) => {
-                snapshot.docs.forEach((doc) => {
-                    var curr = doc.data();
-                    this.mallsList.push(curr);
-                });
-                });
-            // get restaurantsList
-            database
-                .collection("restaurants")
-                .get()
-                .then((snapshot) => {
-                snapshot.docs.forEach((doc) => {
-                    var curr = doc.data();
-                    curr.id = doc.id;
-                    this.restaurantsList.push(curr);
-                });
-                });
-        },
-        selectRestaurants: function () {
-            const selectedRestaurants = this.restaurantsList.filter(
-                (restaurant) => restaurant.mallName == this.mallSelected
-            );
-            this.selectedRestaurantsList = selectedRestaurants;
-            },
-    },
-        created() {
-            this.getDetails();
-        },
+      queueNum: 0,
+      queueNumId: "",
     };
+  },
+  methods: {
+    // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
+    joinQueue: function() {
+      var paxGroup = this.getPaxGroup(this.numAdult, this.numChildren);
+      var restName = this.restaurantSelected.restaurantName;
+      var mallName = this.mallSelected;
+      this.getArrivalTime(paxGroup, restName, mallName);
+    },
+    getCurrentTime: function() {
+      const curr = new Date();
+      return curr.toString();
+    },
+    getArrivalTime(paxGroup, restName, mallName) {
+      let counter = 0;
+      database
+        .collection("bookings")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            var booking = doc.data();
+            if (
+              booking.paxGroup === paxGroup &&
+              booking.restaurantName === restName &&
+              booking.mallName === mallName &&
+              booking.queueStatus === "waiting"
+            ) {
+              counter += 1;
+            }
+          });
+        })
+        .then(() => {
+          var bookTime = this.getCurrentTime();
+          var parsed = Date.parse(bookTime) + counter * 2700000;
+          var arrTime = new Date(parsed).toString();
+          database.collection("bookings").add({
+            customerID: this.customerID,
+            customerName: this.customerName,
+            mallName: mallName,
+            restaurantName: restName,
+            restaurantMall: restName + " @ " + mallName,
+            numAdult: this.numAdult,
+            numChildren: this.numChildren,
+            paxGroup: paxGroup,
+            queueNumber: this.getQueueNumber(this.numAdult, this.numChildren),
+            babyChair: this.babyChair,
+            wheelChair: this.wheelChair,
+            additionalMessage: this.additionalMessage,
+            queueStatus: "waiting",
+            bookedTiming: bookTime,
+            restaurantId: this.restaurantSelected.id,
+            arrivalTime: arrTime,
+          });
+          alert(
+            "Successfully joined queue. Please arrive at " +
+              restName +
+              " @ " +
+              mallName +
+              " by " +
+              arrTime +
+              "."
+          );
+          this.$router.push("/myprofile");
+        });
+    },
+    calculatePax: function(numAdult, numChildren) {
+      let children = 0;
+      if (numChildren !== null) {
+        children = numChildren;
+      }
+      return parseInt(numAdult, 10) + children;
+    },
+    getPaxGroup: function(numAdult, numChildren) {
+      const totalPax = this.calculatePax(numAdult, numChildren);
+      var paxGroup;
+      if (totalPax < 3) paxGroup = "1 to 2 people";
+      else if (totalPax < 5) paxGroup = "3 to 4 people";
+      else paxGroup = "5 or more people";
+      return paxGroup;
+    },
+    getQueueNumber: function(numAdult, numChildren) {
+      const totalPax = this.calculatePax(numAdult, numChildren);
+      var qCategory;
+      if (totalPax < 3) qCategory = "A";
+      else if (totalPax < 5) qCategory = "B";
+      else qCategory = "C";
+
+      database
+        .collection("queueNumbers")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            if (qCategory === "A") {
+              this.queueNum = doc.data().queueNumA;
+              this.queueNumId = doc.id;
+            } else if (qCategory === "B") {
+              this.queueNum = doc.data().queueNumB;
+              this.queueNumId = doc.id;
+            } else {
+              this.queueNum = doc.data().queueNumC;
+              this.queueNumId = doc.id;
+            }
+          });
+        });
+      this.queueNum += 1;
+      var num = String(this.queueNum);
+      while (num.length < 4) num = "0" + num;
+      var res = qCategory + num;
+
+      if (qCategory === "A") {
+        database
+          .collection("queueNumbers")
+          .doc(this.queueNumId)
+          .update({
+            queueNumA: this.queueNum,
+          });
+      } else if (qCategory === "B") {
+        database
+          .collection("queueNumbers")
+          .doc(this.queueNumId)
+          .update({
+            queueNumB: this.queueNum,
+          });
+      } else {
+        database
+          .collection("queueNumbers")
+          .doc(this.queueNumId)
+          .update({
+            queueNumC: this.queueNum,
+          });
+      }
+      alert(res);
+      return res;
+    },
+    // getDetails is for when created stage
+    getDetails: function() {
+      // get mallsList
+      database
+        .collection("malls")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            var curr = doc.data();
+            this.mallsList.push(curr);
+          });
+        });
+      // get restaurantsList
+      database
+        .collection("restaurants")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            var curr = doc.data();
+            curr.id = doc.id;
+            this.restaurantsList.push(curr);
+          });
+        });
+      // get customerName
+      database
+        .collection("users")
+        .doc(`${auth.currentUser.uid}`)
+        .get()
+        .then((querySnapShot) => {
+          this.customerName = querySnapShot.data().name;
+        });
+    },
+    selectRestaurants: function() {
+      const selectedRestaurants = this.restaurantsList.filter(
+        (restaurant) => restaurant.mallName == this.mallSelected
+      );
+      this.selectedRestaurantsList = selectedRestaurants;
+    },
+  },
+  created() {
+    this.getDetails();
+  },
+};
 </script>
 
 <style scoped>
