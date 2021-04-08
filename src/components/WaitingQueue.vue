@@ -56,22 +56,22 @@
               <tr>
                 <td>1 to 2 people</td>
                 <td>{{ getQueueNumber(key, "1 to 2 people") }}</td>
-                <td>{{ value["1 to 2 people"] - 1 || 0 }}</td>
-                <td>{{ (value["1 to 2 people"] - 1 || 0) * 5 }} minutes</td>
+                <td>{{ getNumWaiting(getQueueNumber(key, "1 to 2 people"), value["1 to 2 people"] || 0) }}</td>
+                <td>{{ (getNumWaiting(getQueueNumber(key, "1 to 2 people"), value["1 to 2 people"] || 0)) * 5 }} minutes</td>
               </tr>
 
               <tr>
                 <td>3 to 4 people</td>
                 <td>{{ getQueueNumber(key, "3 to 4 people") }}</td>
-                <td>{{ value["3 to 4 people"] - 1 || 0 }}</td>
-                <td>{{ (value["3 to 4 people"] - 1 || 0) * 6 }} minutes</td>
+                <td>{{ getNumWaiting(getQueueNumber(key, "3 to 4 people"), value["3 to 4 people"] || 0) }}</td>
+                <td>{{ (getNumWaiting(getQueueNumber(key, "3 to 4 people"), value["3 to 4 people"] || 0)) * 6 }} minutes</td>
               </tr>
 
               <tr>
                 <td>5 or more people</td>
                 <td>{{ getQueueNumber(key, "5 or more people") }}</td>
-                <td>{{ value["5 or more people"] - 1 || 0 }}</td>
-                <td>{{ (value["5 or more people"] - 1 || 0) * 8 }} minutes</td>
+                <td>{{ getNumWaiting(getQueueNumber(key, "5 or more people"), value["5 or more people"] || 0) }}</td>
+                <td>{{ (getNumWaiting(getQueueNumber(key, "5 or more people"), value["5 or more people"] || 0)) * 8 }} minutes</td>
               </tr>
             </table>
           </li>
@@ -190,13 +190,20 @@ export default {
     getQueueNumber: function (restaurantMall, paxGroup) {
       for (var i = 0; i < this.currentQueue.length; i++) {
         if (
-          this.currentQueue[i].restaurantMall == restaurantMall &&
-          this.currentQueue[i].paxGroup == paxGroup
+          this.currentQueue[i].restaurantMall === restaurantMall &&
+          this.currentQueue[i].paxGroup === paxGroup
         ) {
-          return this.currentQueue[i].QueueNumber;
+          return this.currentQueue[i].queueNumber;
         }
       }
       return "Empty";
+    },
+    getNumWaiting: function(queueNumVal, currAndWaitNum) {
+      if (queueNumVal === "Empty") {
+        return currAndWaitNum
+      } else {
+        return currAndWaitNum - 1
+      }
     },
 
     fetchData: function () {
