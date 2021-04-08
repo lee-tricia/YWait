@@ -103,6 +103,7 @@ export default {
             if (this.password != this.confirmPassword) {
               throw new Error();
             } else {
+              alert("Successfully signed up!")
               this.$router.replace({ name: "Login" });
               this.registerUser();
             }
