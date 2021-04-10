@@ -103,7 +103,7 @@ export default {
             if (this.password != this.confirmPassword) {
               throw new Error();
             } else {
-              alert("Successfully signed up!")
+              alert("Successfully signed up!");
               this.$router.replace({ name: "Login" });
               this.registerUser();
             }
@@ -122,13 +122,16 @@ export default {
       }
     },
     registerUser() {
-      database.collection("users").doc(`${auth.currentUser.uid}`).set({
-        customerID: auth.currentUser.uid,
-        name: this.name,
-        email: auth.currentUser.email,
-        contact: this.contact,
-        dob: this.dob,
-      });
+      database
+        .collection("users")
+        .doc(`${auth.currentUser.uid}`)
+        .set({
+          customerID: auth.currentUser.uid,
+          name: this.name,
+          email: auth.currentUser.email,
+          contact: this.contact,
+          dob: this.dob,
+        });
     },
   },
 };

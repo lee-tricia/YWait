@@ -2,9 +2,9 @@
   <div>
     <h1>Restaurant Queue System</h1>
     <div class="logout"><LogOutButton /></div>
-    
+
     <div id="currToCompleted">
-      <h2> - Current Queue Number - </h2>
+      <h2>- Current Queue Number -</h2>
       <table>
         <tr>
           <th>No. Pax</th>
@@ -17,26 +17,25 @@
         </tr>
 
         <tr v-for="queue in currentQueueNumber" v-bind:key="queue.id">
-          <td> {{queue['paxGroup']}} </td>
-          <td> {{queue['queueNumber']}} </td>
-          <td> {{queue['customerID']}} </td>
-          <td> {{queue['babyChair']}} </td>
-          <td> {{queue['wheelChair']}} </td>
-          <td> {{queue['additionalMessage']}} </td>
-          <td> 
+          <td>{{ queue["paxGroup"] }}</td>
+          <td>{{ queue["queueNumber"] }}</td>
+          <td>{{ queue["customerID"] }}</td>
+          <td>{{ queue["babyChair"] }}</td>
+          <td>{{ queue["wheelChair"] }}</td>
+          <td>{{ queue["additionalMessage"] }}</td>
+          <td>
             <button
-            v-on:click="changeStatus(queue['queueNumber'], 'completed')"
-          >
-            Have Arrived
-          </button>            
-          </td>          
+              v-on:click="changeStatus(queue['queueNumber'], 'completed')"
+            >
+              Have Arrived
+            </button>
+          </td>
         </tr>
       </table>
     </div>
 
-    
     <div id="waitingToCurr">
-      <h2> - Waiting Queue Numbers - </h2>
+      <h2>- Waiting Queue Numbers -</h2>
       <table>
         <tr>
           <th>No. Pax</th>
@@ -50,24 +49,21 @@
         </tr>
 
         <tr v-for="queue in waitingQueue" v-bind:key="queue.id">
-          <td> {{queue['paxGroup']}} </td>
-          <td> {{queue['queueNumber']}} </td>
-          <td> {{queue['customerID']}} </td>
-          <td> {{queue['babyChair']}} </td>
-          <td> {{queue['wheelChair']}} </td>
-          <td> {{queue['additionalMessage']}} </td>
-          <td> {{queue['arrivalTime']}} </td>
-          <td> 
-            <button
-            v-on:click="changeStatus(queue['queueNumber'], 'current')"
-          >
-            Push to Current
-          </button>          
-          </td>          
+          <td>{{ queue["paxGroup"] }}</td>
+          <td>{{ queue["queueNumber"] }}</td>
+          <td>{{ queue["customerID"] }}</td>
+          <td>{{ queue["babyChair"] }}</td>
+          <td>{{ queue["wheelChair"] }}</td>
+          <td>{{ queue["additionalMessage"] }}</td>
+          <td>{{ queue["arrivalTime"] }}</td>
+          <td>
+            <button v-on:click="changeStatus(queue['queueNumber'], 'current')">
+              Push to Current
+            </button>
+          </td>
         </tr>
       </table>
     </div>
-
   </div>
 </template>
 
@@ -84,7 +80,7 @@ export default {
   },
 
   methods: {
-    getDataFromQuery: function (query) {
+    getDataFromQuery: function(query) {
       var data = [];
       query.get().then((snapshot) => {
         snapshot.docs.forEach((doc) => {
@@ -93,23 +89,25 @@ export default {
       });
       return data;
     },
-    queueData: function (status) {
+    queueData: function(status) {
       var query = database
         .collection("bookings")
         .where("restaurantId", "==", `${auth.currentUser.uid}`)
         .where("queueStatus", "==", status);
       return this.getDataFromQuery(query);
     },
-    changeStatus: function (queueNum, newStatus) {
+    changeStatus: function(queueNum, newStatus) {
       database
         .collection("bookings")
         .where("restaurantId", "==", `${auth.currentUser.uid}`)
-        .where("queueNumber","==",queueNum)
+        .where("queueNumber", "==", queueNum)
         .limit(1)
-        .get().then((query) => {
+        .get()
+        .then((query) => {
           const queueData = query.docs[0];
-          queueData.ref.update({queueStatus: newStatus});
-        })
+          queueData.ref.update({ queueStatus: newStatus });
+          location.reload();
+        });
     },
   },
 };
@@ -137,7 +135,9 @@ h2 {
   text-align: center;
 }
 
-table, td, th {
+table,
+td,
+th {
   border-collapse: collapse;
   text-align: center;
 }
@@ -172,7 +172,7 @@ th:last-of-type {
 }
 
 button {
-  color: black; 
+  color: black;
   background-color: white;
   border: 2px solid #e7e7e7;
   transition-duration: 0.4s;
@@ -184,5 +184,4 @@ button:hover {
   cursor: pointer;
   background-color: #e7e7e7;
 }
-
 </style>
