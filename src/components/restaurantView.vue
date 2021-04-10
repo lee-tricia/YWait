@@ -106,7 +106,6 @@ export default {
         .then((query) => {
           const queueData = query.docs[0];
           queueData.ref.update({ queueStatus: newStatus });
-          location.reload();
         });
     },
   },
