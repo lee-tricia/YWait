@@ -23,14 +23,6 @@
           id="filterRestaurant"
         />
 
-        <button
-          type="button"
-          id="filterSort"
-          v-on:click="changeOrder()"
-          title="Sort by ______"
-        >
-          <sortIcon class="icon" title="Sort by _______" />
-        </button>
       </div>
 
       <div id="summary">
@@ -84,7 +76,6 @@
 <script>
 // left sorting to settle
 import { database } from "../firebase.js";
-import sortIcon from "vue-material-design-icons/Sort.vue";
 
 export default {
   data() {
@@ -102,9 +93,6 @@ export default {
       summaryData: [],
       location: "",
     };
-  },
-  components: {
-    sortIcon,
   },
   watch: {
     filterMall: function () {
@@ -150,11 +138,6 @@ export default {
       if (this.searchRestaurant) {
         query = query.where("restaurantName", "==", this.searchRestaurant);
       }
-      //if (this.sortBy == 'desc') {
-      //query = query.orderBy('mallName',this.sortBy)
-      //} else {
-      //query = query.orderBy('mallName')
-      //}
       return query;
     },
     getDataFromQuery: function (query) {
@@ -260,21 +243,12 @@ h1 {
   padding: 7px 14px;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 3%;
+  margin-right: 5%;
 }
 
 #filterBar > #filterRestaurant {
   width: 35%;
   padding: 7px 14px;
-  margin-right: 25%;
-}
-
-#filterBar > #filterSort {
-  width: 5%;
-  border: none;
-  background: none;
-  cursor: pointer;
-  align-self: center;
 }
 
 #summary {
