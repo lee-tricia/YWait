@@ -5,9 +5,7 @@
     <h1>Testing</h1>
       <ul id="malls">
         <li class="mall-items" v-for="mall in mallsList" v-bind:key="mall.id">
-            
-          <h2>{{ mall.mallName }}</h2>
-          <button v-on:click.prevent="route($event)" v-bind:id="mall.mallName">{{ mall.mallName }}</button>
+          <button class="btn" v-on:click.prevent="route($event)" v-bind:id="mall.mallName"><h2>{{ mall.mallName }}</h2></button>
           <h3>{{ mall.address }}</h3>
           <h3>Singapore {{ mall.postalCode }}</h3>
         </li>
@@ -66,6 +64,20 @@ h1 {
   font-size: 40px;
   font-weight: normal;
 }
+.btn {
+  border: none;
+  background-color: inherit;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn:hover {
+    background: #eee;
+    text-decoration: underline;
+}
+
 #wrapper {
   display: block;
   margin-left: 300px;
