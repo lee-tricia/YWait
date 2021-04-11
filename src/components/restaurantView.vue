@@ -57,7 +57,7 @@
           <td>{{ queue["additionalMessage"] }}</td>
           <td>{{ queue["arrivalTime"] }}</td>
           <td>
-            <button v-on:click="changeStatus(queue['queueNumber'], 'current')">
+            <button v-on:click="changeStatus(queue['queueNumber'], 'current');">
               Push to Current
             </button>
           </td>
@@ -105,7 +105,7 @@ export default {
         .get()
         .then((query) => {
           const queueData = query.docs[0];
-          queueData.ref.update({ queueStatus: newStatus });
+          queueData.ref.update({ queueStatus: newStatus }).then(() => { location.reload()});
         });
     },
   },
