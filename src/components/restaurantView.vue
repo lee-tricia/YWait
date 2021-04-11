@@ -9,7 +9,7 @@
         <tr>
           <th>No. Pax</th>
           <th>Current Queue Number</th>
-          <th>Customer ID</th>
+          <th>Customer Name</th>
           <th>Baby Chair</th>
           <th>Wheel Chair</th>
           <th>Additional Message</th>
@@ -19,7 +19,7 @@
         <tr v-for="queue in currentQueueNumber" v-bind:key="queue.id">
           <td>{{ queue["paxGroup"] }}</td>
           <td>{{ queue["queueNumber"] }}</td>
-          <td>{{ queue["customerID"] }}</td>
+          <td>{{ queue["customerName"] }}</td>
           <td>{{ queue["babyChair"] }}</td>
           <td>{{ queue["wheelChair"] }}</td>
           <td>{{ queue["additionalMessage"] }}</td>
@@ -40,7 +40,7 @@
         <tr>
           <th>No. Pax</th>
           <th>Queue Number</th>
-          <th>Customer ID</th>
+          <th>Customer Name</th>
           <th>Baby Chair</th>
           <th>Wheel Chair</th>
           <th>Additional Message</th>
@@ -51,7 +51,7 @@
         <tr v-for="queue in waitingQueue" v-bind:key="queue.id">
           <td>{{ queue["paxGroup"] }}</td>
           <td>{{ queue["queueNumber"] }}</td>
-          <td>{{ queue["customerID"] }}</td>
+          <td>{{ queue["customerName"] }}</td>
           <td>{{ queue["babyChair"] }}</td>
           <td>{{ queue["wheelChair"] }}</td>
           <td>{{ queue["additionalMessage"] }}</td>
