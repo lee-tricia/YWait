@@ -22,9 +22,9 @@
               id="mall"
               required
             >
-              <option v-for="mall in mallsList" v-bind:key="mall.id">
+            <option v-for="mall in mallsList" v-bind:key="mall.id" :value="mall.mallName">
                 {{ mall.mallName }}
-              </option>
+            </option>
             </select>
           </div>
 
@@ -130,7 +130,7 @@ export default {
       //FORM
       customerID: `${auth.currentUser.uid}`,
       customerName: "",
-      mallSelected: "",
+      mallSelected: "all",
       restaurantSelected: "",
       numAdult: null,
       numChildren: null,
@@ -319,15 +319,25 @@ export default {
           this.customerName = querySnapShot.data().name;
         });
     },
+    exploreMall: function() {
+        if (typeof this.$route.params.id !== 'undefined') {
+            this.mallSelected = String(this.$route.params.id);
+        }
+        this.selectRestaurants();
+    },
     selectRestaurants: function() {
-      const selectedRestaurants = this.restaurantsList.filter(
-        (restaurant) => restaurant.mallName == this.mallSelected
-      );
-      this.selectedRestaurantsList = selectedRestaurants;
+        for (const rest of this.restaurantsList) {
+            if (rest.mallName == this.mallSelected) {
+                this.selectedRestaurantsList.push(rest)
+            }
+        }
     },
   },
   created() {
     this.getDetails();
+    setTimeout(() => {
+        this.exploreMall();
+    }, 400)
   },
 };
 </script>

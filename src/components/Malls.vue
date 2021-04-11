@@ -5,7 +5,9 @@
     <h1>Testing</h1>
       <ul id="malls">
         <li class="mall-items" v-for="mall in mallsList" v-bind:key="mall.id">
+            
           <h2>{{ mall.mallName }}</h2>
+          <button v-on:click.prevent="route($event)" v-bind:id="mall.mallName">{{ mall.mallName }}</button>
           <h3>{{ mall.address }}</h3>
           <h3>Singapore {{ mall.postalCode }}</h3>
         </li>
@@ -47,6 +49,10 @@ export default {
           });
         });
     },
+    route: function(event) {
+        let mall_name = event.target.getAttribute("id")
+        this.$router.push({ name: 'JoinQ', params: { id: mall_name } })
+    }
   },
 
   created() {
