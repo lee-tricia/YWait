@@ -2,7 +2,7 @@
   <div>
     <NavBar></NavBar>
     <div id="wrapper">
-    <h1>Testing</h1>
+    <h1>Malls</h1>
       <ul id="malls">
         <li class="mall-items" v-for="mall in mallsList" v-bind:key="mall.id">
           <button class="btn" v-on:click.prevent="route($event)" v-bind:id="mall.mallName"><h2>{{ mall.mallName }}</h2></button>
