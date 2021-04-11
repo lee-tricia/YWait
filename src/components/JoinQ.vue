@@ -285,7 +285,6 @@ export default {
             queueNumC: this.queueNum,
           });
       }
-      alert(res);
       return res;
     },
     // getDetails is for when created stage
