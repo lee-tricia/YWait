@@ -7,10 +7,12 @@
         <router-link to="/joinq" exact>Join a Queue Here!</router-link>
       </div>
       <p></p>
+      <div>
       <div id="viewMalls">
         <router-link to="/malls" exact>View Malls</router-link>
       </div>
       <div id="calendar"><Calendar></Calendar></div>
+      </div>
     </div>
   </div>
 </template>
