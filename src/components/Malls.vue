@@ -69,7 +69,7 @@ export default {
 h1 {
   font-size: 40px;
   font-weight: normal;
-  margin-bottom: -40px;
+  margin-bottom: -20px;
 }
 .btn {
   border: none;
@@ -79,6 +79,7 @@ h1 {
   font-size: 16px;
   cursor: pointer;
   display: inline-block;
+  height: 60px;
 }
 
 .btn:hover {
@@ -97,14 +98,9 @@ h1 {
   font-family: sans-serif;
 }
 
-h2 {
-  margin-top: 35px;
-  margin-bottom: -5px;
-}
-
 h3 {
   font-weight: normal;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 #malls {
