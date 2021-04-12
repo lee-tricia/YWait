@@ -33,13 +33,13 @@
             {{ this.waitingMall }} by {{ this.arrivalTime }}.
           </p>
           <p>Details:</p>
-          <span>No. of Pax (Adult): {{ this.numOfAdult }}</span
+          <span>Number of Pax (Adult): {{ this.numOfAdult }}</span
           ><br />
-          <span>No. of Pax (Children): {{ this.numOfChildren }}</span
+          <span>Number of Pax (Children): {{ this.numOfChildren }}</span
           ><br />
-          <span>Baby Chair: {{ this.babychair }}</span
+          <span>Number of Baby Chair(s): {{ this.babychair }}</span
           ><br />
-          <span>Wheelchair: {{ this.wheelchair }} </span><br />
+          <span>Number of Wheelchair(s): {{ this.wheelchair }} </span><br />
         </div>
         <div id="currentQueueDetails" v-if="this.waitingRestaurant == ''">
           <p class="notInQ">
