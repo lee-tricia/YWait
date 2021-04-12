@@ -57,12 +57,15 @@
           <td>{{ queue["additionalMessage"] }}</td>
           <td>{{ queue["arrivalTime"] }}</td>
           <td>
-            <button v-on:click="changeStatus(queue['queueNumber'], 'current');">
+            <button v-on:click="changeStatus(queue['queueNumber'], 'current')">
               Push to Current
             </button>
           </td>
         </tr>
       </table>
+    </div>
+    <div id="ratingChart">
+      <zingchart :data="chartData"></zingchart>
     </div>
   </div>
 </template>
@@ -76,10 +79,22 @@ export default {
     return {
       currentQueueNumber: this.queueData("current"),
       waitingQueue: this.queueData("waiting"),
+      rating: null,
+      numRatings: null,
     };
   },
 
   methods: {
+    fetchRating: function() {
+      database
+        .collection("restaurants")
+        .doc(`${auth.currentUser.uid}`)
+        .get()
+        .then((query) => {
+          this.rating = query.data().rating;
+          this.numRatings = query.data().numRatings;
+        });
+    },
     getDataFromQuery: function(query) {
       var data = [];
       query.get().then((snapshot) => {
@@ -105,9 +120,116 @@ export default {
         .get()
         .then((query) => {
           const queueData = query.docs[0];
-          queueData.ref.update({ queueStatus: newStatus }).then(() => { location.reload()});
+          queueData.ref.update({ queueStatus: newStatus }).then(() => {
+            location.reload();
+          });
         });
     },
+  },
+
+  computed: {
+    computeEmptyRating() {
+      var emptyRating = 5 - this.rating;
+      return emptyRating;
+    },
+    chartData() {
+      return {
+        type: "ring",
+        title: {
+          text: "Average Rating",
+          color: "black",
+          "font-weight": "normal",
+          "font-family": "sans-serif",
+          fontSize: "35px",
+          "adjust-layout": true,
+        },
+        plotarea: {
+          // Margin around each ring chart
+          margin: "0 50",
+        },
+        scaleR: {
+          // Set to half ring
+          refAngle: 180,
+          aperture: 180,
+        },
+        tooltip: {
+          // Hide tooltip
+          visible: false,
+        },
+        series: [
+          {
+            // First part of the ring (colored)
+            values: [this.rating],
+            rules: [
+              {
+                rule: "this.rating <= 1",
+                backgroundColor: "#ff5f5f",
+              },
+              {
+                rule: "1 < this.rating <= 2",
+                backgroundColor: "#ffa55a",
+              },
+              {
+                rule: "2 < this.rating <= 3",
+                backgroundColor: "#faff5a",
+              },
+              {
+                rule: "3 < this.rating <= 4",
+                backgroundColor: "#b9ff55",
+              },
+              {
+                rule: "this.rating > 4",
+                backgroundColor: "#73ff5f",
+              },
+            ],
+          },
+          {
+            // Remainder of ring
+            values: [this.computeEmptyRating],
+            backgroundColor: "#EDF2F7",
+          },
+        ],
+        plot: {
+          slice: "80%", // Ring width,
+          detach: false, // Prevent ring piece from detaching on click
+          valueBox: [
+            {
+              // Percentage text
+              type: "first",
+              text: this.rating + " / 5",
+              connected: false,
+              fontColor: "black",
+              "font-family": "sans-serif",
+              fontSize: "35px",
+              placement: "center",
+              visible: true,
+              offsetY: "-85px",
+            },
+            {
+              // Label text
+              type: "first",
+              text: this.numRatings + " Total",
+              connected: false,
+              fontColor: "black",
+              "font-weight": "normal",
+              "font-family": "sans-serif",
+              fontSize: "25px",
+              placement: "center",
+              visible: true,
+              offsetY: "-35px",
+            },
+          ],
+          animation: {
+            effect: "2",
+            method: "0",
+            speed: "1000",
+          },
+        },
+      };
+    },
+  },
+  created() {
+    this.fetchRating();
   },
 };
 </script>
@@ -182,5 +304,8 @@ button {
 button:hover {
   cursor: pointer;
   background-color: #e7e7e7;
+}
+#ratingChart {
+  margin-top: 20px;
 }
 </style>
