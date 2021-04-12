@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Restaurant Queue System</h1>
+    <h1>{{ this.name }} Queue System</h1>
     <div class="logout"><LogOutButton /></div>
 
     <div id="currToCompleted">
@@ -79,13 +79,14 @@ export default {
     return {
       currentQueueNumber: this.queueData("current"),
       waitingQueue: this.queueData("waiting"),
+      name: null,
       rating: null,
       numRatings: null,
     };
   },
 
   methods: {
-    fetchRating: function() {
+    fetchItems: function() {
       database
         .collection("restaurants")
         .doc(`${auth.currentUser.uid}`)
@@ -93,6 +94,7 @@ export default {
         .then((query) => {
           this.rating = query.data().rating;
           this.numRatings = query.data().numRatings;
+          this.name = query.data().restaurantName;
         });
     },
     getDataFromQuery: function(query) {
@@ -229,7 +231,7 @@ export default {
     },
   },
   created() {
-    this.fetchRating();
+    this.fetchItems();
   },
 };
 </script>
