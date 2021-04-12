@@ -92,11 +92,19 @@ h1 {
 
 #calendar {
   display: inline-block;
-  padding: 0px 47px;
+  /* hazel's screen: 13", 100% */
+  /* padding: 0px 47px;
   padding-left: 73px;
-  width: 36%;
+  width: 40%;
   height: 517px;
-  margin-left: 20px;
+  margin-left: 10px; */
+  
+  /* rx's screen: 15", 100% */
+  padding: 7px 25px;
+  width: 40%;
+  height: 500px;
+  margin-left: 10px;
+
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
@@ -107,6 +115,10 @@ a {
 }
 
 a:visited {
+  color: white;
+}
+
+a:link {
   color: white;
 }
 
