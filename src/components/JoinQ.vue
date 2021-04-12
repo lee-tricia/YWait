@@ -536,6 +536,10 @@ textarea:focus {
   box-shadow: 0 2px 6px -8px rgba(rgba(0, 0, 0, 0.1), 0.45);
 }
 
+textarea::placeholder {
+  font-family: sans-serif;
+}
+
 #button {
   text-align: center;
 }
