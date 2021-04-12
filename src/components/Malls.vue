@@ -66,68 +66,70 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 40px;
-  font-weight: normal;
-  margin-bottom: -20px;
-}
-.btn {
-  border: none;
-  background-color: inherit;
-  padding: 10px 10px; 
-  padding-top: 0px;
-  font-size: 16px;
-  cursor: pointer;
-  display: inline-block;
-  height: 60px;
-}
+@media (max-width: 800px) {
+  h1 {
+    font-size: 40px;
+    font-weight: normal;
+    margin-bottom: -20px;
+  }
+  .btn {
+    border: none;
+    background-color: inherit;
+    padding: 10px 10px;
+    padding-top: 0px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    height: 60px;
+  }
 
-.btn:hover {
-  background: #eee;
-  text-decoration: underline;
-}
+  .btn:hover {
+    background: #eee;
+    text-decoration: underline;
+  }
 
-#wrapper {
-  display: block;
-  margin-left: 300px;
-  text-align: center;
-  grid-template-rows: 50% 50%;
-  grid-template-areas:
-    "a"
-    "b";
-  font-family: sans-serif;
-}
+  #wrapper {
+    display: block;
+    margin-left: 300px;
+    text-align: center;
+    grid-template-rows: 50% 50%;
+    grid-template-areas:
+      "a"
+      "b";
+    font-family: sans-serif;
+  }
 
-h3 {
-  font-weight: normal;
-  margin-bottom: 20px;
-}
+  h3 {
+    font-weight: normal;
+    margin-bottom: 20px;
+  }
 
-#malls {
-  display: flex;
-  flex-wrap: wrap;
-  list-style-type: none;
-  grid-area: a;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
+  #malls {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    grid-area: a;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
 
-.mall-items {
-  flex-grow: 1;
-  flex-basis: 300px;
-  text-align: center;
-  padding-left: 40px;
-  padding-right: 75px;
-}
+  .mall-items {
+    flex-grow: 1;
+    flex-basis: 300px;
+    text-align: center;
+    padding-left: 40px;
+    padding-right: 75px;
+  }
 
-map {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  grid-area: b;
-  align-items: center;
-  justify-content: center;
+  map {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    grid-area: b;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>
