@@ -65,8 +65,14 @@
       >
         <div id="queueHistoryDetails">
           <ul>
-            <li v-for="booking in history" v-bind:key="booking.id" class="queueHistory">
-              <span class="historyRestaurantMall">{{ booking.restaurantMall }}</span>
+            <li
+              v-for="booking in history"
+              v-bind:key="booking.id"
+              class="queueHistory"
+            >
+              <span class="historyRestaurantMall">{{
+                booking.restaurantMall
+              }}</span>
               <rating
                 @updateRating="ratingUpdated"
                 v-bind:restaurantId="booking.restaurantId"
@@ -86,39 +92,41 @@
           <profileIcon :size="200" />
         </div>
         <div id="editDetails">
-          <p class="editDetails">
-            <input
-              input
-              type="text"
-              name="name"
-              id="name"
-              v-model="name"
-              placeholder="Name"
-              required
-            />
-          </p>
-          <p class="editDetails">
-            <input
-              type="tel"
-              name="contact"
-              id="contact"
-              v-model="contact"
-              placeholder="Contact Number"
-              required
-            />
-          </p>
-          <p class="editDetails">
-            <input
-              type="date"
-              name="dob"
-              id="dob"
-              v-model="dob"
-              placeholder="Date of Birth"
-              required
-            />
-          </p>
-          <button v-on:click="edit()">Save</button>
-          <button v-on:click="cancel()">Cancel</button>
+          <form @submit="edit()">
+            <p class="editDetails">
+              <input
+                input
+                type="text"
+                name="name"
+                id="name"
+                v-model="name"
+                placeholder="Name"
+                required
+              />
+            </p>
+            <p class="editDetails">
+              <input
+                type="tel"
+                name="contact"
+                id="contact"
+                v-model="contact"
+                placeholder="Contact Number"
+                required
+              />
+            </p>
+            <p class="editDetails">
+              <input
+                type="date"
+                name="dob"
+                id="dob"
+                v-model="dob"
+                placeholder="Date of Birth"
+                required
+              />
+            </p>
+            <button type="submit">Save</button>
+            <button type="button" v-on:click="cancel()">Cancel</button>
+          </form>
         </div>
       </div>
 
@@ -130,38 +138,40 @@
           <profileIcon :size="200" />
         </div>
         <div id="editPassword">
-          <p class="editPassword">
-            <input
-              type="password"
-              name="oldPassword"
-              id="oldPassword"
-              v-model="oldPassword"
-              placeholder="Old Password"
-              required
-            />
-          </p>
-          <p class="editPassword">
-            <input
-              type="password"
-              name="newPassword"
-              id="newPassword"
-              v-model="newPassword"
-              placeholder="New Password"
-              required
-            />
-          </p>
-          <p class="editPassword">
-            <input
-              type="password"
-              name="confirmPassword"
-              id="confirmPassword"
-              v-model="confirmPassword"
-              placeholder="Confirm New Password"
-              required
-            />
-          </p>
-          <button v-on:click="change()">Save</button>
-          <button v-on:click="cancel()">Cancel</button>
+          <form @submit="change()">
+            <p class="editPassword">
+              <input
+                type="password"
+                name="oldPassword"
+                id="oldPassword"
+                v-model="oldPassword"
+                placeholder="Old Password"
+                required
+              />
+            </p>
+            <p class="editPassword">
+              <input
+                type="password"
+                name="newPassword"
+                id="newPassword"
+                v-model="newPassword"
+                placeholder="New Password"
+                required
+              />
+            </p>
+            <p class="editPassword">
+              <input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                v-model="confirmPassword"
+                placeholder="Confirm New Password"
+                required
+              />
+            </p>
+            <button type="submit">Save</button>
+            <button type="button" v-on:click="cancel()">Cancel</button>
+          </form>
         </div>
       </div>
     </div>
@@ -376,7 +386,7 @@ export default {
   width: 800px;
   border-radius: 10px;
   margin-left: 10px;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 #editDetails {
   margin-top: 20px;
@@ -393,7 +403,7 @@ export default {
   width: 800px;
   border-radius: 10px;
   margin-left: 10px;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 #editPassword {
   margin-top: 20px;
