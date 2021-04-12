@@ -138,40 +138,38 @@
           <profileIcon :size="200" />
         </div>
         <div id="editPassword">
-          <form @submit="change()">
-            <p class="editPassword">
-              <input
-                type="password"
-                name="oldPassword"
-                id="oldPassword"
-                v-model="oldPassword"
-                placeholder="Old Password"
-                required
-              />
-            </p>
-            <p class="editPassword">
-              <input
-                type="password"
-                name="newPassword"
-                id="newPassword"
-                v-model="newPassword"
-                placeholder="New Password"
-                required
-              />
-            </p>
-            <p class="editPassword">
-              <input
-                type="password"
-                name="confirmPassword"
-                id="confirmPassword"
-                v-model="confirmPassword"
-                placeholder="Confirm New Password"
-                required
-              />
-            </p>
-            <button type="submit">Save</button>
-            <button type="button" v-on:click="cancel()">Cancel</button>
-          </form>
+          <p class="editPassword">
+            <input
+              type="password"
+              name="oldPassword"
+              id="oldPassword"
+              v-model="oldPassword"
+              placeholder="Old Password"
+              required
+            />
+          </p>
+          <p class="editPassword">
+            <input
+              type="password"
+              name="newPassword"
+              id="newPassword"
+              v-model="newPassword"
+              placeholder="New Password"
+              required
+            />
+          </p>
+          <p class="editPassword">
+            <input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              v-model="confirmPassword"
+              placeholder="Confirm New Password"
+              required
+            />
+          </p>
+          <button v-on:click="change()">Save</button>
+          <button v-on:click="cancel()">Cancel</button>
         </div>
       </div>
     </div>
@@ -254,31 +252,39 @@ export default {
       if (this.changePassword == false) {
         this.changePassword = true;
       } else {
-        this.reauthenticate(this.oldPassword)
-          .then(() => {
-            if (this.newPassword.length < 6) {
-              alert(
-                "Password must contain at least 6 characters. Please check your password and try again."
-              );
-            } else if (this.newPassword != this.confirmPassword) {
-              alert(
-                "Passwords do not match. Please check your password and try again."
-              );
-            } else {
-              auth.currentUser.updatePassword(this.newPassword).then(() => {
-                alert("Password successfully changed.");
-                this.changePassword = false;
-                this.editProfile = false;
-              });
-            }
-          })
-          .catch((error) => {
-            if (error.code == "auth/wrong-password") {
-              alert(
-                "The current password you entered is wrong. Please check your current password and try again."
-              );
-            }
-          });
+        if (
+          this.oldPassword == null ||
+          this.newPassword == null ||
+          this.confirmPassword == null
+        ) {
+          alert("Please fill out all the fields and try again.");
+        } else {
+          this.reauthenticate(this.oldPassword)
+            .then(() => {
+              if (this.newPassword.length < 6) {
+                alert(
+                  "Password must contain at least 6 characters. Please check your password and try again."
+                );
+              } else if (this.newPassword != this.confirmPassword) {
+                alert(
+                  "Passwords do not match. Please check your password and try again."
+                );
+              } else {
+                auth.currentUser.updatePassword(this.newPassword).then(() => {
+                  alert("Password successfully changed.");
+                  this.changePassword = false;
+                  this.editProfile = false;
+                });
+              }
+            })
+            .catch((error) => {
+              if (error.code == "auth/wrong-password") {
+                alert(
+                  "The current password you entered is wrong. Please check your current password and try again."
+                );
+              }
+            });
+        }
       }
     },
     cancel() {
