@@ -68,7 +68,7 @@
           <p><input type="number" v-model="babyChair" id="babychair" /></p>
 
           <p><label for="wheelchair"> Number of Wheelchair(s)</label></p>
-          <p><input type="number" v-model="wheelchair" id="wheelchair" /></p>
+          <p><input type="number" v-model="wheelChair" id="wheelchair" /></p>
 
           <p><label for="additionalMessage">Message</label></p>
           <p>
@@ -306,6 +306,7 @@ export default {
     exploreMall: function() {
       if (typeof this.$route.params.id !== "undefined") {
         this.mallSelected = String(this.$route.params.id);
+        //alert(this.mallSelected);
       }
       this.selectRestaurants();
     },

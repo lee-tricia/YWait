@@ -5,11 +5,7 @@
       <h1>Malls</h1>
       <ul id="malls">
         <li class="mall-items" v-for="mall in mallsList" v-bind:key="mall.id">
-          <button
-            class="btn"
-            v-on:click.prevent="route($event)"
-            v-bind:id="mall.mallName"
-          >
+          <button class="btn" v-on:click.prevent="route($event)" v-bind:id="mall.mallName">
             <h2>{{ mall.mallName }}</h2>
           </button>
           <h3>{{ mall.address }}</h3>
@@ -54,7 +50,7 @@ export default {
         });
     },
     route: function(event) {
-      let mall_name = event.target.getAttribute("id");
+      let mall_name = event.currentTarget.getAttribute("id");
       this.$router.push({ name: "JoinQ", params: { id: mall_name } });
     },
   },
