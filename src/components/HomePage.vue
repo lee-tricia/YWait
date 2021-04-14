@@ -3,16 +3,15 @@
     <NavBar></NavBar>
     <div id="wrapper">
       <h1>Hi {{ this.name }}!</h1>
-
       <div id="joinQ">
         <router-link to="/joinq" exact>Join a Queue Here!</router-link>
       </div>
       <p></p>
-      <div id="secondRow">
+      <div id="mallCalendar">
         <div id="viewMalls">
           <router-link to="/malls" exact>View Malls</router-link>
         </div>
-        <div id="calendar"><Calendar></Calendar></div>
+        <Calendar id="calendar"></Calendar>
       </div>
     </div>
   </div>
@@ -58,8 +57,8 @@ h1 {
 
 #joinQ {
   padding: 7px 25px;
-  width: 90%;
-  height: 300px;
+  width: 95%;
+  height: 350px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: url("../../images/home-page-dashboard.jpeg");
@@ -74,8 +73,9 @@ h1 {
   padding-top: 10px;
 }
 
-#secondRow {
-  width : 100%;
+#mallCalendar {
+  display: flex;
+  height: 450px;
 }
 
 #viewMalls {
@@ -83,7 +83,6 @@ h1 {
   padding: 7px 25px;
   vertical-align: top;
   width: 45%;
-  height: 450px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: url("../../images/home-page-view.jpeg");
@@ -94,15 +93,15 @@ h1 {
   text-align: left;
   font-size: 40px;
   text-shadow: 2px 2px black;
-  padding-top: 1%;
+  padding-top: 10px;
 }
 
 #calendar {
   display: inline-block;
-  padding: 7px 25px;
-  width: 40%;
-  height: 453px;
-  margin-left: 1%;
+  padding: 50px 25px;
+  width: 44.55%;
+  margin-left: 2%;
+
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
