@@ -494,7 +494,7 @@ h2 {
   border-top: 3px solid #222;
   background-color: white;
   height: auto;
-  width: 100%;
+  width: 1550px;
   /* margin-left: auto; */
   margin-right: auto;
   margin-top: 30px;
@@ -514,7 +514,7 @@ p.note {
   border-top: 3px solid #222;
   background-color: white;
   height: auto;
-  width: 100%;
+  width: 1550px;
   /* margin-left: auto; */
   margin-right: auto;
   margin-top: 30px;
@@ -535,6 +535,6 @@ button.rate {
 li.queueHistory {
   text-align: center;
   column-count: 3;
-  column-gap: 160px;
+  column-gap: 200px;
 }
 </style>
