@@ -31,7 +31,7 @@
             >My Profile</router-link
           >
         </li>
-        <br /><br />
+        <br /><br /><br />
       </ul>
       <chatIcon class="chatIcon" :size="50" />
       <div class="help">
@@ -84,7 +84,7 @@ img {
 }
 nav {
   height: 100%;
-  width: 19.5%;
+  width: 300px;
   position: fixed;
   top: 0;
   left: 0;
@@ -145,8 +145,7 @@ p.emailLink {
   color: blue;
 }
 div.logout {
-  margin-top: 10px;
-  
+  margin-top: 30px;
 }
 ul {
   list-style-type: none;
