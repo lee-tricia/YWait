@@ -88,6 +88,7 @@ h1 {
   background: url("../../images/home-page-view.jpeg");
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 100%;
   color: white;
   font-weight: bold;
   text-align: left;
