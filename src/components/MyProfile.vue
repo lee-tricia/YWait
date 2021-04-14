@@ -535,6 +535,6 @@ button.rate {
 li.queueHistory {
   text-align: center;
   column-count: 3;
-  column-gap: 200px;
+  column-gap: 160px;
 }
 </style>
