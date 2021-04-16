@@ -139,11 +139,11 @@ export default {
       return {
         type: "ring",
         title: {
-          text: "Average Rating",
+          text: "- Average Rating -",
           color: "black",
-          "font-weight": "normal",
+          "font-weight": "bold",
           "font-family": "sans-serif",
-          fontSize: "35px",
+          fontSize: "22px",
           "adjust-layout": true,
         },
         plotarea: {
@@ -257,6 +257,7 @@ h1 {
 h2 {
   margin-top: 4%;
   text-align: center;
+  font-size: 22px;
 }
 
 table,
@@ -274,7 +275,7 @@ table {
 #currToCompleted > table {
   width: 70%;
   margin-left: 15%;
-  margin-bottom: 5%;
+  margin-bottom: -1%;
 }
 
 #waitingToCurr > table {
@@ -309,6 +310,6 @@ button:hover {
   background-color: #e7e7e7;
 }
 #ratingChart {
-  margin-top: 20px;
+  margin-top: 3%;
 }
 </style>
