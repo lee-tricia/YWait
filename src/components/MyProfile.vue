@@ -18,71 +18,6 @@
           <button v-on:click="change()">Change Password</button>
         </div>
       </div>
-      <br />
-
-      <h2 v-if="this.editProfile == false && this.changePassword == false">
-        Current Queue Details
-      </h2>
-      <div
-        id="currentQueue"
-        v-if="this.editProfile == false && this.changePassword == false"
-      >
-        <div id="currentQueueDetails" v-if="this.waitingRestaurant != ''">
-          <p>
-            Please arrive at {{ this.waitingRestaurant }} @
-            {{ this.waitingMall }} by {{ this.arrivalTime }}.
-          </p>
-          <p>Details:</p>
-          <span>Number of Pax (Adult): {{ this.numOfAdult }}</span
-          ><br />
-          <span>Number of Pax (Children): {{ this.numOfChildren }}</span
-          ><br />
-          <span>Number of Baby Chair(s): {{ this.babychair }}</span
-          ><br />
-          <span>Number of Wheelchair(s): {{ this.wheelchair }} </span><br />
-        </div>
-        <div id="currentQueueDetails" v-if="this.waitingRestaurant == ''">
-          <p class="notInQ">
-            Currently not in any queue. Click on 'Join a Queue' to join a queue.
-          </p>
-        </div>
-      </div>
-      <p
-        class="note"
-        v-if="this.editProfile == false && this.changePassword == false"
-      >
-        Note: Full party must be present to be seated. <br />
-        The queue seatings will be given up if you are late due to limited
-        seating capacity.
-      </p>
-
-      <h2 v-if="this.editProfile == false && this.changePassword == false">
-        Queue History
-      </h2>
-      <div
-        id="queueHistory"
-        v-if="this.editProfile == false && this.changePassword == false"
-      >
-        <div id="queueHistoryDetails">
-          <ul>
-            <li
-              v-for="booking in history"
-              v-bind:key="booking.id"
-              class="queueHistory"
-            >
-              <span class="historyRestaurantMall">{{
-                booking.restaurantMall
-              }}</span>
-              <rating
-                @updateRating="ratingUpdated"
-                v-bind:restaurantId="booking.restaurantId"
-              ></rating>
-              <button class="rate" v-on:click="rate()">Rate</button>
-            </li>
-            <br />
-          </ul>
-        </div>
-      </div>
 
       <div
         id="editProfile"
@@ -170,6 +105,61 @@
           </p>
           <button v-on:click="change()">Save</button>
           <button v-on:click="cancel()">Cancel</button>
+        </div>
+      </div>
+
+      <h2>
+        Current Queue Details
+      </h2>
+      <div id="currentQueue">
+        <div id="currentQueueDetails" v-if="this.waitingRestaurant != ''">
+          <p>
+            Please arrive at {{ this.waitingRestaurant }} @
+            {{ this.waitingMall }} by {{ this.arrivalTime }}.
+          </p>
+          <p>Details:</p>
+          <span>Number of Pax (Adult): {{ this.numOfAdult }}</span
+          ><br />
+          <span>Number of Pax (Children): {{ this.numOfChildren }}</span
+          ><br />
+          <span>Number of Baby Chair(s): {{ this.babychair }}</span
+          ><br />
+          <span>Number of Wheelchair(s): {{ this.wheelchair }} </span><br />
+        </div>
+        <div id="currentQueueDetails" v-if="this.waitingRestaurant == ''">
+          <p class="notInQ">
+            Currently not in any queue. Click on 'Join a Queue' to join a queue.
+          </p>
+        </div>
+      </div>
+      <p class="note">
+        Note: Full party must be present to be seated. <br />
+        The queue seatings will be given up if you are late due to limited
+        seating capacity.
+      </p>
+
+      <h2>
+        Queue History
+      </h2>
+      <div id="queueHistory">
+        <div id="queueHistoryDetails">
+          <ul>
+            <li
+              v-for="booking in history"
+              v-bind:key="booking.id"
+              class="queueHistory"
+            >
+              <span class="historyRestaurantMall">{{
+                booking.restaurantMall
+              }}</span>
+              <rating
+                @updateRating="ratingUpdated"
+                v-bind:restaurantId="booking.restaurantId"
+              ></rating>
+              <button class="rate" v-on:click="rate()">Rate</button>
+            </li>
+            <br />
+          </ul>
         </div>
       </div>
     </div>
@@ -288,10 +278,9 @@ export default {
       }
     },
     cancel() {
-      if (this.editProfile == true) {
-        this.editProfile = false;
-        this.changePassword = false;
-      } 
+      this.editProfile = false;
+      this.changePassword = false;
+      this.fetchItems();
     },
     getCurrentAndHist() {
       database
@@ -389,7 +378,7 @@ export default {
   width: 800px;
   border-radius: 10px;
   margin-left: 10px;
-  margin-top: 4px;
+  margin-top: 30px;
 }
 #editDetails {
   margin-top: 20px;
@@ -406,7 +395,7 @@ export default {
   width: 800px;
   border-radius: 10px;
   margin-left: 10px;
-  margin-top: 4px;
+  margin-top: 30px;
 }
 #editPassword {
   margin-top: 20px;
@@ -492,7 +481,6 @@ h2 {
   background-color: white;
   height: auto;
   width: 100%;
-  /* margin-left: auto; */
   margin-right: auto;
   margin-top: 30px;
   background-color: #eee;
@@ -504,7 +492,6 @@ h2 {
   padding-bottom: 10px;
 }
 p.note {
-  /* margin-left: 30px; */
   font-style: italic;
 }
 #queueHistory {
@@ -512,7 +499,6 @@ p.note {
   background-color: white;
   height: auto;
   width: 100%;
-  /* margin-left: auto; */
   margin-right: auto;
   margin-top: 30px;
   background-color: #eee;
