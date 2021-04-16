@@ -322,7 +322,7 @@ export default {
     this.getDetails();
     setTimeout(() => {
       this.exploreMall();
-    }, 300);
+    }, 400);
   },
 };
 </script>
