@@ -110,7 +110,8 @@ export default {
       var query = database
         .collection("bookings")
         .where("restaurantId", "==", `${auth.currentUser.uid}`)
-        .where("queueStatus", "==", status);
+        .where("queueStatus", "==", status)
+        .orderBy("arrivalTime");
       return this.getDataFromQuery(query);
     },
     changeStatus: function(queueNum, newStatus) {
