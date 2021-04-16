@@ -150,14 +150,6 @@ export default {
           );
           this.$router.push("/myprofile");
     },
-    getCurrentDate: function() {
-      var today = new Date();
-      var dd = String(today.getDate()).padStart(2, "0");
-      var mm = String(today.getMonth() + 1).padStart(2, "0");
-      var yyyy = today.getFullYear();
-      today = dd + "/" + mm + "/" + yyyy;
-      return today;
-    },
     getCurrentTime: function() {
       const curr = new Date();
       return curr.toString();
@@ -182,7 +174,6 @@ export default {
         })
         .then(() => {
           var bookTime = this.getCurrentTime();
-          var bookDate = this.getCurrentDate();
           var parsed = Date.parse(bookTime) + counter * 2700000;
           this.arrTime = new Date(parsed).toString();
           database.collection("bookings").add({
@@ -202,7 +193,6 @@ export default {
             bookedTiming: bookTime,
             restaurantId: this.restaurantSelected.id,
             arrivalTime: this.arrTime,
-            bookedDate: bookDate,
           });
         });
     },
