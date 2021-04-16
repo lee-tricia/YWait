@@ -291,10 +291,11 @@ export default {
       if (this.editProfile == true) {
         this.editProfile = false;
         this.changePassword = false;
-      } else {
-        this.changePassword = false;
-        this.editProfile = false;
-      }
+      } 
+      // else {
+      //   this.changePassword = false;
+      //   this.editProfile = false;
+      // }
     },
     getCurrentAndHist() {
       database
