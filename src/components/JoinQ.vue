@@ -127,6 +127,8 @@ export default {
 
       queueNum: 0,
       queueNumId: "",
+
+      arrTime: null,
     };
   },
   methods: {
@@ -136,6 +138,17 @@ export default {
       var restName = this.restaurantSelected.restaurantName;
       var mallName = this.mallSelected;
       this.getArrivalTime(paxGroup, restName, mallName);
+      //alert here
+      alert(
+            "Successfully joined queue. Please arrive at " +
+              this.restName +
+              " @ " +
+              this.mallName +
+              " by " +
+              this.arrTime +
+              "."
+          );
+          this.$router.push("/myprofile");
     },
     getCurrentDate: function() {
       var today = new Date();
@@ -171,7 +184,7 @@ export default {
           var bookTime = this.getCurrentTime();
           var bookDate = this.getCurrentDate();
           var parsed = Date.parse(bookTime) + counter * 2700000;
-          var arrTime = new Date(parsed).toString();
+          this.arrTime = new Date(parsed).toString();
           database.collection("bookings").add({
             customerID: this.customerID,
             customerName: this.customerName,
@@ -188,19 +201,9 @@ export default {
             queueStatus: "waiting",
             bookedTiming: bookTime,
             restaurantId: this.restaurantSelected.id,
-            arrivalTime: arrTime,
+            arrivalTime: this.arrTime,
             bookedDate: bookDate,
           });
-          alert(
-            "Successfully joined queue. Please arrive at " +
-              restName +
-              " @ " +
-              mallName +
-              " by " +
-              arrTime +
-              "."
-          );
-          this.$router.push("/myprofile");
         });
     },
     calculatePax: function(numAdult, numChildren) {
