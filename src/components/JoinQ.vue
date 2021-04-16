@@ -58,17 +58,17 @@
             >
           </p>
           <p>
-            <input type="number" v-model="numAdult" id="numAdult" required />
+            <input type="number" v-model="numAdult" id="numAdult" required min="0"/>
           </p>
 
           <p><label for="numChildren"> Number of Pax (Children) </label></p>
-          <p><input type="number" v-model="numChildren" id="numChildren" /></p>
+          <p><input type="number" v-model="numChildren" id="numChildren" min="0"/></p>
 
           <p><label for="babychair"> Number of Baby Chair(s)</label></p>
-          <p><input type="number" v-model="babyChair" id="babychair" /></p>
+          <p><input type="number" v-model="babyChair" id="babychair" min="0"/></p>
 
           <p><label for="wheelchair"> Number of Wheelchair(s)</label></p>
-          <p><input type="number" v-model="wheelChair" id="wheelchair" /></p>
+          <p><input type="number" v-model="wheelChair" id="wheelchair" min="0"/></p>
 
           <p><label for="additionalMessage">Message</label></p>
           <p>

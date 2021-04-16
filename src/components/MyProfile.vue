@@ -292,10 +292,6 @@ export default {
         this.editProfile = false;
         this.changePassword = false;
       } 
-      // else {
-      //   this.changePassword = false;
-      //   this.editProfile = false;
-      // }
     },
     getCurrentAndHist() {
       database
