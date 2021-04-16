@@ -495,7 +495,7 @@ h2 {
   background-color: white;
   height: auto;
   width: 1550px;
-  margin-left: auto;
+  /* margin-left: auto; */
   margin-right: auto;
   margin-top: 30px;
   background-color: #eee;
@@ -507,7 +507,7 @@ h2 {
   padding-bottom: 10px;
 }
 p.note {
-  margin-left: 30px;
+  /* margin-left: 30px; */
   font-style: italic;
 }
 #queueHistory {
@@ -515,7 +515,7 @@ p.note {
   background-color: white;
   height: auto;
   width: 1550px;
-  margin-left: auto;
+  /* margin-left: auto; */
   margin-right: auto;
   margin-top: 30px;
   background-color: #eee;
