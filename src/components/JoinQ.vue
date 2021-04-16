@@ -58,17 +58,34 @@
             >
           </p>
           <p>
-            <input type="number" v-model="numAdult" id="numAdult" required min="0"/>
+            <input
+              type="number"
+              v-model="numAdult"
+              id="numAdult"
+              required
+              min="0"
+            />
           </p>
 
           <p><label for="numChildren"> Number of Pax (Children) </label></p>
-          <p><input type="number" v-model="numChildren" id="numChildren" min="0"/></p>
+          <p>
+            <input
+              type="number"
+              v-model="numChildren"
+              id="numChildren"
+              min="0"
+            />
+          </p>
 
           <p><label for="babychair"> Number of Baby Chair(s)</label></p>
-          <p><input type="number" v-model="babyChair" id="babychair" min="0"/></p>
+          <p>
+            <input type="number" v-model="babyChair" id="babychair" min="0" />
+          </p>
 
           <p><label for="wheelchair"> Number of Wheelchair(s)</label></p>
-          <p><input type="number" v-model="wheelChair" id="wheelchair" min="0"/></p>
+          <p>
+            <input type="number" v-model="wheelChair" id="wheelchair" min="0" />
+          </p>
 
           <p><label for="additionalMessage">Message</label></p>
           <p>
@@ -127,30 +144,17 @@ export default {
 
       queueNum: 0,
       queueNumId: "",
-
-      arrTime: null,
     };
   },
   methods: {
     // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
-    joinQueue: function() {
+    joinQueue: function () {
       var paxGroup = this.getPaxGroup(this.numAdult, this.numChildren);
       var restName = this.restaurantSelected.restaurantName;
       var mallName = this.mallSelected;
       this.getArrivalTime(paxGroup, restName, mallName);
-      //alert here
-      alert(
-            "Successfully joined queue. Please arrive at " +
-              this.restName +
-              " @ " +
-              this.mallName +
-              " by " +
-              this.arrTime +
-              "."
-          );
-          this.$router.push("/myprofile");
     },
-    getCurrentTime: function() {
+    getCurrentTime: function () {
       const curr = new Date();
       return curr.toString();
     },
@@ -175,7 +179,7 @@ export default {
         .then(() => {
           var bookTime = this.getCurrentTime();
           var parsed = Date.parse(bookTime) + counter * 2700000;
-          this.arrTime = new Date(parsed).toString();
+          var arrTime = new Date(parsed).toString();
           database.collection("bookings").add({
             customerID: this.customerID,
             customerName: this.customerName,
@@ -192,18 +196,28 @@ export default {
             queueStatus: "waiting",
             bookedTiming: bookTime,
             restaurantId: this.restaurantSelected.id,
-            arrivalTime: this.arrTime,
+            arrivalTime: arrTime,
           });
+          alert(
+            "Successfully joined queue. Please arrive at " +
+              restName +
+              " @ " +
+              mallName +
+              " by " +
+              arrTime +
+              "."
+          );
+          this.$router.push("/myprofile");
         });
     },
-    calculatePax: function(numAdult, numChildren) {
+    calculatePax: function (numAdult, numChildren) {
       let children = 0;
       if (numChildren !== null) {
         children = numChildren;
       }
       return parseInt(numAdult, 10) + children;
     },
-    getPaxGroup: function(numAdult, numChildren) {
+    getPaxGroup: function (numAdult, numChildren) {
       const totalPax = this.calculatePax(numAdult, numChildren);
       var paxGroup;
       if (totalPax < 3) paxGroup = "1 to 2 people";
@@ -211,7 +225,7 @@ export default {
       else paxGroup = "5 or more people";
       return paxGroup;
     },
-    getQueueNumber: function(numAdult, numChildren) {
+    getQueueNumber: function (numAdult, numChildren) {
       const totalPax = this.calculatePax(numAdult, numChildren);
       var qCategory;
       if (totalPax < 3) qCategory = "A";
@@ -241,31 +255,22 @@ export default {
       var res = qCategory + num;
 
       if (qCategory === "A") {
-        database
-          .collection("queueNumbers")
-          .doc(this.queueNumId)
-          .update({
-            queueNumA: this.queueNum,
-          });
+        database.collection("queueNumbers").doc(this.queueNumId).update({
+          queueNumA: this.queueNum,
+        });
       } else if (qCategory === "B") {
-        database
-          .collection("queueNumbers")
-          .doc(this.queueNumId)
-          .update({
-            queueNumB: this.queueNum,
-          });
+        database.collection("queueNumbers").doc(this.queueNumId).update({
+          queueNumB: this.queueNum,
+        });
       } else {
-        database
-          .collection("queueNumbers")
-          .doc(this.queueNumId)
-          .update({
-            queueNumC: this.queueNum,
-          });
+        database.collection("queueNumbers").doc(this.queueNumId).update({
+          queueNumC: this.queueNum,
+        });
       }
       return res;
     },
     // getDetails is for when created stage
-    getDetails: function() {
+    getDetails: function () {
       // get mallsList
       database
         .collection("malls")
@@ -296,14 +301,14 @@ export default {
           this.customerName = querySnapShot.data().name;
         });
     },
-    exploreMall: function() {
+    exploreMall: function () {
       if (typeof this.$route.params.id !== "undefined") {
         this.mallSelected = String(this.$route.params.id);
         //alert(this.mallSelected);
       }
       this.selectRestaurants();
     },
-    selectRestaurants: function() {
+    selectRestaurants: function () {
       for (const rest of this.restaurantsList) {
         if (rest.mallName == this.mallSelected) {
           this.selectedRestaurantsList.push(rest);
