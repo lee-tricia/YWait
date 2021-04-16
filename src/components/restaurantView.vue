@@ -198,7 +198,7 @@ export default {
             {
               // Percentage text
               type: "first",
-              text: this.rating + " / 5",
+              text: this.rating.toFixed(2) + " / 5",
               connected: false,
               fontColor: "black",
               "font-family": "sans-serif",
