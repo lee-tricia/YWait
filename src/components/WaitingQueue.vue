@@ -179,10 +179,10 @@ export default {
           return this.currentQueue[i].queueNumber;
         }
       }
-      return "Empty";
+      return "-";
     },
     getNumWaiting: function(queueNumVal, currAndWaitNum) {
-      if (queueNumVal === "Empty") {
+      if (queueNumVal === "-") {
         return currAndWaitNum
       } else {
         return currAndWaitNum - 1
