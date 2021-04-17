@@ -268,6 +268,16 @@ export default {
         },
         series: [{
           values: [
+            this.countDayTimeFrequency(0, 0),
+            this.countDayTimeFrequency(1, 0),
+            this.countDayTimeFrequency(2, 0),
+            this.countDayTimeFrequency(3, 0),
+            this.countDayTimeFrequency(4, 0),
+            this.countDayTimeFrequency(5, 0),
+            this.countDayTimeFrequency(6, 0)], 
+            "text": "Morning"
+        }, { 
+          values: [
             this.countDayTimeFrequency(0, 1),
             this.countDayTimeFrequency(1, 1),
             this.countDayTimeFrequency(2, 1),
@@ -275,7 +285,7 @@ export default {
             this.countDayTimeFrequency(4, 1),
             this.countDayTimeFrequency(5, 1),
             this.countDayTimeFrequency(6, 1)], 
-            "text": "Morning"
+            "text": "Afternoon"
         }, { 
           values: [
             this.countDayTimeFrequency(0, 2),
@@ -285,16 +295,6 @@ export default {
             this.countDayTimeFrequency(4, 2),
             this.countDayTimeFrequency(5, 2),
             this.countDayTimeFrequency(6, 2)], 
-            "text": "Afternoon"
-        }, { 
-          values: [
-            this.countDayTimeFrequency(0, 3),
-            this.countDayTimeFrequency(1, 3),
-            this.countDayTimeFrequency(2, 3),
-            this.countDayTimeFrequency(3, 3),
-            this.countDayTimeFrequency(4, 3),
-            this.countDayTimeFrequency(5, 3),
-            this.countDayTimeFrequency(6, 3)], 
             "text": "Night"
         }],
         plot: {
