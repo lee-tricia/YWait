@@ -64,8 +64,8 @@
         </tr>
       </table>
     </div>
-    <div id="ratingChart">
-      <zingchart :data="chartData"></zingchart>
+    <div id="charts">
+      <zingchart :data="myConfig"></zingchart>
     </div>
   </div>
 </template>
@@ -82,6 +82,10 @@ export default {
       name: null,
       rating: null,
       numRatings: null,
+      daysOfWeek: [],
+      daysOfWeekFreq: null,
+      partsOfDay: [],
+      partsOfDayFreq: null,
     };
   },
 
@@ -95,6 +99,18 @@ export default {
           this.rating = query.data().rating;
           this.numRatings = query.data().numRatings;
           this.name = query.data().restaurantName;
+        });
+    },
+    fetchDays: function() {
+      database
+        .collection("bookings")
+        .where("restaurantId", "==", auth.currentUser.uid)
+        .get()
+        .then((snap) => {
+          snap.forEach((doc) => {
+            this.daysOfWeek.push(doc.data().dayType);
+            this.partsOfDay.push(doc.data().partOfDay);
+          });
         });
     },
     getDataFromQuery: function(query) {
@@ -128,6 +144,46 @@ export default {
           });
         });
     },
+    countDaysOfWeekFrequency() {
+      let count = {};
+      for (let i = 0; i < this.daysOfWeek.length; i++) {
+        var day = this.daysOfWeek[i];
+        if (count[day]) {
+          count[day] += 1;
+        } else {
+          count[day] = 1;
+        }
+      }
+      this.daysOfWeekFreq = count;
+      for (let i = 0; i < 7; i++) {
+        if (this.daysOfWeekFreq[i] == null) {
+          this.daysOfWeekFreq[i] = 0;
+        } else {
+          continue;
+        }
+      }
+      return this.daysOfWeekFreq;
+    },
+    countPartsOfDayFrequency() {
+      let count = {};
+      for (let i = 0; i < this.partsOfDay.length; i++) {
+        var time = this.partsOfDay[i];
+        if (count[time]) {
+          count[time] += 1;
+        } else {
+          count[time] = 1;
+        }
+      }
+      this.partsOfDayFreq = count;
+      for (let i = 0; i < 3; i++) {
+        if (this.partsOfDayFreq[i] == null) {
+          this.partsOfDayFreq[i] = 0;
+        } else {
+          continue;
+        }
+      }
+      return this.partsOfDayFreq;
+    },
   },
 
   computed: {
@@ -135,7 +191,7 @@ export default {
       var emptyRating = 5 - this.rating;
       return emptyRating;
     },
-    chartData() {
+    ratingChartData() {
       return {
         type: "ring",
         title: {
@@ -145,10 +201,6 @@ export default {
           "font-family": "sans-serif",
           fontSize: "22px",
           "adjust-layout": true,
-        },
-        plotarea: {
-          // Margin around each ring chart
-          margin: "0 50",
         },
         scaleR: {
           // Set to half ring
@@ -230,9 +282,94 @@ export default {
         },
       };
     },
+    dayChartData() {
+      this.countDaysOfWeekFrequency();
+      return {
+        type: "bar",
+        "scale-x": {
+          labels: [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ],
+        },
+        title: {
+          text: "- Distribution of Customers in a Week -",
+          color: "black",
+          "font-weight": "bold",
+          "font-family": "sans-serif",
+          fontSize: "22px",
+          "adjust-layout": true,
+        },
+        plotarea: {
+          "adjust-layout": true,
+        },
+        series: [
+          {
+            values: [this.daysOfWeekFreq[0], this.daysOfWeekFreq[1], this.daysOfWeekFreq[2], this.daysOfWeekFreq[3], this.daysOfWeekFreq[4], this.daysOfWeekFreq[5], this.daysOfWeekFreq[6]],
+          },
+        ],
+        plot: {
+          styles: [ "#B276B2", "#5DA5DA", "#5DA5DA", "#5DA5DA", "#5DA5DA", "#5DA5DA", "#B276B2"],
+          animation: {
+            effect: "2",
+            method: "0",
+            speed: "1000",
+          },
+        },
+      };
+    },
+    partOfDayChartData() {
+      this.countPartsOfDayFrequency();
+      return {
+        type: "bar",
+        "scale-x": {
+          labels: ["Morning", "Afternoon", "Evening"],
+        },
+        title: {
+          text: "- Distribution of Customers in a Day -",
+          color: "black",
+          "font-weight": "bold",
+          "font-family": "sans-serif",
+          fontSize: "22px",
+          "adjust-layout": true,
+        },
+        plotarea: {
+          "adjust-layout": true,
+        },
+        series: [
+          {
+            values: [this.partsOfDayFreq[0], this.partsOfDayFreq[1], this.partsOfDayFreq[2]],
+          },
+        ],
+        plot: {
+          styles: ["#E5DE44", "#EF810E", "#053752"],
+          animation: {
+            effect: "2",
+            method: "0",
+            speed: "1000",
+          },
+        },
+      };
+    },
+    myConfig() {
+      return {
+        layout: "horizontal",
+        graphset: [
+          this.ratingChartData,
+          this.dayChartData,
+          this.partOfDayChartData,
+        ],
+      };
+    },
   },
   created() {
     this.fetchItems();
+    this.fetchDays();
   },
 };
 </script>
@@ -309,7 +446,7 @@ button:hover {
   cursor: pointer;
   background-color: #e7e7e7;
 }
-#ratingChart {
+#charts {
   margin-top: 3%;
 }
 </style>
