@@ -286,6 +286,9 @@ export default {
       this.countDaysOfWeekFrequency();
       return {
         type: "bar",
+        globals: {
+          decimals: 0,
+        },
         "scale-x": {
           labels: [
             "Sunday",
@@ -310,11 +313,27 @@ export default {
         },
         series: [
           {
-            values: [this.daysOfWeekFreq[0], this.daysOfWeekFreq[1], this.daysOfWeekFreq[2], this.daysOfWeekFreq[3], this.daysOfWeekFreq[4], this.daysOfWeekFreq[5], this.daysOfWeekFreq[6]],
+            values: [
+              this.daysOfWeekFreq[0],
+              this.daysOfWeekFreq[1],
+              this.daysOfWeekFreq[2],
+              this.daysOfWeekFreq[3],
+              this.daysOfWeekFreq[4],
+              this.daysOfWeekFreq[5],
+              this.daysOfWeekFreq[6],
+            ],
           },
         ],
         plot: {
-          styles: [ "#B276B2", "#5DA5DA", "#5DA5DA", "#5DA5DA", "#5DA5DA", "#5DA5DA", "#B276B2"],
+          styles: [
+            "#B276B2",
+            "#5DA5DA",
+            "#5DA5DA",
+            "#5DA5DA",
+            "#5DA5DA",
+            "#5DA5DA",
+            "#B276B2",
+          ],
           animation: {
             effect: "2",
             method: "0",
@@ -343,7 +362,11 @@ export default {
         },
         series: [
           {
-            values: [this.partsOfDayFreq[0], this.partsOfDayFreq[1], this.partsOfDayFreq[2]],
+            values: [
+              this.partsOfDayFreq[0],
+              this.partsOfDayFreq[1],
+              this.partsOfDayFreq[2],
+            ],
           },
         ],
         plot: {
