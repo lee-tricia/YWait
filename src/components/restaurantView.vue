@@ -269,7 +269,7 @@ export default {
           step: 1,
         },
         title: {
-          text: "- Distribution of Customers in a Week -",
+          text: "- Distribution of Bookings in a Week -",
           color: "black",
           "font-weight": "bold",
           "font-family": "sans-serif",
