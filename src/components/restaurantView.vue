@@ -82,10 +82,7 @@ export default {
       name: null,
       rating: null,
       numRatings: null,
-      daysOfWeek: [],
-      daysOfWeekFreq: null,
-      partsOfDay: [],
-      partsOfDayFreq: null,
+      dayTime: [],
     };
   },
 
@@ -144,46 +141,26 @@ export default {
           });
         });
     },
-    countDaysOfWeekFrequency() {
-      let count = {};
-      for (let i = 0; i < this.daysOfWeek.length; i++) {
-        var day = this.daysOfWeek[i];
-        if (count[day]) {
-          count[day] += 1;
-        } else {
-          count[day] = 1;
-        }
-      }
-      this.daysOfWeekFreq = count;
-      for (let i = 0; i < 7; i++) {
-        if (this.daysOfWeekFreq[i] == null) {
-          this.daysOfWeekFreq[i] = 0;
-        } else {
-          continue;
-        }
-      }
-      return this.daysOfWeekFreq;
+    fetchDayTime: function() {
+      database
+        .collection("bookings")
+        .where("restaurantId", "==", auth.currentUser.uid)
+        .get()
+        .then((snap) => {
+          snap.forEach((doc) => {
+            this.dayTime.push(doc.data());
+          });
+        });
     },
-    countPartsOfDayFrequency() {
-      let count = {};
-      for (let i = 0; i < this.partsOfDay.length; i++) {
-        var time = this.partsOfDay[i];
-        if (count[time]) {
-          count[time] += 1;
-        } else {
-          count[time] = 1;
+    countDayTimeFrequency: function(getDay, getTime) {
+      var count = 0
+      for (let i = 0; i < this.dayTime.length; i++) {
+        if (this.dayTime[i].dayType === getDay && this.dayTime[i].partOfDay === getTime) {
+          count += 1
         }
       }
-      this.partsOfDayFreq = count;
-      for (let i = 0; i < 3; i++) {
-        if (this.partsOfDayFreq[i] == null) {
-          this.partsOfDayFreq[i] = 0;
-        } else {
-          continue;
-        }
-      }
-      return this.partsOfDayFreq;
-    },
+      return count
+    }
   },
 
   computed: {
@@ -282,23 +259,14 @@ export default {
         },
       };
     },
-    dayChartData() {
-      this.countDaysOfWeekFrequency();
+    DayTimeChartData() {
       return {
         type: "bar",
-        globals: {
-          decimals: 0,
-        },
         "scale-x": {
-          labels: [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-          ],
+          labels: ["Sunday", "Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        },
+        "scale-y": {
+          step: 1,
         },
         title: {
           text: "- Distribution of Customers in a Week -",
@@ -311,66 +279,41 @@ export default {
         plotarea: {
           "adjust-layout": true,
         },
-        series: [
-          {
-            values: [
-              this.daysOfWeekFreq[0],
-              this.daysOfWeekFreq[1],
-              this.daysOfWeekFreq[2],
-              this.daysOfWeekFreq[3],
-              this.daysOfWeekFreq[4],
-              this.daysOfWeekFreq[5],
-              this.daysOfWeekFreq[6],
-            ],
-          },
-        ],
+        series: [{
+          values: [
+            this.countDayTimeFrequency(0, 1),
+            this.countDayTimeFrequency(1, 1),
+            this.countDayTimeFrequency(2, 1),
+            this.countDayTimeFrequency(3, 1),
+            this.countDayTimeFrequency(4, 1),
+            this.countDayTimeFrequency(5, 1),
+            this.countDayTimeFrequency(6, 1)], 
+            "text": "Morning"
+        }, { 
+          values: [
+            this.countDayTimeFrequency(0, 2),
+            this.countDayTimeFrequency(1, 2),
+            this.countDayTimeFrequency(2, 2),
+            this.countDayTimeFrequency(3, 2),
+            this.countDayTimeFrequency(4, 2),
+            this.countDayTimeFrequency(5, 2),
+            this.countDayTimeFrequency(6, 2)], 
+            "text": "Afternoon"
+        }, { 
+          values: [
+            this.countDayTimeFrequency(0, 3),
+            this.countDayTimeFrequency(1, 3),
+            this.countDayTimeFrequency(2, 3),
+            this.countDayTimeFrequency(3, 3),
+            this.countDayTimeFrequency(4, 3),
+            this.countDayTimeFrequency(5, 3),
+            this.countDayTimeFrequency(6, 3)], 
+            "text": "Night"
+        }],
         plot: {
-          styles: [
-            "#B276B2",
-            "#5DA5DA",
-            "#5DA5DA",
-            "#5DA5DA",
-            "#5DA5DA",
-            "#5DA5DA",
-            "#B276B2",
-          ],
-          animation: {
-            effect: "2",
-            method: "0",
-            speed: "1000",
+          tooltip: {
+            text: "%t: %vt"
           },
-        },
-      };
-    },
-    partOfDayChartData() {
-      this.countPartsOfDayFrequency();
-      return {
-        type: "bar",
-        "scale-x": {
-          labels: ["Morning", "Afternoon", "Evening"],
-        },
-        title: {
-          text: "- Distribution of Customers in a Day -",
-          color: "black",
-          "font-weight": "bold",
-          "font-family": "sans-serif",
-          fontSize: "22px",
-          "adjust-layout": true,
-        },
-        plotarea: {
-          "adjust-layout": true,
-        },
-        series: [
-          {
-            values: [
-              this.partsOfDayFreq[0],
-              this.partsOfDayFreq[1],
-              this.partsOfDayFreq[2],
-            ],
-          },
-        ],
-        plot: {
-          styles: ["#E5DE44", "#EF810E", "#053752"],
           animation: {
             effect: "2",
             method: "0",
@@ -384,8 +327,7 @@ export default {
         layout: "horizontal",
         graphset: [
           this.ratingChartData,
-          this.dayChartData,
-          this.partOfDayChartData,
+          this.DayTimeChartData
         ],
       };
     },
@@ -393,6 +335,8 @@ export default {
   created() {
     this.fetchItems();
     this.fetchDays();
+    // test
+    this.fetchDayTime();
   },
 };
 </script>
