@@ -152,7 +152,6 @@ export default {
     };
   },
   methods: {
-    // to do: make the mallsList and restaurantList dynamic using watch & queueNumber assignment not done
     joinQueue: function () {
       var paxGroup = this.getPaxGroup(this.numAdult, this.numChildren);
       var restName = this.restaurantSelected.restaurantName;
