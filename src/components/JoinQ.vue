@@ -144,14 +144,11 @@ export default {
 
       queueNum: 0,
       queueNumId: "",
-<<<<<<< Updated upstream
-=======
       dayType: 0,
       partOfDay: 0,
       freq: "",
       custFreqObj: {},
       arrTime: "",
->>>>>>> Stashed changes
     };
   },
   methods: {
@@ -162,8 +159,6 @@ export default {
       var mallName = this.mallSelected;
       
       this.getArrivalTime(paxGroup, restName, mallName);
-<<<<<<< Updated upstream
-=======
       database
         .collection("restaurants")
         .get()
@@ -206,7 +201,6 @@ export default {
         .update({
           custFreq: this.custFreqObj
         });
->>>>>>> Stashed changes
     },
     getCurrentTime: function () {
       const curr = new Date();
@@ -233,13 +227,9 @@ export default {
         .then(() => {
           var bookTime = this.getCurrentTime();
           var parsed = Date.parse(bookTime) + counter * 2700000;
-<<<<<<< Updated upstream
-          var arrTime = new Date(parsed).toString();
-=======
           this.dayType = new Date(parsed).getDay();
           this.arrTime = new Date(parsed).toString();
           this.partOfDay = this.getPartOfDay(new Date(parsed).getHours());
->>>>>>> Stashed changes
           database.collection("bookings").add({
             customerID: this.customerID,
             customerName: this.customerName,
@@ -256,14 +246,10 @@ export default {
             queueStatus: "waiting",
             bookedTiming: bookTime,
             restaurantId: this.restaurantSelected.id,
-<<<<<<< Updated upstream
-            arrivalTime: arrTime,
-=======
             arrivalTime: this.arrTime,
             // 0 for SUN, 1 for MON, 2 for TUES ...
             dayType: this.dayType,
             partOfDay: this.partOfDay,
->>>>>>> Stashed changes
           });
           alert(
             "Successfully joined queue. Please arrive at " +
@@ -271,19 +257,12 @@ export default {
               " @ " +
               mallName +
               " by " +
-<<<<<<< Updated upstream
-              arrTime +
-=======
               this.arrTime +
->>>>>>> Stashed changes
               "."
           );
           this.$router.push("/myprofile");
         });
     },
-<<<<<<< Updated upstream
-    calculatePax: function (numAdult, numChildren) {
-=======
     getPartOfDay: function(hrs) {
         // 0 for morning, 1 for afternoon, 2 for evening
         if (hrs < 12) {
@@ -295,7 +274,6 @@ export default {
         }
     },
     calculatePax: function(numAdult, numChildren) {
->>>>>>> Stashed changes
       let children = 0;
       if (numChildren !== null) {
         children = numChildren;
