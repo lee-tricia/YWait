@@ -85,7 +85,6 @@ export default {
       dayTime: [],
     };
   },
-
   methods: {
     fetchItems: function() {
       database
@@ -96,18 +95,6 @@ export default {
           this.rating = query.data().rating;
           this.numRatings = query.data().numRatings;
           this.name = query.data().restaurantName;
-        });
-    },
-    fetchDays: function() {
-      database
-        .collection("bookings")
-        .where("restaurantId", "==", auth.currentUser.uid)
-        .get()
-        .then((snap) => {
-          snap.forEach((doc) => {
-            this.daysOfWeek.push(doc.data().dayType);
-            this.partsOfDay.push(doc.data().partOfDay);
-          });
         });
     },
     getDataFromQuery: function(query) {
@@ -334,8 +321,6 @@ export default {
   },
   created() {
     this.fetchItems();
-    this.fetchDays();
-    // test
     this.fetchDayTime();
   },
 };
