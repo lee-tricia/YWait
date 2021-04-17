@@ -9,10 +9,7 @@
       <div id="form">
         <form @submit.prevent="joinQueue()">
           <p>
-            <la
-            
-            
-            bel for="mall"
+            <label for="mall"
               >Choose your preferred dining mall<span style="color: red"
                 >*</span
               ></label
@@ -273,7 +270,7 @@ export default {
         } else if (hrs < 18) {
             return 1
         } else {
-            return 3
+            return 2
         }
     },
     calculatePax: function(numAdult, numChildren) {
