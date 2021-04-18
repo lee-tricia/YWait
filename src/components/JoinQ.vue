@@ -104,7 +104,8 @@
               >at least 5 minutes before reservation time</span
             >
             to be seated.<br />We regret to inform that queue seatings will be
-            given up if you are late due to the limited seating capacity.
+            given up if you are late due to the limited seating capacity.<br />
+            Kindly double-click the 'Join Queue' button to confirm your reservation.
           </p>
 
           <div id="button">

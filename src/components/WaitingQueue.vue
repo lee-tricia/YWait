@@ -74,7 +74,6 @@
 </template>
 
 <script>
-// left sorting to settle
 import { database } from "../firebase.js";
 
 export default {
