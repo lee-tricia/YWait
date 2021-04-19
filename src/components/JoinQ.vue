@@ -148,7 +148,6 @@ export default {
       dayType: 0,
       partOfDay: 0,
       freq: "",
-      custFreqObj: {},
       arrTime: "",
     };
   },
@@ -157,50 +156,7 @@ export default {
       var paxGroup = this.getPaxGroup(this.numAdult, this.numChildren);
       var restName = this.restaurantSelected.restaurantName;
       var mallName = this.mallSelected;
-      
       this.getArrivalTime(paxGroup, restName, mallName);
-      database
-        .collection("restaurants")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            if (doc.id === this.restaurantSelected.id) {
-                var restaurant = doc.data();
-                //var arrDayName = ['Sunday', 'Monday', 'Tuesday', 
-                //'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                //var arrPart = ['morning', 'afternoon', 'evening'];
-                //var day = arrDayName[this.dayType];
-                var day = 'Monday';
-                var part = 'afternoon';
-                //var part = arrPart[this.partOfDay];
-                this.custFreqObj = restaurant.custFreq;
-                //alert(this.custFreqObj[day]);
-                //alert(typeof this.custFreqObj[day]);
-                if (typeof this.custFreqObj === 'undefined') {
-                   // alert('1')
-                    this.custFreqObj = {}
-                    this.custFreqObj[day] = {};
-                    this.custFreqObj[day][part] = 1;
-                } else if (typeof this.custFreqObj[day] === 'undefined') {
-                    //alert('2')
-                    this.custFreqObj[day] = {};
-                    this.custFreqObj[day][part] = 1;
-                } else if (typeof this.custFreqObj[day][part] === 'undefined') {
-                    //alert('3')
-                    this.custFreqObj[day][part] = 1;
-                } else {
-                    //alert('4')
-                    this.custFreqObj[day][part] += 1
-                }
-            }
-          });
-        });
-        database
-        .collection("restaurants")
-        .doc(this.restaurantSelected.id)
-        .update({
-          custFreq: this.custFreqObj
-        });
     },
     getCurrentTime: function () {
       const curr = new Date();
